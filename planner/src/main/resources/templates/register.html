@@ -1,25 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Register | Kik Plus Weddings</title>
+    <title>Begin Your Journey | Kik Plus</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        :root {
+            --dusty-rose: #D4A5A5;
+            --sage-green: #A3B18A;
+            --cream: #F5F1E8;
+            --terracotta: #C07A58;
+        }
+        body { background-color: var(--cream); color: var(--terracotta); font-family: 'Poppins', sans-serif; }
+        .reg-card {
+            max-width: 450px; margin: 100px auto; padding: 40px;
+            background: white; border-radius: 20px;
+            box-shadow: 15px 15px 0px var(--sage-green);
+        }
+        input, select {
+            width: 100%; padding: 12px; margin: 10px 0;
+            border: 1px solid var(--sage-green); border-radius: 8px;
+        }
+        .submit-btn {
+            background: var(--dusty-rose); color: white; border: none;
+            padding: 15px; width: 100%; border-radius: 50px; font-weight: 600;
+            cursor: pointer; margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-<div class="luxury-card">
-    <h1 class="brand-name">Kik Plus</h1>
-    <p class="sub-text">PREMIUM WEDDING PLANNING</p>
-
+<div class="reg-card">
+    <h2 style="font-family: 'Playfair Display'; text-align: center;">Join Kik Plus</h2>
     <form th:action="@{/register}" th:object="${user}" method="post">
-        <input type="email" th:field="*{email}" class="input-field" placeholder="Email Address" required />
+        <input type="email" th:field="*{email}" placeholder="Email Address" required />
 
-        <select th:field="*{role}" id="roleSelect" class="input-field" onchange="toggleCulture()">
-            <option value="Couple">I am a Couple</option>
+        <select th:field="*{role}" id="roleSelect" onchange="toggleCulture()">
+            <option value="Couple">We are a Couple</option>
             <option value="Vendor">I am a Vendor</option>
         </select>
 
         <div id="cultureSection">
-            <p style="font-size: 0.9rem; color: #d4af37;">Wedding Tradition:</p>
-            <select th:field="*{style}" class="input-field">
+            <p style="font-size: 0.9rem; color: var(--sage-green); margin-top: 10px;">Select Your Tradition</p>
+            <select th:field="*{style}">
                 <option value="Sinhalese">Sinhalese</option>
                 <option value="Hindu">Hindu</option>
                 <option value="Muslim">Muslim</option>
@@ -28,7 +49,7 @@
             </select>
         </div>
 
-        <button type="submit" class="gold-button">CREATE ACCOUNT</button>
+        <button type="submit" class="submit-btn">CREATE YOUR ACCOUNT</button>
     </form>
 </div>
 

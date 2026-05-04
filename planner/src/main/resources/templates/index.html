@@ -1,76 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Kik Plus | Premium Sri Lankan Weddings</title>
+    <title>Kik Plus | The Art of Sri Lankan Weddings</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Sophisticated Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar">
-    <div class="logo">KIK PLUS</div>
-    <div class="nav-links">
-        <a href="/login" class="login-link">Sign In</a>
-        <a href="/register" class="cta-outline">Get Started</a>
+<nav class="luxury-nav">
+    <div class="nav-container">
+        <span class="brand">KIK PLUS</span>
+        <div class="nav-links">
+            <a href="/login">EXHIBITIONS</a>
+            <a href="/register" class="nav-cta">RESERVE NOW</a>
+        </div>
     </div>
 </nav>
 
-<main class="hero-section">
-    <div class="hero-content">
-        <h1 class="main-title">Crafting Your <br><span class="gold-text">Timeless Union</span></h1>
-        <p class="description">
-            The most exclusive wedding ecosystem in Sri Lanka. Connect with premium vendors and plan your celebration with cultural elegance.
+<main class="editorial-hero">
+    <div class="text-layer">
+        <h2 class="sub-heading">ESTABLISHED 2026</h2>
+        <h1 class="main-title">A Symphony of <br><em>Heritage & Luxury</em></h1>
+        <p class="manifesto">
+            Curating the most prestigious wedding experiences across the teardrop isle. From the golden sands of Bentota to the emerald hills of Kandy.
         </p>
-        <div class="button-group">
-            <a href="/register" class="cta-fill">Start Planning</a>
-            <a href="/vendors" class="cta-outline">Browse Vendors</a>
-        </div>
-
-        <div class="features-grid">
-            <div class="feature-item">
-                <span class="icon">🏆</span>
-                <h4>Premium Vendors</h4>
-                <p>Curated professionals</p>
-            </div>
-            <div class="feature-item">
-                <span class="icon">🪷</span>
-                <h4>Cultural Traditions</h4>
-                <p>Respecting heritage</p>
-            </div>
+        <div class="action-row">
+            <a href="/register" class="btn-primary">BEGIN YOUR STORY</a>
+            <a href="#explore" class="btn-secondary">EXPLORE THE COLLECTION</a>
         </div>
     </div>
 
-    <div class="hero-image-container">
-        <div class="image-border">
-            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=800" alt="Sri Lankan Wedding">
-        </div>
-        <!-- Floating stat card for uniqueness -->
-        <div class="floating-card">
-            <h5>500+</h5>
-            <p>Luxury Vendors</p>
-        </div>
-    </div>
-</main>
-<!-- src/main/resources/templates/index.html -->
-<main class="hero-section">
-    <div class="hero-content">
-        <h1 class="main-title" style="color: var(--terracotta);">
-            Elegance Rooted in <br><span style="color: var(--sage-green);">Tradition</span>
-        </h1>
-        <p class="description" style="color: #555;">
-            Experience a curated wedding journey in Sri Lanka, designed with the soft hues of nature and the timelessness of heritage.
-        </p>
-
-        <div class="button-group">
-            <!-- Using the Dusty Rose for the primary button -->
-            <a href="/register" class="cta-fill" style="background: var(--dusty-rose); color: white;">Start Planning</a>
-            <a href="/login" class="cta-outline" style="border-color: var(--sage-green); color: var(--sage-green);">Sign In</a>
-        </div>
-    </div>
-
-    <div class="hero-image-container">
-        <!-- Adding a soft garden-themed border shadow -->
-        <div class="image-border" style="border-color: var(--sage-green); box-shadow: 20px 20px 0px var(--dusty-rose);">
-            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Garden Wedding">
+    <div class="image-layer">
+        <div class="frame">
+            <img src="https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&q=80&w=1000" alt="Luxury Wedding">
+            <div class="overlay-tag">PRIVATE COLLECTION</div>
         </div>
     </div>
 </main>

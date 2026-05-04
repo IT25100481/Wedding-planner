@@ -1,32 +1,87 @@
 :root {
-    --dusty-rose: #D4A5A5;   /* Primary Accent */
-    --sage-green: #A3B18A;   /* Secondary Accent */
-    --cream: #F5F1E8;        /* Background/Text */
-    --terracotta: #C07A58;   /* Deep Accent */
-    --sand: #E5B27D;         /* Highlight */
-    --deep-earth: #2C2C2c;   /* Dark Text/Contrast */
+    --primary: #D4A5A5; /* Dusty Rose */
+    --secondary: #A3B18A; /* Sage */
+    --background: #F5F1E8; /* Cream */
+    --text: #2C2C2C; /* Charcoal */
 }
 
 body {
-    background-color: var(--cream);
-    color: var(--deep-earth);
-    font-family: 'Poppins', sans-serif;
+    background-color: var(--background);
+    color: var(--text);
     margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
 }
-.feature-item {
-    background: white;
+
+.luxury-nav {
+    padding: 40px 8%;
+    position: absolute;
+    width: 84%;
+    z-index: 10;
+}
+
+.brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    letter-spacing: 8px;
+    font-weight: 500;
+}
+
+.editorial-hero {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    height: 100vh;
+    align-items: center;
+    padding: 0 8%;
+}
+
+.main-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 6rem;
+    line-height: 0.9;
+    font-weight: 500;
+    margin: 20px 0;
+}
+
+.main-title em {
+    font-style: italic;
+    color: var(--primary);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    padding: 20px 45px;
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    border-radius: 0; /* Sharp corners are more luxury than rounded */
+    transition: 0.5s;
+}
+
+.btn-primary:hover {
+    background: var(--text);
+}
+
+.frame {
+    position: relative;
+    border: 1px solid var(--secondary);
     padding: 20px;
-    border-radius: 10px;
-    border-bottom: 4px solid var(--sand);
-    transition: 0.3s;
+    transform: translateY(30px);
 }
 
-.feature-item:hover {
-    transform: translateY(-10px);
-    border-bottom-color: var(--dusty-rose);
+.frame img {
+    width: 100%;
+    filter: sepia(20%) contrast(1.1);
 }
 
-.feature-item h4 {
-    color: var(--terracotta);
-    font-family: 'Playfair Display', serif;
+.overlay-tag {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--secondary);
+    padding: 10px 20px;
+    color: white;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
 }

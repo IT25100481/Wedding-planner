@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Kik Plus | Premium Sri Lankan Weddings</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">KIK PLUS</div>
+    <div class="nav-links">
+        <a href="/login" class="login-link">Sign In</a>
+        <a href="/register" class="cta-outline">Get Started</a>
+    </div>
+</nav>
+
+<main class="hero-section">
+    <div class="hero-content">
+        <h1 class="main-title">Crafting Your <br><span class="gold-text">Timeless Union</span></h1>
+        <p class="description">
+            The most exclusive wedding ecosystem in Sri Lanka. Connect with premium vendors and plan your celebration with cultural elegance.
+        </p>
+        <div class="button-group">
+            <a href="/register" class="cta-fill">Start Planning</a>
+            <a href="/vendors" class="cta-outline">Browse Vendors</a>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-item">
+                <span class="icon">🏆</span>
+                <h4>Premium Vendors</h4>
+                <p>Curated professionals</p>
+            </div>
+            <div class="feature-item">
+                <span class="icon">🪷</span>
+                <h4>Cultural Traditions</h4>
+                <p>Respecting heritage</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-image-container">
+        <div class="image-border">
+            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=800" alt="Sri Lankan Wedding">
+        </div>
+        <!-- Floating stat card for uniqueness -->
+        <div class="floating-card">
+            <h5>500+</h5>
+            <p>Luxury Vendors</p>
+        </div>
+    </div>
+</main>
+</body>
+</html>

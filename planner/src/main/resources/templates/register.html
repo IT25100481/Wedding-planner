@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Luxury Wedding Planner | Join</title>
+    <style>
+        body { background-color: #1a1a1a; color: #d4af37; font-family: serif; text-align: center; }
+        .form-container { border: 1px solid #d4af37; padding: 40px; margin: 50px auto; width: 300px; }
+        input, select { width: 100%; margin: 10px 0; padding: 10px; background: transparent; border: 1px solid #d4af37; color: white; }
+        .gold-btn { background-color: #d4af37; color: black; border: none; padding: 12px; cursor: pointer; width: 100%; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>Begin Your Journey</h2>
+    <form th:action="@{/register}" th:object="${user}" method="post">
+        <input type="email" th:field="*{email}" placeholder="Email Address" required />
+        <select th:field="*{role}" id="roleSelect" onchange="toggleCultures()">
+            <option value="Couple">Register as Couple</option>
+            <option value="Vendor">Register as Vendor</option>
+        </select>
+
+        <div id="cultureSection">
+            <p>Select Wedding Tradition</p>
+            <select th:field="*{style}">
+                <option value="Sinhalese">Sinhalese</option>
+                <option value="Hindu">Hindu</option>
+                <option value="Christian">Christian</option>
+                <option value="Muslim">Muslim</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <button type="submit" class="gold-btn">CREATE ACCOUNT</button>
+    </form>
+</div>
+
+<script>
+    function toggleCultures() {
+        const role = document.getElementById("roleSelect").value;
+        document.getElementById("cultureSection").style.display = (role === 'Vendor') ? 'none' : 'block';
+    }
+</script>
+</body>
+</html>

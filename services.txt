@@ -1,0 +1,3 @@
+e6131529-dc62-470c-9760-9b26316dcbe3,wer,Venue,Christian,wer,werw,wer,
+68fa6b22-9b15-498b-85ea-3e4f81a0b2ae,Royal photo,Photography,Sinhalese,,0778656988,30 000,no-image.jpg
+c164192f-5d6f-4050-9b90-3d6cd3df6cc9,Royal Cakes,Venue,Hindu,,07786569865,30 0000,no-image.jpg

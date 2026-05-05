@@ -1,0 +1,8 @@
+<<<<<<< Updated upstream
+sanchukan1234@gmail.com,Couple,Sinhalese
+=======
+thisumijisoogajaman@gmail.com,Vendor,Sinhalese
+thisumijisoogajaman@gmail.com,Couple,Sinhalese
+thisumijisoogajaman@gmail.com,Vendor,Sinhalese
+thisumijisoogajaman@gmail.com,Couple,Sinhalese
+>>>>>>> Stashed changes

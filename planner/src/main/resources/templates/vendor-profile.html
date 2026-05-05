@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendor Profile | Kik Plus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --dusty-rose: #D4A5A5; --cream: #F5F1E8; --dark-grey: #333; }
+        body { background-color: var(--cream); font-family: 'Montserrat', sans-serif; margin: 0; }
+
+        .dashboard-nav {
+            background: #fff; padding: 10px 5%; display: flex;
+            justify-content: space-between; align-items: center; border-bottom: 1px solid #eee;
+        }
+
+        .profile-container { max-width: 800px; margin: 50px auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .profile-header { text-align: center; border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 20px; }
+        .profile-pic { width: 120px; height: 120px; border-radius: 50%; background: #eee; margin-bottom: 15px; object-fit: cover; border: 3px solid var(--dusty-rose); }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; text-align: center; }
+        .stat-box { background: var(--cream); padding: 15px; border-radius: 10px; }
+        .stat-box h4 { margin: 0; color: var(--dusty-rose); font-size: 1.5rem; }
+
+        .btn-edit { background: var(--dusty-rose); color: white; border: none; padding: 12px 25px; border-radius: 50px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .btn-edit:hover { background: #c28e8e; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; }
+        .modal-content { background: white; width: 90%; max-width: 500px; margin: 50px auto; padding: 30px; border-radius: 15px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.8rem; color: #777; margin-bottom: 5px; }
+        input, textarea, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+<nav class="dashboard-nav">
+    <span style="font-family: 'Cormorant Garamond'; font-size: 1.8rem; font-weight: bold;">KIK PLUS</span>
+    <a href="/vendor/dashboard" style="text-decoration: none; color: var(--dusty-rose); font-weight: 600;">BACK TO DASHBOARD</a>
+</nav>
+
+<div class="profile-container">
+    <div class="profile-header">
+        <img src="https://via.placeholder.com/150" class="profile-pic" alt="Profile Picture">
+        <h2 th:text="${vendorName}" style="font-family: 'Cormorant Garamond'; margin: 0;">Vendor Name</h2>
+        <p th:text="${location}" style="color: #777;"><i class="fa-solid fa-location-dot"></i> Location</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-box">
+            <h4 th:text="${ratings}">0.0</h4>
+            <p>Average Rating</p>
+        </div>
+        <div class="stat-box">
+            <h4 th:text="${serviceCount}">0</h4>
+            <p>Services Provided</p>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 30px;">
+        <h4 style="font-family: 'Cormorant Garamond';">About Us</h4>
+        <p th:text="${description}" style="line-height: 1.6; color: #555;">Vendor description goes here...</p>
+    </div>
+
+    <button class="btn-edit" onclick="openProfileModal()">EDIT PROFILE DETAILS</button>
+</div>
+
+<!-- EDIT PROFILE MODAL -->
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <h2 style="font-family: 'Cormorant Garamond'; text-align: center;">Edit Personal Details</h2>
+        <form action="/vendor/profile/update" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Profile Picture</label>
+                <input type="file" name="profilePic" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label>Vendor Name</label>
+                <input type="text" name="vendorName" th:value="${vendorName}">
+            </div>
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" name="location" th:value="${location}">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" rows="4" th:text="${description}"></textarea>
+            </div>
+            <button type="submit" class="btn-edit" style="width: 100%;">SAVE CHANGES</button>
+            <button type="button" onclick="closeProfileModal()" style="width:100%; background:none; border:none; margin-top:10px; cursor:pointer;">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openProfileModal() { document.getElementById('profileModal').style.display = 'block'; }
+    function closeProfileModal() { document.getElementById('profileModal').style.display = 'none'; }
+
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('profileModal')) closeProfileModal();
+    }
+</script>
+
+</body>
+</html>

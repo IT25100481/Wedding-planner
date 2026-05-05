@@ -37,5 +37,28 @@
         </div>
     </div>
 </main>
+
+<section id="reserve-section" class="inquiry-container" style="padding: 100px 5%; background: #fff; text-align: center; font-family: 'Cormorant Garamond', serif;">
+    <h2 style="font-size: 3rem; margin-bottom: 10px;">Inquire for Your Grand Day</h2>
+    <p style="font-family: 'Montserrat', sans-serif; font-weight: 300; letter-spacing: 2px; margin-bottom: 50px;">LET US CURATE YOUR STORY</p>
+
+    <form th:action="@{/submit-inquiry}" method="post" style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
+        <input type="text" name="customerName" placeholder="FULL NAME" required
+               style="border: none; border-bottom: 1px solid #333; padding: 15px; font-family: 'Montserrat', sans-serif; outline: none;">
+
+        <input type="text" name="contactNo" placeholder="CONTACT NUMBER" required
+               style="border: none; border-bottom: 1px solid #333; padding: 15px; font-family: 'Montserrat', sans-serif; outline: none;">
+
+        <input type="date" name="weddingDate" required
+               style="border: none; border-bottom: 1px solid #333; padding: 15px; font-family: 'Montserrat', sans-serif; outline: none; color: #666;">
+
+        <textarea name="message" placeholder="TELL US YOUR VISION"
+                  style="border: none; border-bottom: 1px solid #333; padding: 15px; font-family: 'Montserrat', sans-serif; outline: none; min-height: 100px;"></textarea>
+
+        <button type="submit" class="btn-primary" style="margin-top: 30px; cursor: pointer; border: none; letter-spacing: 3px;">
+            SEND ENQUIRY
+        </button>
+    </form>
+</section>
 </body>
 </html>

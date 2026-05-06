@@ -43,14 +43,14 @@ public class ServicePackageController {
         model.addAttribute("package", pkg);
         return "package-edit";
     }
-
+    // Ensure the package object contains valid data before database persistence
     // ── UPDATE - Save edited package ──
     @PostMapping("/update")
     public String updatePackage(@ModelAttribute ServicePackage pkg) {
         packageService.updatePackage(pkg);
         return "redirect:/packages?success=updated";
     }
-
+    // Redirecting back to the package list view to show updated status
     // ── DELETE - Remove package ──
     @GetMapping("/delete/{id}")
     public String deletePackage(@PathVariable String id) {

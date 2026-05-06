@@ -1,8 +1,6 @@
 package com.wedding.planner.model;
 
-public class AdminUser extends User  {
-
-
+public class AdminUser extends User{
 
 
 

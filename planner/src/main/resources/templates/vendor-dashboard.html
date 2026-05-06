@@ -5,13 +5,11 @@
     <title>Vendor Dashboard | Kik Plus</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
-    <!-- Font Awesome for the Profile Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --dusty-rose: #D4A5A5; --cream: #F5F1E8; --dark-grey: #333; }
         body { background-color: var(--cream); font-family: 'Montserrat', sans-serif; margin: 0; }
 
-        /* Updated Nav Bar Styles */
         .dashboard-nav {
             background: #fff;
             padding: 10px 5%;
@@ -34,7 +32,6 @@
         .nav-links a:hover { color: var(--dusty-rose); }
         .nav-links a.active { color: var(--dusty-rose); border-bottom: 2px solid var(--dusty-rose); }
 
-        /* Profile Dropdown Styles */
         .profile-menu { position: relative; display: inline-block; }
         .profile-icon {
             font-size: 1.5rem;
@@ -66,7 +63,6 @@
         .dropdown-content a:hover { background-color: #f8f8f8; color: var(--dusty-rose); }
         .profile-menu:hover .dropdown-content { display: block; }
 
-        /* Original Grid & Card Styles */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; padding: 50px 5%; }
         .service-card {
             background-color: #FFE4E1;
@@ -88,7 +84,6 @@
         }
         .card-content { position: relative; z-index: 2; padding: 20px; }
 
-        /* Form & Modal Styles */
         .drop-zone {
             border: 2px dashed var(--dusty-rose);
             padding: 20px;
@@ -114,15 +109,15 @@
 <nav class="dashboard-nav">
     <span class="brand" style="font-family: 'Cormorant Garamond'; font-size: 1.8rem; font-weight: bold;">KIK PLUS</span>
 
-    <!-- Central Navigation Links -->
+    <!-- ✅ FIXED: Correct links for Packages and Payments -->
     <div class="nav-links">
         <a href="/vendor/dashboard" class="active">SERVICES</a>
-        <a href="/vendor/payments">PAYMENTS</a>
+        <a href="/packages">PACKAGES</a>
+        <a href="/payments">PAYMENTS</a>
         <a href="/vendor/bookings">BOOKINGS</a>
         <a href="/vendor/messages">INQUIRIES</a>
     </div>
 
-    <!-- Right Side Profile Menu -->
     <div class="profile-menu">
         <div class="profile-icon">
             <i class="fa-regular fa-circle-user"></i>
@@ -277,7 +272,6 @@
         reader.readAsDataURL(file);
     }
 
-    // Close dropdown if clicked outside
     window.onclick = function(event) {
         if (!event.target.matches('.fa-circle-user') && !event.target.matches('.profile-icon')) {
             var dropdowns = document.getElementsByClassName("dropdown-content");

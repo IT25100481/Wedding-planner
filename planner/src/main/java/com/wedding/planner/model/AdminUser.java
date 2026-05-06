@@ -1,8 +1,14 @@
 package com.wedding.planner.model;
 
-public class AdminUser extends User{
+// Inheritance: AdminUser extends User
+public class AdminUser extends User {
 
+    //Attributes
+    private String role;
+    private String lastLogin;
 
-
-
+    //Default Constructor
+    public AdminUser() {
+        super();
+    }
 }

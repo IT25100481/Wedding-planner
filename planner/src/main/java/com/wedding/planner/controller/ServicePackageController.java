@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+// Validate that the package price is not null before saving
+
+
 @Controller
 @RequestMapping("/packages")
 public class ServicePackageController {
@@ -31,7 +34,7 @@ public class ServicePackageController {
         packageService.addPackage(pkg);
         return "redirect:/packages?success=added";
     }
-
+    // Redirecting to the dashboard after a successful update
     // ── READ - Show edit form ──
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable String id, Model model) {

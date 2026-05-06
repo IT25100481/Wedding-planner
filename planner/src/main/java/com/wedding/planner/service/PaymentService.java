@@ -16,7 +16,7 @@ public class PaymentService {
     private static final String FILE_PATH = "payments.txt";
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    // ── CREATE ──
+    // Method to save a new payment record to the file
     public void addPayment(Payment payment) {
         payment.setId(UUID.randomUUID().toString().substring(0, 8));
         payment.setCreatedAt(LocalDateTime.now().format(FORMATTER));
@@ -43,7 +43,7 @@ public class PaymentService {
         }
     }
 
-    // ── READ ALL ──
+    // Loads all payments from the text file into a list
     public List<Payment> getAllPayments() {
         List<Payment> payments = new ArrayList<>();
         File file = new File(FILE_PATH);
@@ -63,7 +63,7 @@ public class PaymentService {
         return payments;
     }
 
-    // ── READ BY ID ──
+    // Search for a specific payment using its ID
     public Payment getPaymentById(String id) {
         return getAllPayments().stream()
                 .filter(p -> p.getId().equals(id))
@@ -89,7 +89,7 @@ public class PaymentService {
                 .sum();
     }
 
-    // ── UPDATE ──
+    // Overwrites the file to update an existing payment
     public void updatePayment(Payment updated) {
         List<Payment> payments = getAllPayments();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, false))) {
@@ -106,7 +106,7 @@ public class PaymentService {
         }
     }
 
-    // ── DELETE ──
+    // Removes a payment by rewriting the file without that ID// Removes a payment by rewriting the file without that ID
     public void deletePayment(String id) {
         List<Payment> payments = getAllPayments();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, false))) {

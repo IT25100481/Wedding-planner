@@ -19,4 +19,17 @@ public class AdminUser extends User{
         this.lastLogin = lastLogin;
     }
 
+    //Getters and Setters
+    public String getUserID() {
+        return userID;
+    }
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+    public String getLastLogin() {
+        return lastLogin;
+    }
+    public void setLastLogin(String lastLogin) {
+        this.lastLogin = lastLogin;
+    }
 }

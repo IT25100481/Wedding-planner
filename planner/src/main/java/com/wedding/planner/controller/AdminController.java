@@ -47,8 +47,21 @@ import java.util.List;
                                    HttpSession session,
                                    RedirectAttributes redirectAttributes) {
 
-
+            // Check credentials via the service
+            if (adminService.authenticate(username, password)) {
+                AdminUser admin = adminService.getAdminByUsername(username);
+                session.setAttribute("admin", admin);
+                return "redirect:/admin/dashboard";
+            } else {
+                redirectAttributes.addFlashAttribute("error", "Invalid credentials");
+                return "redirect:/admin/login";
             }
+        }
+
+
+
+    }
+
 
         }
 

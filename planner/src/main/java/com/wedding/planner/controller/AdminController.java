@@ -96,6 +96,62 @@ import java.util.List;
                 ra.addFlashAttribute("message", "Vendor approved and live on the platform.");
                 return "redirect:/admin/vendors";
             }
+            // --- ADMIN CRUD Management SECTION ---
+
+            //Displays a table of all Admin accounts
+            Admin managemen("admin") == null) {
+                return "redirect:/admin/login";
+            }
+
+            List<AdminUser> admins = adminService.getAllAdmins();
+            model.addAttribute("admins", admins);
+            return "admin/admins";
+        }
+
+        //Add New Admin
+        @GetMapping("/admins/add")
+        public String addAdminForm(Model model, HttpSession session) {
+            // Check if admin is logged in
+            if (session.getAttribute("admin") == null) {
+                return "redirect:/admin/login";
+            }
+
+            model.addAttribute("admin", new AdminUser());
+            return "admin/admin-form";
+        }
+
+        // Saves or Updates an Admin
+        @PostMapping("/admins/save")
+        public String saveAdmin(@ModelAttribute AdminUser admin, RedirectAttributes redirectAttributes, HttpSession session) {
+            // Check if admin is logged in
+            if (session.getAttribute("admin") == null) {
+                return "redirect:/admin/login";
+            }
+
+            if (admin.getId() == null || admin.getId().isEmpty()) {
+                adminService.createAdmin(admin);
+                redirectAttributes.addFlashAttribute("Admin created successfully");
+            } else {
+                adminService.updateAdmin(admin);
+                redirectAttributes.addFlashAttribute("Admin updated successfully");
+            }
+
+            return "redirect:/admin/admins";
+        }
+
+        //Delete admin record from the database
+        @GetMapping("/admins/delete/{id}")
+        public String deleteAdmin(@PathVariable String id, RedirectAttributes redirectAttributes, HttpSession session) {
+            // Check if admin is logged in
+            if (session.getAttribute("admin") == null) {
+                return "redirect:/admin/login";
+            }
+
+            adminService.deleteAdmin(id);
+            redirectAttributes.addFlashAttribute("message", "Admin deleted successfully");
+            return "redirect:/admin/admins";
+        }
+    }package com.wedding.planner.controller;
 
         }
 

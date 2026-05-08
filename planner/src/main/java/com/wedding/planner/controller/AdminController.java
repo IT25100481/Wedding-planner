@@ -76,6 +76,26 @@ import java.util.List;
 
                 return "admin/dashboard";
             }
+            // --- VENDOR MANAGEMENT (System Specific) ---
+
+            // Lists all vendors in the system
+            @GetMapping("/vendors")
+            public String listVendors(Model model, HttpSession session) {
+                if (session.getAttribute("admin") == null) return "redirect:/admin/login";
+
+                model.addAttribute("vendors", vendorService.getAllVendors());
+                return "admin/vendor-list";
+            }
+
+            //Approve Vendor
+            @PostMapping("/vendors/approve/{id}")
+            public String approveVendor(@PathVariable String id, RedirectAttributes ra, HttpSession session) {
+                if (session.getAttribute("admin") == null) return "redirect:/admin/login";
+
+                vendorService.updateStatus(id, "APPROVED");
+                ra.addFlashAttribute("message", "Vendor approved and live on the platform.");
+                return "redirect:/admin/vendors";
+            }
 
         }
 

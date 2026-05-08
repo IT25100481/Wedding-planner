@@ -56,13 +56,28 @@ import java.util.List;
                 redirectAttributes.addFlashAttribute("error", "Invalid credentials");
                 return "redirect:/admin/login";
             }
+            //Clear the session and User Logout
+            @GetMapping("/logout")
+            public String logout(HttpSession session) {
+                session.invalidate();
+                return "redirect:/admin/login";
+            }
+
+            // --- DASHBOARD & STATISTICS ---
+
+            @GetMapping("/dashboard")
+            public String dashboard(Model model, HttpSession session) {
+                if (session.getAttribute("admin") == null) return "redirect:/admin/login";
+
+                //Push data to the HTML view via the Model
+                model.addAttribute("totalVendors", vendorService.getTotalCount());
+                model.addAttribute("pendingApprovals", vendorService.getPendingCount());
+                model.addAttribute("recentLogins", adminService.getRecentLogins());
+
+                return "admin/dashboard";
+            }
+
         }
 
 
 
-    }
-
-
-        }
-
-    }

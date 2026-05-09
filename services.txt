@@ -1,3 +1,2 @@
-68fa6b22-9b15-498b-85ea-3e4f81a0b2ae,Royal photo,Photography,Sinhalese,,0778656988,30 000,no-image.jpg
 c164192f-5d6f-4050-9b90-3d6cd3df6cc9,Royal Cakes,Venue,Hindu,,07786569865,30 0000,no-image.jpg
 a41f4c15-dfb5-4942-90fe-f318805d2d1c,Royal photo,Cakes,Muslim,,0778656988,y,no-image.jpg

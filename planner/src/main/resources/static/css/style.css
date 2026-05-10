@@ -20,19 +20,17 @@ body, html {
     background: rgba(26, 18, 9, 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(192, 122, 88, 0.2);
-    padding: 15px 0; /* Reduced padding for a sleeker look */
+    padding: 15px 0;
 }
 
-/* Logo and Vivaha Text Container */
 .navbar-brand-vivaha {
     display: flex;
     align-items: center;
     gap: 15px;
-    text-decoration: none !important; /* Removes blue underline */
 }
 
 .nav-logo {
-    height: 50px; /* Professional size */
+    height: 50px;
     width: auto;
     object-fit: contain;
 }
@@ -50,10 +48,43 @@ body, html {
     font-size: 0.75rem;
     letter-spacing: 2px;
     text-transform: uppercase;
+    text-decoration: none !important;
 }
 
 .nav-link:hover {
     color: var(--gold-light) !important;
+}
+
+/* ── NAVBAR BUTTONS (FIXED COLORS) ── */
+.btn-nav-outline, .btn-nav-gold {
+    text-decoration: none !important;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+}
+
+.btn-nav-outline {
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 20px;
+}
+
+.btn-nav-outline:hover {
+    color: var(--gold-light) !important;
+    border-color: var(--gold-light);
+}
+
+.btn-nav-gold {
+    color: var(--dark-chocolate) !important;
+    background-color: var(--gold-light);
+    padding: 8px 22px;
+    border: 1px solid var(--gold-light);
+    font-weight: 600;
+}
+
+.btn-nav-gold:hover {
+    background-color: #fff;
+    border-color: #fff;
 }
 
 /* ── HERO SECTION ── */
@@ -69,31 +100,13 @@ body, html {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, rgba(26,18,9,0.9), rgba(26,18,9,0.3));
+    background: linear-gradient(to right, rgba(26,18,9,0.95), rgba(26,18,9,0.3));
 }
 
 .hero-content-center {
     position: relative;
     z-index: 5;
     padding-left: 8%;
-}
-
-/* ── TYPOGRAPHY ── */
-.est-line {
-    font-size: 0.7rem;
-    letter-spacing: 4px;
-    color: var(--gold-light);
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.est-line span {
-    height: 1px;
-    width: 40px;
-    background: var(--gold);
-    opacity: 0.5;
 }
 
 .main-heading {
@@ -104,10 +117,8 @@ body, html {
 }
 
 .gold-italic {
-    font-family: "Monotype Corsiva", cursive; /* Branding consistency */
-    font-style: italic;
+    font-family: "Monotype Corsiva", cursive;
     color: var(--gold-light);
-    font-size: 1.1em;
 }
 
 .hero-subtitle {
@@ -116,10 +127,9 @@ body, html {
     color: rgba(255,255,255,0.6);
     max-width: 500px;
     margin: 30px 0 50px;
-    font-weight: 300;
 }
 
-/* ── BUTTONS ── */
+/* ── MAIN BUTTONS ── */
 .btn-main-gold {
     background: var(--gold-light);
     color: var(--dark-chocolate);
@@ -127,14 +137,6 @@ body, html {
     text-decoration: none;
     font-weight: 600;
     letter-spacing: 2px;
-    font-size: 0.75rem;
-    display: inline-block;
-    transition: 0.4s ease;
-}
-
-.btn-main-gold:hover {
-    background: #fff;
-    transform: translateY(-3px);
 }
 
 .btn-main-outline {
@@ -142,15 +144,5 @@ body, html {
     color: white;
     padding: 16px 35px;
     text-decoration: none;
-    letter-spacing: 2px;
-    font-size: 0.75rem;
     margin-left: 15px;
-    display: inline-block;
-    transition: 0.4s ease;
-}
-
-.btn-main-outline:hover {
-    border-color: var(--gold-light);
-    color: var(--gold-light);
-    background: rgba(229, 178, 125, 0.05);
 }

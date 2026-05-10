@@ -1,62 +1,75 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Begin Your Journey | Kik Plus</title>
-    <link rel="stylesheet" th:href="@{/static/style.css}">
-    <style>
-        :root {
-            --dusty-rose: #D4A5A5;
-            --sage-green: #A3B18A;
-            --cream: #F5F1E8;
-            --terracotta: #C07A58;
-        }
-        body { background-color: var(--cream); color: var(--terracotta); font-family: 'Poppins', sans-serif; }
-        .reg-card {
-            max-width: 450px; margin: 100px auto; padding: 40px;
-            background: white; border-radius: 20px;
-            box-shadow: 15px 15px 0px var(--sage-green);
-        }
-        input, select {
-            width: 100%; padding: 12px; margin: 10px 0;
-            border: 1px solid var(--sage-green); border-radius: 8px;
-        }
-        .submit-btn {
-            background: var(--dusty-rose); color: white; border: none;
-            padding: 15px; width: 100%; border-radius: 50px; font-weight: 600;
-            cursor: pointer; margin-top: 20px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" th:href="@{'/images/logo color.png'}">
+    <title>Registration | Vivaha Boutique</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<div class="reg-card">
-    <h2 style="font-family: 'Playfair Display'; text-align: center;">Join Kik Plus</h2>
-    <form th:action="@{/register}" th:object="${user}" method="post">
-        <input type="email" th:field="*{email}" placeholder="Email Address" required />
+<body class="split-layout">
 
-        <select th:field="*{role}" id="roleSelect" onchange="toggleCulture()">
-            <option value="Couple">We are a Couple</option>
-            <option value="Vendor">I am a Vendor</option>
-        </select>
-
-        <div id="cultureSection">
-            <p style="font-size: 0.9rem; color: var(--sage-green); margin-top: 10px;">Select Your Tradition</p>
-            <select th:field="*{style}">
-                <option value="Sinhalese">Sinhalese</option>
-                <option value="Hindu">Hindu</option>
-                <option value="Muslim">Muslim</option>
-                <option value="Christian">Christian</option>
-                <option value="Other">Other</option>
-            </select>
+<div class="split-container">
+    <div class="split-visual">
+        <div class="visual-overlay"></div>
+        <div class="visual-content">
+            <img th:src="@{'/images/logo color.png'}" alt="Vivaha Logo" class="floating-logo">
+            <h2 class="visual-brand">Vivaha</h2>
+            <p class="visual-tag">WHERE TRADITION MEETS LUXURY</p>
         </div>
+    </div>
 
-        <button type="submit" class="submit-btn">CREATE YOUR ACCOUNT</button>
-    </form>
+    <div class="split-form">
+        <div class="form-wrapper">
+            <div class="form-header">
+                <h3 class="editorial-title">Join the <em>Exhibition</em></h3>
+                <p class="form-instruction">Create your profile to access our curated collection of Sri Lankan vendors.</p>
+            </div>
+
+            <form th:action="@{/register}" th:object="${user}" method="post">
+                <div class="input-set">
+                    <label>EMAIL ADDRESS</label>
+                    <input type="email" th:field="*{email}" placeholder="your@email.com" required>
+                </div>
+
+                <div class="input-set">
+                    <label>I AM A...</label>
+                    <select th:field="*{role}" id="roleSelect" onchange="toggleTradition()">
+                        <option value="Couple">Couple Planning a Wedding</option>
+                        <option value="Vendor">Vendor Providing Services</option>
+                    </select>
+                </div>
+
+                <div id="traditionSection" class="input-set">
+                    <label>CULTURAL TRADITION</label>
+                    <select th:field="*{style}">
+                        <option value="Sinhalese">Sinhalese</option>
+                        <option value="Hindu">Hindu</option>
+                        <option value="Muslim">Muslim</option>
+                        <option value="Christian">Christian</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-editorial">RESERVE MY ACCOUNT</button>
+            </form>
+
+            <div class="form-footer">
+                <span>Already a member?</span>
+                <a href="/login" class="link-minimal">SIGN IN</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    function toggleCulture() {
+    function toggleTradition() {
         const role = document.getElementById("roleSelect").value;
-        document.getElementById("cultureSection").style.display = (role === 'Vendor') ? 'none' : 'block';
+        const section = document.getElementById("traditionSection");
+        section.style.opacity = (role === 'Vendor') ? '0' : '1';
+        section.style.pointerEvents = (role === 'Vendor') ? 'none' : 'auto';
     }
 </script>
 </body>

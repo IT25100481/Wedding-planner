@@ -11,14 +11,15 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: var(--dark-chocolate);
+    background-color: var(--dark-chocolate) !important; /* Force background */
     font-family: 'Montserrat', sans-serif;
+    color: white;
 }
 
-/* ── NAVBAR REFINED ── */
+/* ── NAVBAR ── */
 .navbar {
-    background: rgba(26, 18, 9, 0.95);
-    backdrop-filter: blur(10px);
+    background: rgba(26, 18, 9, 0.98) !important;
+    backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(192, 122, 88, 0.2);
     padding: 15px 0;
 }
@@ -27,80 +28,37 @@ body, html {
     display: flex;
     align-items: center;
     gap: 15px;
+    text-decoration: none !important;
 }
 
+/* ── GLOSSY LOGO FIX ── */
 .nav-logo {
     height: 50px;
     width: auto;
-    object-fit: contain;
+    filter: brightness(1.2) contrast(1.1) drop-shadow(0 0 10px rgba(229, 178, 125, 0.3));
 }
 
 .brand-text {
-    font-family: "Monotype Corsiva", "Apple Chancery", cursive, serif;
+    font-family: "Monotype Corsiva", cursive;
     font-size: 2.2rem;
     color: var(--gold-light);
-    letter-spacing: 1px;
-    font-weight: 400;
 }
 
 .nav-link {
-    color: rgba(255,255,255,0.7) !important;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-decoration: none !important;
-}
-
-.nav-link:hover {
-    color: var(--gold-light) !important;
-}
-
-/* ── NAVBAR BUTTONS (FIXED COLORS) ── */
-.btn-nav-outline, .btn-nav-gold {
+    color: rgba(255,255,255,0.8) !important;
     text-decoration: none !important;
     font-size: 0.75rem;
     letter-spacing: 2px;
-    transition: all 0.3s ease;
-}
-
-.btn-nav-outline {
-    color: white !important;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 8px 20px;
-}
-
-.btn-nav-outline:hover {
-    color: var(--gold-light) !important;
-    border-color: var(--gold-light);
-}
-
-.btn-nav-gold {
-    color: var(--dark-chocolate) !important;
-    background-color: var(--gold-light);
-    padding: 8px 22px;
-    border: 1px solid var(--gold-light);
-    font-weight: 600;
-}
-
-.btn-nav-gold:hover {
-    background-color: #fff;
-    border-color: #fff;
 }
 
 /* ── HERO SECTION ── */
 .hero-full {
     height: 100vh;
-    background: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600') center/cover no-repeat;
+    background: linear-gradient(rgba(26,18,9,0.8), rgba(26,18,9,0.5)),
+                url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600') center/cover no-repeat;
     display: flex;
     align-items: center;
     position: relative;
-    color: white;
-}
-
-.hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, rgba(26,18,9,0.95), rgba(26,18,9,0.3));
 }
 
 .hero-content-center {
@@ -111,9 +69,9 @@ body, html {
 
 .main-heading {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: white;
     line-height: 1.1;
-    font-weight: 300;
 }
 
 .gold-italic {
@@ -121,28 +79,18 @@ body, html {
     color: var(--gold-light);
 }
 
-.hero-subtitle {
-    font-size: 0.9rem;
-    line-height: 1.8;
-    color: rgba(255,255,255,0.6);
-    max-width: 500px;
-    margin: 30px 0 50px;
+/* ── BUTTONS ── */
+.btn-nav-outline {
+    color: white !important;
+    border: 1px solid white;
+    padding: 8px 20px;
+    text-decoration: none !important;
 }
 
-/* ── MAIN BUTTONS ── */
-.btn-main-gold {
+.btn-nav-gold {
     background: var(--gold-light);
-    color: var(--dark-chocolate);
-    padding: 16px 35px;
-    text-decoration: none;
+    color: var(--dark-chocolate) !important;
+    padding: 8px 20px;
+    text-decoration: none !important;
     font-weight: 600;
-    letter-spacing: 2px;
-}
-
-.btn-main-outline {
-    border: 1px solid rgba(255,255,255,0.4);
-    color: white;
-    padding: 16px 35px;
-    text-decoration: none;
-    margin-left: 15px;
 }

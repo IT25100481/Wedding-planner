@@ -1,64 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Kik Plus | The Art of Sri Lankan Weddings</title>
-    <link rel="stylesheet" th:href="@{/static/style.css}">
-    <!-- Sophisticated Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>KIK PLUS | Premium Weddings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<nav class="luxury-nav">
-    <div class="nav-container">
-        <span class="brand">KIK PLUS</span>
-        <div class="nav-links">
-            <a href="/login">EXHIBITIONS</a>
-            <a href="/register" class="nav-cta">RESERVE NOW</a>
+
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid px-5">
+        <a class="navbar-brand" href="#">✦ KIK PLUS</a>
+        <div class="collapse navbar-collapse justify-content-center">
+            <div class="navbar-nav gap-4">
+                <a class="nav-link" href="/">HOME</a>
+                <a class="nav-link" href="/vendors">VENDORS</a>
+                <a class="nav-link" href="/hotels">HOTELS</a>
+                <a class="nav-link" href="/gallery">GALLERY</a>
+                <a class="nav-link" href="/about">ABOUT</a>
+            </div>
+        </div>
+        <div class="d-flex gap-3">
+            <a href="/login" class="btn-nav-outline">LOGIN</a>
+            <a href="/register" class="btn-nav-gold">REGISTER</a>
         </div>
     </div>
 </nav>
 
-<main class="editorial-hero">
-    <div class="text-layer">
-        <h2 class="sub-heading">ESTABLISHED 2026</h2>
-        <h1 class="main-title">A Symphony of <br><em>Heritage & Luxury</em></h1>
-        <p class="manifesto">
-            Curating the most prestigious wedding experiences across the teardrop isle. From the golden sands of Bentota to the emerald hills of Kandy.
+<section class="hero-full">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content-center">
+        <div class="est-line">
+            <span></span> EST. 2026 &nbsp;•&nbsp; PREMIER WEDDING SERVICES <span></span>
+        </div>
+
+        <h1 class="main-heading">
+            Your Dream<br>
+            <span class="gold-italic">Wedding</span><br>
+            Begins Here
+        </h1>
+
+        <p class="hero-subtitle">
+            From intimate ceremonies to grand celebrations — curated vendors,
+            exquisite venues, and unforgettable memories crafted with love and elegance.
         </p>
-        <div class="action-row">
-            <a href="/register" class="btn-primary">BEGIN YOUR STORY</a>
-            <a href="#explore" class="btn-secondary">EXPLORE THE COLLECTION</a>
+
+        <div class="hero-btn-group">
+            <a href="/register" class="btn-main-gold">BEGIN PLANNING</a>
+            <a href="/gallery" class="btn-main-outline">VIEW GALLERY</a>
         </div>
     </div>
-
-    <div class="image-layer">
-        <div class="frame">
-            <img src="https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&q=80&w=1000" alt="Luxury Wedding">
-            <div class="overlay-tag">PRIVATE COLLECTION</div>
-        </div>
-    </div>
-</main>
-
-<section id="reserve-section" class="inquiry-container" style="padding: 100px 5%; background: #fff; text-align: center; font-family: 'Cormorant Garamond', serif;">
-    <h2 style="font-size: 3rem; margin-bottom: 10px;">Inquire for Your Grand Day</h2>
-    <p style="font-family: 'Montserrat', sans-serif; font-weight: 300; letter-spacing: 2px; margin-bottom: 50px;">LET US CURATE YOUR STORY</p>
-
-    <form th:action="@{/submit-inquiry}" method="post" style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
-        <input type="text" name="customerName" placeholder="FULL NAME" required
-               style="border: none; border-bottom: 1px solid #333; padding: 15px; font-family: 'Montserrat', sans-serif; outline: none;">
-
-        <input type="text" name="contactNo" placeholder="CONTACT NUMBER" required
-               style="border: none; border-bottom: 1px solid #333; padding: 15px; font-family: 'Montserrat', sans-serif; outline: none;">
-
-        <input type="date" name="weddingDate" required
-               style="border: none; border-bottom: 1px solid #333; padding: 15px; font-family: 'Montserrat', sans-serif; outline: none; color: #666;">
-
-        <textarea name="message" placeholder="TELL US YOUR VISION"
-                  style="border: none; border-bottom: 1px solid #333; padding: 15px; font-family: 'Montserrat', sans-serif; outline: none; min-height: 100px;"></textarea>
-
-        <button type="submit" class="btn-primary" style="margin-top: 30px; cursor: pointer; border: none; letter-spacing: 3px;">
-            SEND ENQUIRY
-        </button>
-    </form>
 </section>
+
 </body>
 </html>

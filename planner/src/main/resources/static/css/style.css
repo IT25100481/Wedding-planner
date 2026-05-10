@@ -1,9 +1,9 @@
 :root {
     --dusty-rose: #D4A5A5;
     --sage-green: #A3B18A;
-    --dark-chocolate: #1A1209; /* Matches the screenshot's dark tone */
-    --gold: #C07A58; /* Using your Terracotta as the Luxury Gold */
-    --gold-light: #E5B27D; /* Your Sand color */
+    --dark-chocolate: #1A1209;
+    --gold: #C07A58;
+    --gold-light: #E5B27D;
     --cream: #FDF8F2;
 }
 
@@ -15,28 +15,48 @@ body, html {
     font-family: 'Montserrat', sans-serif;
 }
 
-/* NAVBAR */
+/* ── NAVBAR REFINED ── */
 .navbar {
-    background: rgba(26, 18, 9, 0.9);
+    background: rgba(26, 18, 9, 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(192, 122, 88, 0.2);
-    padding: 20px 0;
+    padding: 15px 0; /* Reduced padding for a sleeker look */
 }
 
-.navbar-brand {
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--gold) !important;
-    letter-spacing: 4px;
-    font-weight: 600;
+/* Logo and Vivaha Text Container */
+.navbar-brand-vivaha {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none !important; /* Removes blue underline */
+}
+
+.nav-logo {
+    height: 50px; /* Professional size */
+    width: auto;
+    object-fit: contain;
+}
+
+.brand-text {
+    font-family: "Monotype Corsiva", "Apple Chancery", cursive, serif;
+    font-size: 2.2rem;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+    font-weight: 400;
 }
 
 .nav-link {
     color: rgba(255,255,255,0.7) !important;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
-/* HERO SECTION */
+.nav-link:hover {
+    color: var(--gold-light) !important;
+}
+
+/* ── HERO SECTION ── */
 .hero-full {
     height: 100vh;
     background: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600') center/cover no-repeat;
@@ -49,16 +69,16 @@ body, html {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, rgba(26,18,9,0.9), rgba(26,18,9,0.4));
+    background: linear-gradient(to right, rgba(26,18,9,0.9), rgba(26,18,9,0.3));
 }
 
 .hero-content-center {
     position: relative;
     z-index: 5;
-    padding-left: 5%;
+    padding-left: 8%;
 }
 
-/* TYPOGRAPHY */
+/* ── TYPOGRAPHY ── */
 .est-line {
     font-size: 0.7rem;
     letter-spacing: 4px;
@@ -78,49 +98,59 @@ body, html {
 
 .main-heading {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(4rem, 8vw, 6.5rem);
-    line-height: 1;
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    line-height: 1.1;
     font-weight: 300;
 }
 
 .gold-italic {
+    font-family: "Monotype Corsiva", cursive; /* Branding consistency */
     font-style: italic;
     color: var(--gold-light);
+    font-size: 1.1em;
 }
 
 .hero-subtitle {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.8;
     color: rgba(255,255,255,0.6);
     max-width: 500px;
     margin: 30px 0 50px;
+    font-weight: 300;
 }
 
-/* BUTTONS */
+/* ── BUTTONS ── */
 .btn-main-gold {
     background: var(--gold-light);
     color: var(--dark-chocolate);
-    padding: 18px 40px;
+    padding: 16px 35px;
     text-decoration: none;
     font-weight: 600;
     letter-spacing: 2px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     display: inline-block;
-    transition: 0.3s;
+    transition: 0.4s ease;
+}
+
+.btn-main-gold:hover {
+    background: #fff;
+    transform: translateY(-3px);
 }
 
 .btn-main-outline {
-    border: 1px solid rgba(255,255,255,0.3);
+    border: 1px solid rgba(255,255,255,0.4);
     color: white;
-    padding: 18px 40px;
+    padding: 16px 35px;
     text-decoration: none;
     letter-spacing: 2px;
-    font-size: 0.8rem;
-    margin-left: 20px;
-    transition: 0.3s;
+    font-size: 0.75rem;
+    margin-left: 15px;
+    display: inline-block;
+    transition: 0.4s ease;
 }
 
 .btn-main-outline:hover {
     border-color: var(--gold-light);
     color: var(--gold-light);
+    background: rgba(229, 178, 125, 0.05);
 }

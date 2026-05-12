@@ -1,9 +1,6 @@
 package com.wedding.planner.model;
 
-import java.io.Serializable;
-import java.util.Scanner;
-
-public class Service implements Serializable {
+public class Service {
     private String id;
     private String businessName;
     private String category;
@@ -12,59 +9,73 @@ public class Service implements Serializable {
     private String contact;
     private String price;
     private String imagePath;
-    private String status;
-    private String ownerEmail;
+    private String status; // PENDING, APPROVED, REJECTED
 
     public Service() {}
 
-    // Getters and Setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-    public String getBusinessName() { return businessName; }
-    public void setBusinessName(String businessName) { this.businessName = businessName; }
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
-    public String getTradition() { return tradition; }
-    public void setTradition(String tradition) { this.tradition = tradition; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    public String getContact() { return contact; }
-    public void setContact(String contact) { this.contact = contact; }
-    public String getPrice() { return price; }
-    public void setPrice(String price) { this.price = price; }
-    public String getImagePath() { return imagePath; }
-    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-    public String getOwnerEmail() { return ownerEmail; }
-    public void setOwnerEmail(String ownerEmail) { this.ownerEmail = ownerEmail; }
-
-    public static Service fromFileLine(String line) {
-        if (line == null || line.isEmpty()) return null;
-        try (Scanner sc = new Scanner(line).useDelimiter("\\|")) {
-            Service s = new Service();
-            if (sc.hasNext()) s.setId(sc.next());
-            if (sc.hasNext()) s.setBusinessName(sc.next());
-            if (sc.hasNext()) s.setCategory(sc.next());
-            if (sc.hasNext()) s.setTradition(sc.next());
-            if (sc.hasNext()) s.setDescription(sc.next());
-            if (sc.hasNext()) s.setContact(sc.next());
-            if (sc.hasNext()) s.setPrice(sc.next());
-            if (sc.hasNext()) s.setImagePath(sc.next());
-            if (sc.hasNext()) s.setStatus(sc.next());
-            if (sc.hasNext()) s.setOwnerEmail(sc.next());
-            return s;
-        } catch (Exception e) { return null; }
+    public Service(String id, String businessName, String category, String tradition,
+                   String description, String contact, String price) {
+        this.id = id;
+        this.businessName = businessName;
+        this.category = category;
+        this.tradition = tradition;
+        this.description = description;
+        this.contact = contact;
+        this.price = price;
+        this.status = "PENDING";
     }
 
+    // ── Getters & Setters ──
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+
+    public String getBusinessName() { return businessName; }
+    public void setBusinessName(String businessName) { this.businessName = businessName; }
+
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
+
+    public String getTradition() { return tradition; }
+    public void setTradition(String tradition) { this.tradition = tradition; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public String getContact() { return contact; }
+    public void setContact(String contact) { this.contact = contact; }
+
+    public String getPrice() { return price; }
+    public void setPrice(String price) { this.price = price; }
+
+    public String getImagePath() { return imagePath; }
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    // ── Convert to file line ──
     public String toFileLine() {
         return String.join("|",
-                (id != null ? id : ""), (businessName != null ? businessName : ""),
-                (category != null ? category : ""), (tradition != null ? tradition : ""),
-                (description != null ? description : ""), (contact != null ? contact : ""),
-                (price != null ? price : ""), (imagePath != null ? imagePath : "no-image.jpg"),
-                (status != null ? status : "APPROVED"),
-                (ownerEmail != null ? ownerEmail : "unknown")
-        );
+                id,
+                businessName,
+                category,
+                tradition,
+                description != null ? description.replace("|", ";") : "",
+                contact,
+                price,
+                imagePath != null ? imagePath : "",
+                status != null ? status : "PENDING");
+    }
+
+    // ── Create from file line ──
+    public static Service fromFileLine(String line) {
+        String[] parts = line.split("\\|", -1);
+        if (parts.length < 7) return null;
+        Service service = new Service(
+                parts[0], parts[1], parts[2], parts[3],
+                parts[4], parts[5], parts[6]);
+        if (parts.length > 7) service.setImagePath(parts[7]);
+        if (parts.length > 8) service.setStatus(parts[8]);
+        return service;
     }
 }

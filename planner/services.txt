@@ -1,12 +1,2 @@
-1|The Velvet Crumb|cake|Universal|Premium 3-tier fondant wedding cakes|0771112222|45000|cake1.jpg|APPROVED
-2|Aura Captures|photo|Universal|Cinematic wedding photography & drone|0773334444|125000|photo1.jpg|APPROVED
-3|Grand Ballroom|venue|Universal|Luxury 500-seat hotel reception hall|0775556666|550000|venue1.jpg|APPROVED
-4|Luxe Glam Studio|makeup|Universal|Professional bridal makeup and hair|0779998888|35000|makeup1.jpg|APPROVED
-5|Starlight Deco|deco|Universal|Modern LED and floral theme decor|0774441111|150000|deco1.jpg|APPROVED
-6|Golden Whisk|cake|Universal|Custom buttercream designs and flavors|0772223333|32000|cake2.jpg|APPROVED
-7|Pixel Perfect|photo|Universal|Candid photography and photobooth|0778887777|85000|photo2.jpg|APPROVED
-8|Garden Pavilion|venue|Universal|Outdoor garden wedding space|0771110000|250000|venue2.jpg|APPROVED
-9|Tamil Arasan Decor|deco|Hindu|Traditional Tamil flower and pillar decor|0772229999|185000|deco2.jpg|APPROVED
-10|Kandyan Heritage|deco|Sinhala|Full Poruwa ceremony setup and dancers|0773335555|95000|poruwa.jpg|APPROVED
-11|Bridal Glow|makeup|Universal|HD makeup for high-end photography|0771114444|28000|makeup2.jpg|APPROVED
-12|Mehendi by Shifa|makeup|Islamic|Intricate bridal mehendi artistry|0775556666|5000|makeup3.jpg|APPROVED
+5da29e68-c6b0-42f4-bdfc-1a730b15a63e,Royal photo,Venue,Sinhalese,,07786569865,30 0000,f2926654-80cb-4214-bb0c-38e4f0a7e6c3_81bU1rw43CL.jpg
+01858bc6-c452-4ba9-bf75-0439c1210d92,Royal photo,Other,Sinhalese,,07786569865,30 0000,777db284-266e-46d9-8acb-b61a8581ea14_81bU1rw43CL.jpg

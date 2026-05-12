@@ -1,2 +1,10 @@
-5da29e68-c6b0-42f4-bdfc-1a730b15a63e,Royal photo,Venue,Sinhalese,,07786569865,30 0000,f2926654-80cb-4214-bb0c-38e4f0a7e6c3_81bU1rw43CL.jpg
-01858bc6-c452-4ba9-bf75-0439c1210d92,Royal photo,Other,Sinhalese,,07786569865,30 0000,777db284-266e-46d9-8acb-b61a8581ea14_81bU1rw43CL.jpg
+1|The Velvet Crumb|Cake|Islamic|Custom luxury wedding cakes with premium fondant work|0771112222|45000|cake1.jpg|APPROVED
+2|Aura Captures|Photography|Modern|Cinematic wedding photography and drone coverage|0773334444|125000|photo1.jpg|APPROVED
+3|Grand Ballroom|Venue|Sinhala|Luxury hotel reception hall with traditional decor|0775556666|550000|venue1.jpg|APPROVED
+4|Elegant Blooms|Deco|Sinhala|Traditional Poruwa and floral set designs|0778889999|85000|deco1.jpg|APPROVED
+5|Luxe Glam|Makeup|Christian|High-end Western bridal makeup and hair styling|0771110000|35000|makeup1.jpg|APPROVED
+6|Royal Sets|Deco|Islamic|Grand stage designs and Nikah ceremony backdrops|0772223333|150000|deco2.jpg|APPROVED
+7|Magic Whisk|Cake|Christian|Elegant tiered cakes with fresh floral accents|0774445555|38000|cake2.jpg|APPROVED
+8|Radiant Brides|Makeup|Hindu|Traditional Tamil bridal makeup and jewelry styling|0776667777|42000|makeup2.jpg|APPROVED
+9|Temple View Hall|Venue|Hindu|Spacious venue suitable for traditional Hindu ceremonies|0779998888|300000|venue2.jpg|APPROVED
+10|Starlight Deco|Deco|Modern|Minimalist LED and crystal themed wedding decor|0771231234|200000|deco3.jpg|APPROVED

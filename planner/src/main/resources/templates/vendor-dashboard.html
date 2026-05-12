@@ -2,114 +2,167 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Vendor Dashboard | Kik Plus</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root { --dusty-rose: #D4A5A5; --cream: #F5F1E8; --dark-grey: #333; }
-        body { background-color: var(--cream); font-family: 'Montserrat', sans-serif; margin: 0; }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Dashboard | VIVAHA</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ── VIVAHA SHARED LUXURY VARIABLES ── */
+        :root {
+            --gold-light: #E5B27D;
+            --dark-chocolate: #1A1209;
+            --gold: #C07A58;
+            --white-alpha: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--dark-chocolate);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ── */
         .dashboard-nav {
-            background: #fff;
-            padding: 10px 5%;
+            background: rgba(26, 18, 9, 0.98);
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(229, 178, 125, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
-        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .brand-text { font-family: "Cormorant Garamond", serif; font-size: 2.2rem; color: var(--gold-light); letter-spacing: 2px; }
+
+        .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-links a {
             text-decoration: none;
-            color: var(--dark-grey);
-            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.75rem;
             font-weight: 500;
+            letter-spacing: 2px;
             transition: 0.3s;
+            text-transform: uppercase;
         }
-        .nav-links a:hover { color: var(--dusty-rose); }
-        .nav-links a.active { color: var(--dusty-rose); border-bottom: 2px solid var(--dusty-rose); }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+        .nav-links a.active { border-bottom: 1px solid var(--gold-light); padding-bottom: 5px; }
 
-        .profile-menu { position: relative; display: inline-block; }
-        .profile-icon {
-            font-size: 1.5rem;
-            color: var(--dark-grey);
-            cursor: pointer;
-            padding: 5px;
-            transition: 0.3s;
-        }
-        .profile-icon:hover { color: var(--dusty-rose); }
-
+        /* ── PROFILE MENU ── */
+        .profile-menu { position: relative; }
+        .profile-icon { font-size: 1.5rem; color: var(--gold-light); cursor: pointer; transition: 0.3s; }
         .dropdown-content {
             display: none;
             position: absolute;
             right: 0;
-            background-color: #fff;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            z-index: 1;
-            overflow: hidden;
+            background-color: var(--dark-chocolate);
+            min-width: 180px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.5);
+            border: 1px solid var(--gold-light);
+            z-index: 1001;
         }
         .dropdown-content a {
-            color: var(--dark-grey);
+            color: white;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
         }
-        .dropdown-content a:hover { background-color: #f8f8f8; color: var(--dusty-rose); }
+        .dropdown-content a:hover { background-color: var(--gold-light); color: var(--dark-chocolate); }
         .profile-menu:hover .dropdown-content { display: block; }
 
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; padding: 50px 5%; }
+        /* ── GRID & CARDS ── */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; padding: 50px 5%; }
+
         .service-card {
-            background-color: #FFE4E1;
-            background-size: cover;
-            background-position: center;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            transition: 0.3s;
+            background: #231A11;
+            border: 1px solid var(--white-alpha);
+            transition: 0.4s ease;
             position: relative;
-            min-height: 220px;
+            min-height: 350px;
             cursor: pointer;
             overflow: hidden;
         }
-        .card-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.6);
-            z-index: 1;
+        .service-card:hover { border-color: var(--gold-light); transform: translateY(-5px); }
+
+        .card-img-layer {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid var(--white-alpha);
+            position: relative;
         }
-        .card-content { position: relative; z-index: 2; padding: 20px; }
+        .card-overlay-luxury {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(35, 26, 17, 0.9), transparent);
+        }
+
+        .card-content { position: relative; padding: 25px; z-index: 2; }
+        .card-cat { font-size: 0.65rem; color: var(--gold-light); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin: 5px 0; font-weight: 300; }
+        .card-price { color: var(--gold-light); font-weight: 500; letter-spacing: 1px; margin-top: 15px; display: block; }
+
+        /* ── ADD CARD ── */
+        .add-card { border: 1px dashed var(--gold-light); background: transparent; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .add-card i { font-size: 3rem; color: var(--gold-light); margin-bottom: 10px; }
+
+        /* ── MODALS ── */
+        .modal-content { background: var(--dark-chocolate); border: 1px solid var(--gold-light); color: white; border-radius: 0; }
+        .modal-header { border-bottom: 1px solid var(--white-alpha); }
+        .form-group { margin-bottom: 20px; }
+        label { font-size: 0.65rem; color: var(--gold-light); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; display: block; }
+
+        input, select, textarea {
+            width: 100%;
+            background: transparent !important;
+            border: none !important;
+            border-bottom: 1px solid var(--white-alpha) !important;
+            color: white !important;
+            padding: 10px 0 !important;
+            font-size: 0.9rem;
+            border-radius: 0 !important;
+        }
+        input:focus, select:focus, textarea:focus { outline: none; border-bottom: 1px solid var(--gold-light) !important; }
+
+        .btn-luxury-gold {
+            background: var(--gold-light);
+            color: var(--dark-chocolate);
+            border: none;
+            padding: 15px;
+            width: 100%;
+            font-weight: 600;
+            letter-spacing: 2px;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+        .btn-luxury-gold:hover { background: white; }
 
         .drop-zone {
-            border: 2px dashed var(--dusty-rose);
-            padding: 20px;
+            border: 1px dashed var(--white-alpha);
+            padding: 30px;
             text-align: center;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             cursor: pointer;
-            background: #fff;
+            transition: 0.3s;
         }
-        .drop-zone--over { background: #fdf2f2; border-style: solid; }
-        #preview-img { max-width: 100%; height: 100px; display: none; margin-top: 10px; border-radius: 5px; }
-
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; overflow-y: auto; }
-        .modal-content { background: white; width: 90%; max-width: 450px; margin: 50px auto; padding: 30px; border-radius: 15px; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 0.8rem; margin-bottom: 5px; color: #777; font-weight: 600; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        .btn-primary { background: var(--dusty-rose); color: white; border: none; padding: 12px; width: 100%; border-radius: 50px; cursor: pointer; font-weight: 600; }
+        .drop-zone:hover { border-color: var(--gold-light); }
+        #preview-img { max-width: 100%; height: 120px; display: none; margin: 10px auto; border: 1px solid var(--gold-light); }
     </style>
 </head>
 <body>
 
 <nav class="dashboard-nav">
-    <span class="brand" style="font-family: 'Cormorant Garamond'; font-size: 1.8rem; font-weight: bold;">KIK PLUS</span>
+    <span class="brand-text">Vivaha</span>
 
-    <!-- ✅ FIXED: Correct links for Packages and Payments -->
     <div class="nav-links">
         <a href="/vendor/dashboard" class="active">SERVICES</a>
         <a href="/packages">PACKAGES</a>
@@ -123,108 +176,134 @@
             <i class="fa-regular fa-circle-user"></i>
         </div>
         <div class="dropdown-content">
-            <a href="/vendor/profile"><i class="fa-solid fa-user-pen me-2"></i> Edit Profile</a>
-            <a href="/" style="color: #c0392b;"><i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a>
+            <a href="/vendor/profile">EDIT PROFILE</a>
+            <a href="/" style="color: #c0392b;">LOGOUT</a>
         </div>
     </div>
 </nav>
 
 <div class="grid-container">
-    <!-- ADD SERVICE CARD -->
-    <div class="service-card" style="display: flex; align-items: center; justify-content: center; border: 2px dashed var(--dusty-rose); background: none;" onclick="openAddModal()">
-        <div style="text-align: center;">
-            <span style="font-size: 3rem; color: var(--dusty-rose);">+</span>
-            <p>Add New Service</p>
+    <div class="service-card add-card" onclick="openAddModal()">
+        <div>
+            <i class="bi bi-plus-lg"></i>
+            <p class="card-cat">Add New Service</p>
         </div>
     </div>
 
-    <!-- EXISTING SERVICES -->
     <div th:each="service : ${services}"
          class="service-card"
-         th:style="${service.imagePath != null} ? 'background-image: url(/uploads/' + ${service.imagePath} + ');' : ''"
-         th:onclick="openEditModal([[${service.id}]], [[${service.businessName}]], [[${service.category}]], [[${service.tradition}]], [[${service.price}]], [[${service.description}]], [[${service.contact}]])">
+         th:data-id="${service.id}"
+         th:data-name="${service.businessName}"
+         th:data-category="${service.category}"
+         th:data-tradition="${service.tradition}"
+         th:data-price="${service.price}"
+         th:data-description="${service.description}"
+         th:data-contact="${service.contact}"
+         onclick="openEditModalFromCard(this)">
 
-        <div th:if="${service.imagePath != null}" class="card-overlay"></div>
+        <div class="card-img-layer" th:style="${service.imagePath != null} ? 'background-image: url(/uploads/' + ${service.imagePath} + ');' : ''">
+            <div class="card-overlay-luxury"></div>
+        </div>
+
         <div class="card-content">
-            <h3 th:text="${service.businessName}" style="font-family: 'Cormorant Garamond'; margin: 0;"></h3>
-            <p style="font-size: 0.8rem; color: #555;">
-                <span th:text="${service.category}"></span> | <span th:text="${service.tradition}"></span>
-            </p>
-            <p th:text="${service.price + ' LKR'}" style="font-weight: bold; margin-top: 15px;"></p>
-            <a th:href="@{'/vendor/delete/' + ${service.id}}" style="color: #c0392b; font-size: 0.7rem; text-decoration: none; font-weight: bold;" onclick="event.stopPropagation(); return confirm('Delete this service?')">REMOVE</a>
+            <span class="card-cat" th:text="${service.category} + ' | ' + ${service.tradition}"></span>
+            <h3 class="card-title" th:text="${service.businessName}"></h3>
+            <span class="card-price" th:text="${service.price + ' LKR'}"></span>
+
+            <div class="mt-4">
+                <a th:href="@{'/vendor/delete/' + ${service.id}}"
+                   style="color: #c0392b; font-size: 0.65rem; letter-spacing: 1px; text-decoration: none; font-weight: 600;"
+                   onclick="event.stopPropagation(); return confirm('Remove this service from the exhibition?')">REMOVE</a>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- ADD MODAL -->
 <div id="addModal" class="modal">
     <div class="modal-content">
-        <h2 style="font-family: 'Cormorant Garamond'; text-align: center;">New Service</h2>
-        <form th:action="@{/vendor/add-service}" method="post" enctype="multipart/form-data">
-            <div class="drop-zone" id="dropZone">
-                <span id="drop-text">Drag Image Here or Click</span>
-                <input type="file" name="imageFile" id="fileInput" hidden accept="image/*">
-                <img id="preview-img" src="">
-            </div>
-            <div class="form-group"><input type="text" name="businessName" placeholder="Business Name" required></div>
-            <div class="form-group">
-                <select name="category" required>
-                    <option value="Photography">Photography</option>
-                    <option value="Cakes">Cakes</option>
-                    <option value="Venue">Venue</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <select name="tradition" required>
-                    <option value="Sinhalese">Sinhalese</option>
-                    <option value="Hindu">Hindu</option>
-                    <option value="Muslim">Muslim</option>
-                    <option value="Christian">Christian</option>
-                    <option value="Universal/Mixed">Universal/Mixed</option>
-                </select>
-            </div>
-            <div class="form-group"><input type="text" name="price" placeholder="Price (LKR)" required></div>
-            <div class="form-group"><input type="text" name="contact" placeholder="Contact Number" required></div>
-            <div class="form-group"><textarea name="description" placeholder="Description"></textarea></div>
-            <button type="submit" class="btn-primary">SAVE SERVICE</button>
-            <button type="button" onclick="closeAddModal()" style="width:100%; background:none; border:none; margin-top:10px; cursor:pointer;">Cancel</button>
-        </form>
+        <div class="p-4">
+            <h2 style="font-family: 'Cormorant Garamond'; text-align: center; font-weight: 300;">New Service</h2>
+            <form th:action="@{/vendor/add-service}" method="post" enctype="multipart/form-data">
+                <div class="drop-zone" id="dropZone">
+                    <span id="drop-text" class="card-cat">Drag Image or Click</span>
+                    <input type="file" name="imageFile" id="fileInput" hidden accept="image/*">
+                    <img id="preview-img" src="">
+                </div>
+                <div class="form-group"><label>Business Name</label><input type="text" name="businessName" required></div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select name="category" required>
+                                <option value="Photography">Photography</option>
+                                <option value="Cakes">Cakes</option>
+                                <option value="Venue">Venue</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Tradition</label>
+                            <select name="tradition" required>
+                                <option value="Sinhalese">Sinhalese</option>
+                                <option value="Hindu">Hindu</option>
+                                <option value="Muslim">Muslim</option>
+                                <option value="Christian">Christian</option>
+                                <option value="Universal/Mixed">Universal</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"><label>Price (LKR)</label><input type="text" name="price" required></div>
+                <div class="form-group"><label>Contact</label><input type="text" name="contact" required></div>
+                <div class="form-group"><label>Description</label><textarea name="description" rows="2"></textarea></div>
+                <button type="submit" class="btn-luxury-gold">Save Service</button>
+                <button type="button" onclick="closeAddModal()" style="background:none; border:none; color:white; font-size:0.7rem; width:100%; margin-top:15px; letter-spacing:1px;">CANCEL</button>
+            </form>
+        </div>
     </div>
 </div>
 
-<!-- EDIT MODAL -->
 <div id="editModal" class="modal">
     <div class="modal-content">
-        <h2 style="font-family: 'Cormorant Garamond'; text-align: center;">Edit Service</h2>
-        <form th:action="@{/vendor/update}" method="post">
-            <input type="hidden" name="id" id="edit-id">
-            <div class="form-group"><label>Business Name</label><input type="text" name="businessName" id="edit-name" required></div>
-            <div class="form-group">
-                <label>Category</label>
-                <select name="category" id="edit-category" required>
-                    <option value="Photography">Photography</option>
-                    <option value="Cakes">Cakes</option>
-                    <option value="Venue">Venue</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Tradition</label>
-                <select name="tradition" id="edit-tradition" required>
-                    <option value="Sinhalese">Sinhalese</option>
-                    <option value="Hindu">Hindu</option>
-                    <option value="Muslim">Muslim</option>
-                    <option value="Christian">Christian</option>
-                    <option value="Universal/Mixed">Universal/Mixed</option>
-                </select>
-            </div>
-            <div class="form-group"><label>Price (LKR)</label><input type="text" name="price" id="edit-price" required></div>
-            <div class="form-group"><label>Contact</label><input type="text" name="contact" id="edit-contact" required></div>
-            <div class="form-group"><label>Description</label><textarea name="description" id="edit-desc"></textarea></div>
-            <button type="submit" class="btn-primary">UPDATE CHANGES</button>
-            <button type="button" onclick="closeEditModal()" style="width:100%; background:none; border:none; margin-top:10px; cursor:pointer;">Close</button>
-        </form>
+        <div class="p-4">
+            <h2 style="font-family: 'Cormorant Garamond'; text-align: center; font-weight: 300;">Edit Service</h2>
+            <form th:action="@{/vendor/update}" method="post">
+                <input type="hidden" name="id" id="edit-id">
+                <div class="form-group"><label>Business Name</label><input type="text" name="businessName" id="edit-name" required></div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select name="category" id="edit-category" required>
+                                <option value="Photography">Photography</option>
+                                <option value="Cakes">Cakes</option>
+                                <option value="Venue">Venue</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Tradition</label>
+                            <select name="tradition" id="edit-tradition" required>
+                                <option value="Sinhalese">Sinhalese</option>
+                                <option value="Hindu">Hindu</option>
+                                <option value="Muslim">Muslim</option>
+                                <option value="Christian">Christian</option>
+                                <option value="Universal/Mixed">Universal</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"><label>Price (LKR)</label><input type="text" name="price" id="edit-price" required></div>
+                <div class="form-group"><label>Contact</label><input type="text" name="contact" id="edit-contact" required></div>
+                <div class="form-group"><label>Description</label><textarea name="description" id="edit-desc"></textarea></div>
+                <button type="submit" class="btn-luxury-gold">Update Changes</button>
+                <button type="button" onclick="closeEditModal()" style="background:none; border:none; color:white; font-size:0.7rem; width:100%; margin-top:15px; letter-spacing:1px;">CANCEL</button>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -257,10 +336,10 @@
         dropZone.classList.remove("drop-zone--over");
         if (e.dataTransfer.files.length) {
             fileInput.files = e.dataTransfer.files;
-            showPreview(e.dataTransfer.files[0]);
+            showPreview(e.dataTransfer.files);
         }
     };
-    fileInput.onchange = () => { if(fileInput.files.length) showPreview(fileInput.files[0]); };
+    fileInput.onchange = () => { if(fileInput.files.length) showPreview(fileInput.files); };
 
     function showPreview(file) {
         const reader = new FileReader();
@@ -270,18 +349,6 @@
             dropText.style.display = "none";
         };
         reader.readAsDataURL(file);
-    }
-
-    window.onclick = function(event) {
-        if (!event.target.matches('.fa-circle-user') && !event.target.matches('.profile-icon')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            for (var i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.style.display === "block") {
-                    openDropdown.style.display = "none";
-                }
-            }
-        }
     }
 </script>
 </body>

@@ -28,14 +28,25 @@ public class VendorController {
                              @RequestParam(value = "otherCategory", required = false) String otherCategory,
                              @RequestParam("imageFile") MultipartFile file) {
         try {
-            // Logic for 'Other' category
+            // Handle 'Other' category selection
             if ("Other".equalsIgnoreCase(service.getCategory()) && otherCategory != null && !otherCategory.isEmpty()) {
                 service.setCategory(otherCategory);
             }
 
+            // NORMALIZATION: Convert to lowercase to match JavaScript filters
+            if (service.getCategory() != null) {
+                service.setCategory(service.getCategory().toLowerCase().trim());
+            }
+            if (service.getTradition() != null) {
+                service.setTradition(service.getTradition().toLowerCase().trim());
+            }
+
+            // Generate unique ID
             service.setId(UUID.randomUUID().toString());
 
-            // Image handling
+            // Set status to APPROVED so it shows on the customer page instantly
+            service.setStatus("APPROVED");
+
             String fileName = "no-image.jpg";
             if (!file.isEmpty()) {
                 fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
@@ -49,7 +60,7 @@ public class VendorController {
             service.setImagePath(fileName);
             saveServiceToFile(service);
 
-            return "redirect:/vendor/dashboard";
+            return "redirect:/vendor/dashboard?success";
         } catch (IOException e) {
             e.printStackTrace();
             return "redirect:/vendor/dashboard?error";
@@ -69,7 +80,18 @@ public class VendorController {
         List<Service> services = getAllServices();
         for (int i = 0; i < services.size(); i++) {
             if (services.get(i).getId().equals(updatedService.getId())) {
+                // Preserve existing image and status if not modified
                 updatedService.setImagePath(services.get(i).getImagePath());
+                updatedService.setStatus(services.get(i).getStatus());
+
+                // Maintain lowercase normalization on update
+                if (updatedService.getCategory() != null) {
+                    updatedService.setCategory(updatedService.getCategory().toLowerCase().trim());
+                }
+                if (updatedService.getTradition() != null) {
+                    updatedService.setTradition(updatedService.getTradition().toLowerCase().trim());
+                }
+
                 services.set(i, updatedService);
                 break;
             }
@@ -86,12 +108,8 @@ public class VendorController {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 7) {
-                    Service s = new Service(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6]);
-                    if (parts.length == 8) {
-                        s.setImagePath(parts[7]);
-                    }
+                Service s = Service.fromFileLine(line);
+                if (s != null) {
                     services.add(s);
                 }
             }
@@ -105,9 +123,7 @@ public class VendorController {
         try (FileWriter fw = new FileWriter(FILE_PATH, true);
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
-            out.println(s.getId() + "," + s.getBusinessName() + "," + s.getCategory() + "," +
-                    s.getTradition() + "," + s.getDescription() + "," + s.getContact() + "," +
-                    s.getPrice() + "," + s.getImagePath());
+            out.println(formatServiceLine(s));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -116,12 +132,24 @@ public class VendorController {
     private void rewriteFile(List<Service> services) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(FILE_PATH))) {
             for (Service s : services) {
-                pw.println(s.getId() + "," + s.getBusinessName() + "," + s.getCategory() + "," +
-                        s.getTradition() + "," + s.getDescription() + "," + s.getContact() + "," +
-                        s.getPrice() + "," + (s.getImagePath() != null ? s.getImagePath() : ""));
+                pw.println(formatServiceLine(s));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String formatServiceLine(Service s) {
+        return String.join("|",
+                (s.getId() != null ? s.getId() : ""),
+                (s.getBusinessName() != null ? s.getBusinessName() : ""),
+                (s.getCategory() != null ? s.getCategory() : ""),
+                (s.getTradition() != null ? s.getTradition() : ""),
+                (s.getDescription() != null ? s.getDescription() : ""),
+                (s.getContact() != null ? s.getContact() : ""),
+                (s.getPrice() != null ? s.getPrice() : ""),
+                (s.getImagePath() != null ? s.getImagePath() : "no-image.jpg"),
+                (s.getStatus() != null ? s.getStatus() : "APPROVED")
+        );
     }
 }

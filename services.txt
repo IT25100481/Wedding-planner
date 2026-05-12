@@ -1,4 +1,3 @@
-1|Velvet Crème Patisserie|cake|universal|Luxury floral wedding cakes with elegant handcrafted detailing.|+94 77 234 5678|85000|vendor_1.jpg|APPROVED
 2|Moonlit Sugar Studio|cake|universal|Modern fondant and buttercream cakes for grand wedding receptions.|+94 71 445 6677|72000|vendor_2.jpg|APPROVED
 3|Ivory Bloom Cakes|cake|universal|Premium custom cakes with unique flavors and artistic finishes.|+94 76 889 3344|110000|vendor_3.jpg|APPROVED
 4|Rosé Whisk Atelier|cake|universal|Chic and affordable wedding cakes for intimate celebrations.|+94 70 998 2211|48000|vendor_4.jpg|APPROVED
@@ -37,4 +36,4 @@
 37|Velvet Aura Events|deco|modern|Elegant minimalist wedding décor with luxury floral styling.|+94 77 661 2244|850000|modern_decor.jpg|APPROVED
 38|Neon Vows Entertainment|effects|modern|LED dance floors, cold sparks, and luxury reception lighting.|+94 71 882 5500|390000|modern_effects.jpg|APPROVED
 39|Azure Knot Weddings|planning|modern|Premium beach and luxury resort destination wedding planning.|+94 76 445 1188|1200000|modern_destination.jpg|APPROVED
-40|Modern EverAfter Studio|photo|modern|Trendy cinematic wedding films with drone and social media reels.|+94 70 993 4411|690000|modern_photo.jpg|APPROVED
+40|Modern EverAfter Studio|photo|modern|Trendy cinematic wedding films with drone and social media reels.|+94 70 993 4411|690000|modern_photo.jpg|APPROVED467e1097-7066-4cc3-ae55-8c41a74b3bfb

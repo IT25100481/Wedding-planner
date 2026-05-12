@@ -9,136 +9,73 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { --gold-light: #E5B27D; --dark-chocolate: #1A1209; --white-alpha: rgba(255, 255, 255, 0.1); }
-        body { background-color: var(--dark-chocolate); color: white; font-family: 'Montserrat', sans-serif; margin: 0; overflow-x: hidden; }
-        .navbar { background: rgba(26, 18, 9, 0.98); border-bottom: 1px solid var(--white-alpha); padding: 15px 5%; }
+        body { background-color: var(--dark-chocolate); color: white; font-family: 'Montserrat', sans-serif; }
         .brand-text { font-family: "Cormorant Garamond", serif; font-size: 2.2rem; color: var(--gold-light); letter-spacing: 2px; }
         .filter-bar { background: #231A11; padding: 12px 5%; border-bottom: 1px solid var(--white-alpha); display: flex; justify-content: space-between; align-items: center; }
-        .style-dropdown { background: transparent; color: var(--gold-light); border: 1px solid var(--gold-light); padding: 6px 15px; font-size: 0.75rem; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; }
-        .section-title { font-family: 'Cormorant Garamond', serif; font-size: 3rem; text-align: center; margin: 60px 0 30px 0; font-weight: 300; }
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 35px; padding: 20px 5% 50px 5%; }
-        .luxury-card { background: #231A11; border: 1px solid var(--white-alpha); transition: 0.5s; min-height: 380px; position: relative; }
+        .luxury-card { background: #231A11; border: 1px solid var(--white-alpha); transition: 0.5s; position: relative; cursor: pointer; }
         .luxury-card:hover { border-color: var(--gold-light); transform: translateY(-8px); }
-        .card-image-header { height: 240px; background-size: cover; background-position: center; border-bottom: 1px solid var(--white-alpha); }
-        .card-body-content { padding: 30px; }
-        .btn-luxury-gold { background: var(--gold-light); color: var(--dark-chocolate); border: none; padding: 14px 25px; font-weight: 600; letter-spacing: 2px; font-size: 0.75rem; text-transform: uppercase; width: 100%; cursor: pointer; transition: 0.3s; }
-        .btn-luxury-gold:disabled { background: #555 !important; color: #888 !important; cursor: not-allowed; }
-        .card-name-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin: 10px 0; font-weight: 300; }
-        .modal-content { background: var(--dark-chocolate); border: 1px solid var(--gold-light); color: white; border-radius: 0; padding: 40px; }
+        .section-title { font-family: 'Cormorant Garamond', serif; font-size: 3rem; text-align: center; margin: 60px 0 30px; font-weight: 300; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 35px; padding: 20px 5%; }
+        .btn-luxury-gold { background: var(--gold-light); color: var(--dark-chocolate); border: none; padding: 14px; font-weight: 600; text-transform: uppercase; width: 100%; }
         .hidden { display: none !important; }
-        .floating-bucket { position: fixed; bottom: 30px; right: 30px; background: var(--gold-light); color: var(--dark-chocolate); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 1000; }
-        .bucket-count { position: absolute; top: 0; right: 0; background: white; color: black; border-radius: 50%; width: 25px; height: 25px; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .card-image-header { height: 240px; background-size: cover; background-position: center; border-bottom: 1px solid var(--white-alpha); }
+        .floating-bucket { position: fixed; bottom: 30px; right: 30px; background: var(--gold-light); color: var(--dark-chocolate); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; z-index: 1000; }
+        .details-panel { display: none; background: #1f160d; padding: 20px; }
     </style>
 </head>
-
 <body>
 
-<!-- Notification Toast -->
-<div id="notification-bar" class="hidden" style="position: fixed; top: 20px; right: 20px; background: #E5B27D; color: #1A1209; padding: 15px 25px; z-index: 9999; font-weight: 600; border-radius: 2px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); border-left: 5px solid #1A1209;">
-    <i class="bi bi-bell-fill me-2"></i> <span id="notif-msg"></span>
-</div>
-
-<nav class="navbar navbar-expand-lg sticky-top">
-    <div class="container-fluid">
-        <a href="/" class="brand-text text-decoration-none">Vivaha</a>
-        <a href="/" class="btn btn-outline-light btn-sm px-4 rounded-0">RETURN HOME</a>
-    </div>
+<nav class="navbar p-3 border-bottom border-secondary">
+    <div class="container-fluid"><a href="/" class="brand-text text-decoration-none">Vivaha</a></div>
 </nav>
 
 <div class="filter-bar">
-    <span class="small text-uppercase" style="color: var(--gold-light); letter-spacing: 2px; font-weight: 600;">
-        ACTIVE PREFERENCE: <span th:text="${selectedStyle}">MIXED</span>
-    </span>
+    <span class="small text-uppercase" style="color: var(--gold-light);">WEDDING TRADITION FILTER</span>
     <form action="/vendors" method="get">
-        <select name="style" onchange="this.form.submit()" class="style-dropdown">
-            <option value="" disabled selected>CHANGE TRADITION</option>
-            <option value="Sinhala">Sinhala Traditional</option>
-            <option value="Hindu">Hindu / Tamil Style</option>
-            <option value="Islamic">Islamic Style</option>
-            <option value="Christian">Christian Style</option>
-            <option value="Modern">Modern Elegant Style</option>
-            <option value="Mixed">Mixed (Show All)</option>
+        <select name="style" onchange="this.form.submit()" style="background:transparent; color:var(--gold-light); border:1px solid var(--gold-light);">
+            <option value="Mixed">ALL STYLES</option>
+            <option value="Sinhalese">SINHALESE</option>
+            <option value="Hindu">HINDU</option>
+            <option value="Muslim">MUSLIM</option>
+            <option value="Christian">CHRISTIAN</option>
         </select>
     </form>
 </div>
 
-<div class="modal fade" id="styleModal" data-bs-backdrop="static" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content text-center">
-            <h1 style="font-family: 'Cormorant Garamond', serif; color: var(--gold-light); font-size: 3rem; font-weight: 300;">Tailor Your Journey</h1>
-            <p class="small text-white-50 mb-5">SELECT YOUR WEDDING STYLE PREFERENCE</p>
-            <form action="/vendors" method="get">
-                <select name="style" class="form-select bg-transparent text-white border-secondary mb-4 p-3 rounded-0" required>
-                    <option value="" disabled selected style="background: #1A1209;">SELECT TRADITION...</option>
-                    <option value="Sinhala" style="background: #1A1209;">Sinhala Traditional Style</option>
-                    <option value="Hindu" style="background: #1A1209;">Hindu / Tamil Style</option>
-                    <option value="Islamic" style="background: #1A1209;">Islamic Style</option>
-                    <option value="Christian" style="background: #1A1209;">Christian Style</option>
-                    <option value="Modern" style="background: #1A1209;">Modern Elegant Style</option>
-                    <option value="Mixed" style="background: #1A1209;">Mixed Wedding Style</option>
-                </select>
-                <button type="submit" class="btn-luxury-gold">EXPLORE VENDORS</button>
-            </form>
-        </div>
-    </div>
-</div>
-
 <h2 class="section-title">The <span style="color: var(--gold-light)">Essentials</span></h2>
 <div class="grid-container">
-    <div class="luxury-card shadow-lg text-center p-4" onclick="filterCategory('cake', true)">
-        <h3 class="card-name-title">CAKES</h3>
-        <button class="btn-luxury-gold mt-4">EXPLORE</button>
-    </div>
-    <div class="luxury-card shadow-lg text-center p-4" onclick="filterCategory('photo', true)">
-        <h3 class="card-name-title">PHOTOGRAPHY</h3>
-        <button class="btn-luxury-gold mt-4">EXPLORE</button>
-    </div>
-    <div class="luxury-card shadow-lg text-center p-4" onclick="filterCategory('venue', true)">
-        <h3 class="card-name-title">VENUES</h3>
-        <button class="btn-luxury-gold mt-4">EXPLORE</button>
-    </div>
-    <div class="luxury-card shadow-lg text-center p-4" onclick="filterCategory('makeup', true)">
-        <h3 class="card-name-title">MAKEUP</h3>
-        <button class="btn-luxury-gold mt-4">EXPLORE</button>
-    </div>
-    <div class="luxury-card shadow-lg text-center p-4" onclick="filterCategory('deco', true)">
-        <h3 class="card-name-title">DECORATIONS</h3>
-        <button class="btn-luxury-gold mt-4">EXPLORE</button>
-    </div>
+    <div class="luxury-card p-4 text-center" onclick="filterCategory('Cakes')"><h3 style="font-family: 'Cormorant Garamond';">CAKES</h3><button class="btn-luxury-gold mt-3">VIEW</button></div>
+    <div class="luxury-card p-4 text-center" onclick="filterCategory('Photography')"><h3 style="font-family: 'Cormorant Garamond';">PHOTOGRAPHY</h3><button class="btn-luxury-gold mt-3">VIEW</button></div>
+    <div class="luxury-card p-4 text-center" onclick="filterCategory('Venue')"><h3 style="font-family: 'Cormorant Garamond';">VENUES</h3><button class="btn-luxury-gold mt-3">VIEW</button></div>
 </div>
 
-<h2 class="section-title">Traditional <span style="color: var(--gold-light)">Preferences</span></h2>
-<div class="grid-container" id="tradition-specific-grid"></div>
-
 <div id="vendor-section" class="hidden">
-    <h2 class="section-title">Premium <span id="cat-label" style="color: var(--gold-light)">Selection</span></h2>
+    <h2 class="section-title">Available <span id="cat-label" style="color: var(--gold-light)">Selection</span></h2>
     <div class="grid-container" id="vendor-grid">
-        <div th:each="v : ${allVendors}" class="luxury-card shadow-lg vendor-item"
+        <div th:each="v : ${allVendors}" class="luxury-card vendor-item"
              th:data-category="${v.category}"
              th:data-tradition="${v.tradition}">
-            <div th:id="'front-' + ${v.id}">
-                <div class="card-image-header" th:style="|background-image: url(/uploads/${v.imagePath});|"></div>
-                <div class="card-body-content">
-                    <h3 class="card-name-title text-white" th:text="${v.businessName}">NAME</h3>
-                    <p class="small text-white-50" th:text="${v.price + ' LKR'}"></p>
-                    <div class="d-grid gap-2 mt-4">
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-outline-light w-100 rounded-0 btn-sm py-2" th:data-id="${v.id}" onclick="toggleDetails(this.getAttribute('data-id'))">DETAILS</button>
-                            <button class="btn-luxury-gold w-100 py-2 bucket-btn"
-                                    th:data-id="${v.id}" th:data-name="${v.businessName}" th:data-price="${v.price}"
-                                    onclick="handleBooking(this)">+ BUCKET</button>
-                        </div>
-                        <button class="btn btn-outline-info w-100 rounded-0 btn-sm py-2"
-                                style="border-color: #E5B27D; color: #E5B27D;"
-                                th:data-vendor-id="${v.id}"
-                                onclick="handleInquiry(this.getAttribute('data-vendor-id'))">
-                            MAKE AN INQUIRY
-                        </button>
-                    </div>
+            <div class="card-image-header" th:style="'background-image: url(/uploads/' + ${v.imagePath} + ');'"></div>
+            <div class="p-4">
+                <h3 th:text="${v.businessName}" style="font-family: 'Cormorant Garamond'; font-size: 1.8rem;"></h3>
+                <p class="small text-white-50" th:text="${v.price + ' LKR'}"></p>
+                <div class="d-flex gap-2">
+                    <!-- FIX: use data-id + read via getAttribute instead of th:onclick with string -->
+                    <button class="btn btn-outline-light w-100 rounded-0"
+                            th:data-id="${v.id}"
+                            onclick="toggleDetails(this.getAttribute('data-id'))">DETAILS</button>
+                    <button class="btn-luxury-gold w-100"
+                            th:data-id="${v.id}"
+                            th:data-name="${v.businessName}"
+                            th:data-price="${v.price}"
+                            onclick="handleBooking(this)">+ BUCKET</button>
                 </div>
+                <button class="btn btn-outline-warning w-100 mt-2 rounded-0 small"
+                        th:data-vendor-id="${v.id}"
+                        onclick="handleInquiry(this.getAttribute('data-vendor-id'))">INQUIRY</button>
             </div>
-            <div th:id="'back-' + ${v.id}" class="card-body-content" style="display: none; background: #1f160d; min-height: 400px;">
-                <button class="btn btn-link text-gold p-0 mb-4 text-decoration-none small" th:data-id="${v.id}" onclick="toggleDetails(this.getAttribute('data-id'))">BACK</button>
-                <h2 class="card-name-title" style="color: var(--gold-light);" th:text="${v.businessName}"></h2>
+            <!-- Details panel toggled by toggleDetails() -->
+            <div th:id="'details-' + ${v.id}" class="details-panel">
                 <p class="small text-white-50" th:text="${v.description}"></p>
                 <p class="small"><i class="bi bi-telephone"></i> <span th:text="${v.contact}"></span></p>
             </div>
@@ -146,152 +83,52 @@
     </div>
 </div>
 
-<div class="floating-bucket" onclick="openBucket()"><i class="bi bi-bag-heart"></i><span class="bucket-count" id="bucket-count">0</span></div>
-
-<div class="modal fade" id="bucketModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-4">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="card-name-title" style="color: var(--gold-light)">My Bucket List</h2>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div id="bucket-items" class="mb-4"></div>
-            <hr style="border-color: var(--white-alpha)">
-            <div class="d-flex justify-content-between mb-4">
-                <h5 class="Montserrat">Total Amount:</h5>
-                <h5 class="text-gold" id="bucket-total">0 LKR</h5>
-            </div>
-            <button class="btn-luxury-gold" onclick="window.location.href='/payment'">BOOK NOW</button>
-        </div>
-    </div>
+<div class="floating-bucket" onclick="openBucket()">
+    <i class="bi bi-bag-heart"></i>
+    <span id="bucket-count" class="badge bg-white text-dark rounded-circle" style="position:absolute; top:5px; right:5px;">0</span>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     let bucket = JSON.parse(sessionStorage.getItem('vivaha_bucket')) || [];
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (!urlParams.has('style')) {
-            new bootstrap.Modal(document.getElementById('styleModal')).show();
-        } else {
-            loadTraditionalSection();
-        }
-        updateBucketUI();
-    });
-
-    function loadTraditionalSection() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const selectedStyle = (urlParams.get('style') || 'Mixed').trim().toLowerCase();
-        const targetGrid = document.getElementById('tradition-specific-grid');
-        const items = document.querySelectorAll('.vendor-item');
-
-        targetGrid.innerHTML = '';
-        items.forEach(item => {
-            const trad = (item.getAttribute('data-tradition') || "").trim().toLowerCase();
-            if (selectedStyle === 'mixed' ? trad !== "universal" : trad === selectedStyle) {
-                const clone = item.cloneNode(true);
-                clone.classList.remove('vendor-item');
-                targetGrid.appendChild(clone);
-            }
-        });
-    }
-
-    function filterCategory(cat, isEssential) {
-        const section = document.getElementById('vendor-section');
-        section.classList.remove('hidden');
+    function filterCategory(cat) {
+        document.getElementById('vendor-section').classList.remove('hidden');
         document.getElementById('cat-label').innerText = cat.toUpperCase();
-
         const items = document.querySelectorAll('.vendor-item');
         items.forEach(item => {
-            const itemCat = (item.getAttribute('data-category') || "").trim().toLowerCase();
-            const itemTrad = (item.getAttribute('data-tradition') || "").trim().toLowerCase();
-            const targetCat = cat.trim().toLowerCase();
-
-            if (isEssential) {
-                if (itemCat === targetCat && itemTrad === "universal") {
-                    item.classList.remove('hidden');
-                } else {
-                    item.classList.add('hidden');
-                }
+            if (item.getAttribute('data-category').toLowerCase() === cat.toLowerCase()) {
+                item.classList.remove('hidden');
+            } else {
+                item.classList.add('hidden');
             }
         });
-        section.scrollIntoView({ behavior: 'smooth' });
+        window.scrollTo({ top: document.getElementById('vendor-section').offsetTop - 100, behavior: 'smooth' });
     }
 
-    function showNotification(message) {
-        const bar = document.getElementById('notification-bar');
-        document.getElementById('notif-msg').innerText = message;
-        bar.classList.remove('hidden');
-        setTimeout(() => { bar.classList.add('hidden'); }, 3000);
-    }
-
-    function addToBucket(btn) {
-        const id = btn.getAttribute('data-id');
-        const name = btn.getAttribute('data-name');
-        const price = parseFloat(btn.getAttribute('data-price'));
-        if (!bucket.find(i => i.id === id)) {
-            bucket.push({ id, name, price });
-            sessionStorage.setItem('vivaha_bucket', JSON.stringify(bucket));
-            updateBucketUI();
+    function toggleDetails(id) {
+        const panel = document.getElementById('details-' + id);
+        if (panel) {
+            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
         }
     }
 
     function handleBooking(btn) {
-        addToBucket(btn);
-        showNotification("Vendor notified! Added to your bucket.");
+        const id = btn.getAttribute('data-id');
+        if (!bucket.find(i => i.id === id)) {
+            bucket.push({ id, name: btn.getAttribute('data-name'), price: parseFloat(btn.getAttribute('data-price')) });
+            sessionStorage.setItem('vivaha_bucket', JSON.stringify(bucket));
+            document.getElementById('bucket-count').innerText = bucket.length;
+            alert("Added to bucket!");
+        }
     }
 
     function handleInquiry(vendorId) {
-        showNotification("Opening Inquiry form...");
-        setTimeout(() => {
-            window.location.href = '/inquiry?vendorId=' + vendorId;
-        }, 800);
-    }
-
-    function updateBucketUI() {
-        document.getElementById('bucket-count').innerText = bucket.length;
-        document.querySelectorAll('.bucket-btn').forEach(btn => {
-            const id = btn.getAttribute('data-id');
-            if (bucket.find(i => i.id === id)) {
-                btn.innerText = "SELECTED";
-                btn.disabled = true;
-            } else {
-                btn.innerText = "+ BUCKET";
-                btn.disabled = false;
-            }
-        });
+        window.location.href = '/inquiry?vendorId=' + vendorId;
     }
 
     function openBucket() {
-        const list = document.getElementById('bucket-items');
-        list.innerHTML = bucket.length === 0 ? '<p class="text-white-50">Your bucket is empty.</p>' : '';
-        let total = 0;
-        bucket.forEach((item, index) => {
-            total += item.price;
-            list.innerHTML += `<div class="d-flex justify-content-between align-items-center mb-3">
-                <div><h6 class="mb-0">${item.name}</h6><small class="text-white-50">${item.price} LKR</small></div>
-                <button class="btn btn-sm btn-outline-danger border-0" onclick="removeFromBucket(${index})"><i class="bi bi-trash"></i></button>
-            </div>`;
-        });
-        document.getElementById('bucket-total').innerText = total + " LKR";
-        new bootstrap.Modal(document.getElementById('bucketModal')).show();
-    }
-
-    function removeFromBucket(index) {
-        bucket.splice(index, 1);
-        sessionStorage.setItem('vivaha_bucket', JSON.stringify(bucket));
-        updateBucketUI();
-        openBucket();
-    }
-
-    function toggleDetails(id) {
-        const f = document.getElementById('front-' + id);
-        const b = document.getElementById('back-' + id);
-        if(f && b) {
-            f.style.display = (f.style.display === 'none') ? 'block' : 'none';
-            b.style.display = (b.style.display === 'none') ? 'block' : 'none';
-        }
+        let msg = bucket.length === 0 ? 'Your bucket is empty.' : bucket.map(i => i.name + ' - ' + i.price + ' LKR').join('\n');
+        alert('My Bucket:\n' + msg);
     }
 </script>
 </body>

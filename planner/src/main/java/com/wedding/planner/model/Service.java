@@ -13,6 +13,7 @@ public class Service implements Serializable {
     private String price;
     private String imagePath;
     private String status;
+    private String ownerEmail;
 
     public Service() {}
 
@@ -35,8 +36,9 @@ public class Service implements Serializable {
     public void setImagePath(String imagePath) { this.imagePath = imagePath; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    public String getOwnerEmail() { return ownerEmail; }
+    public void setOwnerEmail(String ownerEmail) { this.ownerEmail = ownerEmail; }
 
-    // Static helper to read from file
     public static Service fromFileLine(String line) {
         if (line == null || line.isEmpty()) return null;
         try (Scanner sc = new Scanner(line).useDelimiter("\\|")) {
@@ -50,18 +52,19 @@ public class Service implements Serializable {
             if (sc.hasNext()) s.setPrice(sc.next());
             if (sc.hasNext()) s.setImagePath(sc.next());
             if (sc.hasNext()) s.setStatus(sc.next());
+            if (sc.hasNext()) s.setOwnerEmail(sc.next());
             return s;
         } catch (Exception e) { return null; }
     }
 
-    // NEW: Method used by VendorService to rewrite the file
     public String toFileLine() {
         return String.join("|",
                 (id != null ? id : ""), (businessName != null ? businessName : ""),
                 (category != null ? category : ""), (tradition != null ? tradition : ""),
                 (description != null ? description : ""), (contact != null ? contact : ""),
                 (price != null ? price : ""), (imagePath != null ? imagePath : "no-image.jpg"),
-                (status != null ? status : "PENDING")
+                (status != null ? status : "APPROVED"),
+                (ownerEmail != null ? ownerEmail : "unknown")
         );
     }
 }

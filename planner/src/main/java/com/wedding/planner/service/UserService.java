@@ -11,6 +11,11 @@ import java.util.stream.Collectors;
 public class UserService {
     private final String FILE_PATH = "src/main/resources/data/users.txt";
 
+    public boolean authenticate(String email, String password) {
+        User user = findByEmail(email);
+        return user != null && user.getPassword().equals(password);
+    }
+
     // ── GET ALL USERS (Helper for Updates) ──
     private List<User> getAllUsers() {
         try {

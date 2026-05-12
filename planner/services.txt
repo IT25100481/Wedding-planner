@@ -1,10 +1,12 @@
-1|The Velvet Crumb|Cake|Islamic|Custom luxury wedding cakes with premium fondant work|0771112222|45000|cake1.jpg|APPROVED
-2|Aura Captures|Photography|Modern|Cinematic wedding photography and drone coverage|0773334444|125000|photo1.jpg|APPROVED
-3|Grand Ballroom|Venue|Sinhala|Luxury hotel reception hall with traditional decor|0775556666|550000|venue1.jpg|APPROVED
-4|Elegant Blooms|Deco|Sinhala|Traditional Poruwa and floral set designs|0778889999|85000|deco1.jpg|APPROVED
-5|Luxe Glam|Makeup|Christian|High-end Western bridal makeup and hair styling|0771110000|35000|makeup1.jpg|APPROVED
-6|Royal Sets|Deco|Islamic|Grand stage designs and Nikah ceremony backdrops|0772223333|150000|deco2.jpg|APPROVED
-7|Magic Whisk|Cake|Christian|Elegant tiered cakes with fresh floral accents|0774445555|38000|cake2.jpg|APPROVED
-8|Radiant Brides|Makeup|Hindu|Traditional Tamil bridal makeup and jewelry styling|0776667777|42000|makeup2.jpg|APPROVED
-9|Temple View Hall|Venue|Hindu|Spacious venue suitable for traditional Hindu ceremonies|0779998888|300000|venue2.jpg|APPROVED
-10|Starlight Deco|Deco|Modern|Minimalist LED and crystal themed wedding decor|0771231234|200000|deco3.jpg|APPROVED
+1|The Velvet Crumb|cake|Universal|Premium 3-tier fondant wedding cakes|0771112222|45000|cake1.jpg|APPROVED
+2|Aura Captures|photo|Universal|Cinematic wedding photography & drone|0773334444|125000|photo1.jpg|APPROVED
+3|Grand Ballroom|venue|Universal|Luxury 500-seat hotel reception hall|0775556666|550000|venue1.jpg|APPROVED
+4|Luxe Glam Studio|makeup|Universal|Professional bridal makeup and hair|0779998888|35000|makeup1.jpg|APPROVED
+5|Starlight Deco|deco|Universal|Modern LED and floral theme decor|0774441111|150000|deco1.jpg|APPROVED
+6|Golden Whisk|cake|Universal|Custom buttercream designs and flavors|0772223333|32000|cake2.jpg|APPROVED
+7|Pixel Perfect|photo|Universal|Candid photography and photobooth|0778887777|85000|photo2.jpg|APPROVED
+8|Garden Pavilion|venue|Universal|Outdoor garden wedding space|0771110000|250000|venue2.jpg|APPROVED
+9|Tamil Arasan Decor|deco|Hindu|Traditional Tamil flower and pillar decor|0772229999|185000|deco2.jpg|APPROVED
+10|Kandyan Heritage|deco|Sinhala|Full Poruwa ceremony setup and dancers|0773335555|95000|poruwa.jpg|APPROVED
+11|Bridal Glow|makeup|Universal|HD makeup for high-end photography|0771114444|28000|makeup2.jpg|APPROVED
+12|Mehendi by Shifa|makeup|Islamic|Intricate bridal mehendi artistry|0775556666|5000|makeup3.jpg|APPROVED

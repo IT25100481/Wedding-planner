@@ -44,6 +44,7 @@ public class UserController {
             session.setAttribute("userInitials", getInitials(fullName));
             session.setAttribute("loggedInUser", user.getUsername());
             session.setAttribute("userName", fullName);
+            session.setAttribute("userEmail", user.getEmail()); // ADDED: Store email in session
             session.setAttribute("navName", firstName);
             session.setAttribute("userRole", user.getRole());
 
@@ -113,6 +114,7 @@ public class UserController {
         session.setAttribute("userInitials", getInitials(fullName));
         session.setAttribute("loggedInUser", user.getUsername());
         session.setAttribute("userName", fullName);
+        session.setAttribute("userEmail", user.getEmail()); // ADDED: Store email in session
         session.setAttribute("navName", firstName);
         session.setAttribute("userRole", user.getRole());
 
@@ -125,7 +127,7 @@ public class UserController {
         return "redirect:/login?logout";
     }
 
-    // HELPER METHOD: Generates Initials (e.g. "Yakshanth Nagarathnam" -> "YN")
+    // HELPER METHOD: Generates Initials
     private String getInitials(String fullName) {
         String[] parts = fullName.trim().split("\\s+");
         if (parts.length == 0) return "??";

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" th:href="@{'/images/logo color.png'}">
+    <title>Dashboard | Vivaha Boutique</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <style>
+        .dash-container { display: flex; min-height: 100vh; padding-top: 90px; }
+        .dash-sidebar {
+            width: 280px;
+            border-right: 1px solid var(--white-alpha);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        .dash-main { flex: 1; padding: 40px 60px; background: rgba(26, 18, 9, 0.2); }
+
+        .stat-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--white-alpha);
+            padding: 35px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            border-color: var(--gold-light);
+            background: rgba(229, 178, 125, 0.03);
+            transform: translateY(-5px);
+        }
+
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 2px;
+            background: var(--gold-light);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .stat-card:hover::after { transform: scaleX(1); }
+
+        .dash-nav-link {
+            display: block;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 25px;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .dash-nav-link:hover, .dash-nav-link.active {
+            color: var(--gold-light);
+            padding-left: 10px;
+        }
+
+        .sidebar-footer { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--white-alpha); }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{index :: nav}"></div>
+
+<div class="dash-container">
+    <aside class="dash-sidebar">
+        <h6 class="mb-4 text-uppercase" style="letter-spacing: 4px; font-size: 0.65rem; color: var(--gold-light);">Navigation</h6>
+        <nav>
+            <a href="/dashboard" class="dash-nav-link active">Overview</a>
+            <a href="/profile" class="dash-nav-link">Account Profile</a>
+
+            <div th:if="${role == 'Couple'}">
+                <a href="#" class="dash-nav-link">Wedding Planner</a>
+                <a href="#" class="dash-nav-link">Saved Vendors</a>
+                <a href="#" class="dash-nav-link">Budget Tracker</a>
+            </div>
+
+            <div th:if="${role == 'Vendor'}">
+                <a href="#" class="dash-nav-link">My Service Listings</a>
+                <a href="#" class="dash-nav-link">Client Requests</a>
+                <a href="#" class="dash-nav-link">Portfolio</a>
+            </div>
+
+            <a href="#" class="dash-nav-link">Messages</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="/logout" class="dash-nav-link text-danger" style="opacity: 0.8;">Sign Out</a>
+        </div>
+    </aside>
+
+    <main class="dash-main">
+        <header class="mb-5">
+            <h2 class="editorial-title">Welcome back, <em th:text="${session.navName}">User</em></h2>
+            <p class="text-white-50 small" style="letter-spacing: 1px;">MANAGEMENT DASHBOARD • <span th:text="${role}">Role</span></p>
+        </header>
+
+        <div th:if="${role == 'Couple'}" class="row g-4">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <label class="d-block mb-2 small" style="color:var(--gold-light); letter-spacing: 2px;">COUNTDOWN</label>
+                    <h2 class="main-heading" style="font-size: 2.8rem;">124 <small style="font-size: 1rem; opacity: 0.5;">Days</small></h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <label class="d-block mb-2 small" style="color:var(--gold-light); letter-spacing: 2px;">VENDORS</label>
+                    <h2 class="main-heading" style="font-size: 2.8rem;">08</h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <label class="d-block mb-2 small" style="color:var(--gold-light); letter-spacing: 2px;">PLANNER PROGRESS</label>
+                    <h2 class="main-heading" style="font-size: 2.8rem;">65%</h2>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${role == 'Vendor'}" class="row g-4">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <label class="d-block mb-2 small" style="color:var(--gold-light); letter-spacing: 2px;">NEW INQUIRIES</label>
+                    <h2 class="main-heading" style="font-size: 2.8rem;">12</h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <label class="d-block mb-2 small" style="color:var(--gold-light); letter-spacing: 2px;">BOOKINGS</label>
+                    <h2 class="main-heading" style="font-size: 2.8rem;">05</h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <label class="d-block mb-2 small" style="color:var(--gold-light); letter-spacing: 2px;">REVENUE (LKR)</label>
+                    <h2 class="main-heading" style="font-size: 2.2rem;">450k</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5 p-5 text-center" style="border: 1px dashed var(--white-alpha);">
+            <p class="text-white-50 small mb-0">No recent activity to display.</p>
+        </div>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

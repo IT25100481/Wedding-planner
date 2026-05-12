@@ -1,5 +1,3 @@
-
-Yakshanth Nagarathnam,yakshanth1018@gmail.com,11111,Couple
-Yakshanth Nagarathnam,yakshanth,yakshanth1018@gmail.com,11111,Couple
+Yakshanth Nagarathnam,yakshanth,yakshanth1018@gmail.com,20041018,Couple
 Yakshanth Nagarathnam,111,yakshath1190@gmail.com,222,Couple
 suresh,ssss,suresh@gmail.com,5555,Vendor

@@ -26,19 +26,29 @@
             <header class="mb-5">
                 <h3 class="editorial-title">Join the <em>Exhibition</em></h3>
 
+                <p th:if="${param.usernameTaken}" style="color: #ff6b6b; font-weight: 600; font-size: 0.8rem; margin-top: 10px; letter-spacing: 1px;">
+                    USERNAME ALREADY IN USE. PLEASE CHOOSE ANOTHER.
+                </p>
+
                 <p th:if="${param.notFound}" style="color: var(--gold-light); font-weight: 600; font-size: 0.8rem; margin-top: 10px; letter-spacing: 1px;">
                     ACCOUNT NOT FOUND. PLEASE REGISTER TO CONTINUE.
                 </p>
 
-                <p th:if="${param.notFound == null}" style="font-size: 0.85rem; color: rgba(255,255,255,0.5);">
+                <p th:if="${param.notFound == null and param.usernameTaken == null}" style="font-size: 0.85rem; color: rgba(255,255,255,0.5);">
                     Access Sri Lanka's most exclusive wedding collection.
                 </p>
             </header>
 
             <form th:action="@{/register}" th:object="${user}" method="post" class="luxury-form">
+
                 <div class="input-group-custom">
                     <label>FULL NAME</label>
                     <input type="text" th:field="*{fullName}" placeholder="e.g. Yakshanth Nagarathnam" required>
+                </div>
+
+                <div class="input-group-custom">
+                    <label>USERNAME</label>
+                    <input type="text" th:field="*{username}" placeholder="Enter your username" required>
                 </div>
 
                 <div class="input-group-custom">
@@ -84,12 +94,18 @@
 </div>
 
 <script>
-    var password = document.getElementById("password"), confirm_password = document.getElementById("confirm_password");
+    var password = document.getElementById("password"),
+        confirm_password = document.getElementById("confirm_password");
+
     function validatePassword(){
-      if(password.value != confirm_password.value) { confirm_password.setCustomValidity("Passwords Don't Match"); }
-      else { confirm_password.setCustomValidity(''); }
+      if(password.value != confirm_password.value) {
+          confirm_password.setCustomValidity("Passwords Don't Match");
+      } else {
+          confirm_password.setCustomValidity('');
+      }
     }
-    password.onchange = validatePassword; confirm_password.onkeyup = validatePassword;
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
 </script>
 
 </body>

@@ -34,11 +34,15 @@
                     PASSWORD UPDATED! YOU CAN NOW SIGN IN.
                 </p>
 
+                <p th:if="${param.notFound}" style="color: #ff6b6b; font-weight: 600; font-size: 0.8rem; margin-top: 10px; letter-spacing: 1px;">
+                    ACCOUNT NOT FOUND. PLEASE REGISTER.
+                </p>
+
                 <p th:if="${param.error}" style="color: #ff6b6b; font-weight: 600; font-size: 0.8rem; margin-top: 10px; letter-spacing: 1px;">
                     INVALID CREDENTIALS. PLEASE TRY AGAIN.
                 </p>
 
-                <p th:if="${param.error == null and param.sent == null and param.resetSuccess == null}"
+                <p th:if="${param.error == null and param.sent == null and param.resetSuccess == null and param.notFound == null}"
                    style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">
                     Access your curated wedding dashboard.
                 </p>
@@ -46,8 +50,8 @@
 
             <form th:action="@{/login}" method="post" class="luxury-form">
                 <div class="input-group-custom">
-                    <label>EMAIL ADDRESS</label>
-                    <input type="email" name="email" placeholder="your@email.com" required>
+                    <label>USERNAME</label>
+                    <input type="text" name="username" placeholder="Enter your username" required>
                 </div>
 
                 <div class="input-group-custom mb-2">

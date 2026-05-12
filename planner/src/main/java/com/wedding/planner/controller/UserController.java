@@ -17,7 +17,9 @@ public class UserController {
     @Autowired
     private EmailService emailService;
 
-    public UserController(UserService userService) { this.userService = userService; }
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public String index() { return "index"; }
@@ -26,18 +28,23 @@ public class UserController {
     public String login() { return "login"; }
 
     @PostMapping("/login")
-    public String doLogin(@RequestParam String email, @RequestParam String password, HttpSession session) {
-        User user = userService.findByEmail(email);
+    public String doLogin(@RequestParam String username, @RequestParam String password, HttpSession session) {
+        // CHANGED: Search by Username instead of Email
+        User user = userService.findByUsername(username);
+
         if (user == null) {
-            return "redirect:/register?notFound=true";
+            return "redirect:/login?notFound=true";
         }
 
         if (user.getPassword().equals(password)) {
             String firstName = user.getFullName().trim().split("\\s+")[0];
-            session.setAttribute("loggedInUser", email);
+
+            // Set session attributes using Username
+            session.setAttribute("loggedInUser", user.getUsername());
             session.setAttribute("userName", user.getFullName());
             session.setAttribute("navName", firstName);
             session.setAttribute("userRole", user.getRole());
+
             return "redirect:/?loginSuccess=true";
         } else {
             return "redirect:/login?error=true";
@@ -52,14 +59,20 @@ public class UserController {
     }
 
     @PostMapping("/forgot-password")
-    public String processForgotPassword(@RequestParam String email) {
-        User user = userService.findByEmail(email);
-        if (user != null) {
+    public String processForgotPassword(@RequestParam String username, @RequestParam String email) {
+        // SECURITY UPDATE: Find by Username first
+        User user = userService.findByUsername(username);
+
+        // CHECK: Does username exist AND does the registered email match the input?
+        if (user != null && user.getEmail().equalsIgnoreCase(email)) {
             String token = UUID.randomUUID().toString();
             String resetLink = "http://localhost:8080/reset-password?token=" + token + "&email=" + email;
             emailService.sendResetLink(email, resetLink);
+            return "redirect:/login?sent=true";
         }
-        return "redirect:/login?sent=true";
+
+        // Return with error if they don't match
+        return "redirect:/forgot-password?mismatch=true";
     }
 
     @GetMapping("/reset-password")
@@ -69,20 +82,17 @@ public class UserController {
         return "reset-password";
     }
 
-    // NEW: The method that actually saves the new password
     @PostMapping("/reset-password")
     public String handlePasswordReset(@RequestParam String email, @RequestParam String newPassword) {
         User user = userService.findByEmail(email);
         if (user != null) {
-            // Update the user object with the new password
-            user.setPassword(newPassword);
-            // Save the user (this will update the line in users.txt)
-            userService.saveUser(user);
+            // Service method that overwrites the file line
+            userService.updatePassword(email, newPassword);
         }
         return "redirect:/login?resetSuccess=true";
     }
 
-    /* ────────────────────────── */
+    /* ── REGISTRATION ── */
 
     @GetMapping("/register")
     public String register(Model model) {
@@ -92,12 +102,19 @@ public class UserController {
 
     @PostMapping("/register")
     public String doRegister(@ModelAttribute User user, HttpSession session) {
+        // CHECK: Unique Username Validation
+        if (userService.isUsernameTaken(user.getUsername())) {
+            return "redirect:/register?usernameTaken=true";
+        }
+
         userService.saveUser(user);
+
         String firstName = user.getFullName().trim().split("\\s+")[0];
-        session.setAttribute("loggedInUser", user.getEmail());
+        session.setAttribute("loggedInUser", user.getUsername());
         session.setAttribute("userName", user.getFullName());
         session.setAttribute("navName", firstName);
         session.setAttribute("userRole", user.getRole());
+
         return "redirect:/?welcome=true";
     }
 

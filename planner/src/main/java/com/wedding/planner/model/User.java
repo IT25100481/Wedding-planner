@@ -2,14 +2,17 @@ package com.wedding.planner.model;
 
 public class User {
     private String fullName;
+    private String username; // NEW FIELD
     private String email;
     private String password;
     private String role;
 
     public User() {}
 
-    public User(String fullName, String email, String password, String role) {
+    // Updated Constructor to include username
+    public User(String fullName, String username, String email, String password, String role) {
         this.fullName = fullName;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
@@ -17,6 +20,9 @@ public class User {
 
     public String getFullName() { return fullName; }
     public void setFullName(String fullName) { this.fullName = fullName; }
+
+    public String getUsername() { return username; } // NEW
+    public void setUsername(String username) { this.username = username; } // NEW
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
@@ -29,6 +35,7 @@ public class User {
 
     @Override
     public String toString() {
-        return fullName + "," + email + "," + password + "," + role;
+        // Updated to include username in the CSV format
+        return fullName + "," + username + "," + email + "," + password + "," + role;
     }
 }

@@ -111,7 +111,7 @@ input:-webkit-autofill:focus {
     border: 2px solid var(--gold-light);
 }
 
-/* ── LUXURY DISAPPEARING GREETING BAR ── */
+/* ── LUXURY GREETING BAR ── */
 .welcome-overlay-toast {
     background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
     color: var(--dark-chocolate);
@@ -128,7 +128,6 @@ input:-webkit-autofill:focus {
     backdrop-filter: blur(5px);
     border-top: 1px solid rgba(255,255,255,0.1);
     border-bottom: 1px solid rgba(255,255,255,0.1);
-
     opacity: 0;
     visibility: hidden;
     animation: luxuryFadeInOut 3.5s ease-in-out forwards;
@@ -197,7 +196,7 @@ input:-webkit-autofill:focus {
     background: rgba(229, 178, 125, 0.05);
 }
 
-/* ── SPLIT FORM STYLES (LOGIN/REGISTER) ── */
+/* ── SPLIT FORM STYLES ── */
 .split-container {
     display: flex;
     min-height: 100vh;
@@ -276,22 +275,34 @@ input:-webkit-autofill:focus {
     text-transform: uppercase;
 }
 
+/* ── UPDATED INPUT STYLES FOR WHITE TEXT ── */
 .input-group-custom input,
 .input-group-custom select {
     width: 100%;
     background: transparent;
     border: none;
     border-bottom: 1px solid var(--white-alpha);
-    color: white;
+    color: #ffffff !important; /* Force white text */
     padding: 12px 0;
     font-size: 0.95rem;
     border-radius: 0;
     outline: none;
+    transition: 0.3s border-color ease;
+}
+
+.input-group-custom input:focus,
+.input-group-custom select:focus {
+    border-bottom: 1px solid var(--gold-light);
+}
+
+.input-group-custom input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: 300;
 }
 
 .input-group-custom select {
     cursor: pointer;
-    color: var(--gold-light) !important;
+    color: var(--gold-light) !important; /* Keep select arrow/initial state gold */
 }
 
 .input-group-custom select option {

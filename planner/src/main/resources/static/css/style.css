@@ -4,6 +4,7 @@
     --dark-chocolate: #1A1209;
     --gold-deep: #C07A58;
     --white-alpha: rgba(255, 255, 255, 0.1);
+    --white-soft: rgba(255, 255, 255, 0.7);
 }
 
 /* ── GLOBAL RESET & BASE ── */
@@ -31,7 +32,8 @@ body, html {
 ::-webkit-scrollbar-track { background: var(--dark-chocolate); }
 ::-webkit-scrollbar-thumb { background: var(--gold-light); }
 
-/* ── REMOVE WHITE AUTOFILL BOXES ── */
+/* ── BROWSER AUTOFILL OVERRIDE ── */
+/* Prevents browsers from turning inputs white/yellow when auto-filling */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
@@ -61,7 +63,7 @@ input:-webkit-autofill:focus {
 }
 
 .nav-link {
-    color: rgba(255,255,255,0.7) !important;
+    color: var(--white-soft) !important;
     font-size: 0.75rem;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -88,7 +90,7 @@ input:-webkit-autofill:focus {
     font-weight: 600;
 }
 
-/* ── PROFILE UI ── */
+/* ── PROFILE UI & AVATAR ── */
 .user-name-nav {
     font-size: 0.8rem;
     color: var(--gold-light);
@@ -106,9 +108,10 @@ input:-webkit-autofill:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
-    font-size: 0.8rem;
+    font-weight: 700;
+    font-size: 0.85rem;
     border: 2px solid var(--gold-light);
+    text-transform: uppercase;
 }
 
 /* ── LUXURY GREETING BAR ── */
@@ -197,11 +200,7 @@ input:-webkit-autofill:focus {
 }
 
 /* ── SPLIT FORM STYLES ── */
-.split-container {
-    display: flex;
-    min-height: 100vh;
-    width: 100%;
-}
+.split-container { display: flex; min-height: 100vh; width: 100%; }
 
 .split-visual {
     flex: 1.2;
@@ -224,26 +223,11 @@ input:-webkit-autofill:focus {
     gap: 5px;
 }
 
-.reg-logo-small {
-    height: 70px;
-    width: auto;
-    filter: brightness(1.1);
-    margin-bottom: 10px;
-}
+.reg-logo-small { height: 70px; width: auto; filter: brightness(1.1); margin-bottom: 10px; }
 
-.visual-content .brand-text {
-    font-size: 5rem;
-    margin: 0;
-    line-height: 1;
-}
+.visual-content .brand-text { font-size: 5rem; margin: 0; line-height: 1; }
 
-.brand-tagline {
-    letter-spacing: 5px;
-    font-size: 0.75rem;
-    opacity: 0.8;
-    text-transform: uppercase;
-    color: white;
-}
+.brand-tagline { letter-spacing: 5px; font-size: 0.75rem; opacity: 0.8; text-transform: uppercase; color: white; }
 
 .split-form {
     flex: 1;
@@ -256,11 +240,7 @@ input:-webkit-autofill:focus {
 
 .form-wrapper { width: 100%; max-width: 440px; }
 
-.editorial-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3rem;
-    font-weight: 300;
-}
+.editorial-title { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; }
 
 .editorial-title em { font-style: italic; color: var(--gold-light); font-family: "Monotype Corsiva", cursive; }
 
@@ -275,14 +255,14 @@ input:-webkit-autofill:focus {
     text-transform: uppercase;
 }
 
-/* ── UPDATED INPUT STYLES FOR WHITE TEXT ── */
+/* ── UPDATED INPUT STYLES (WHITE TEXT FIX) ── */
 .input-group-custom input,
 .input-group-custom select {
     width: 100%;
     background: transparent;
     border: none;
     border-bottom: 1px solid var(--white-alpha);
-    color: #ffffff !important; /* Force white text */
+    color: #ffffff !important; /* Forces typed text to be white */
     padding: 12px 0;
     font-size: 0.95rem;
     border-radius: 0;
@@ -302,7 +282,7 @@ input:-webkit-autofill:focus {
 
 .input-group-custom select {
     cursor: pointer;
-    color: var(--gold-light) !important; /* Keep select arrow/initial state gold */
+    color: var(--gold-light) !important;
 }
 
 .input-group-custom select option {
@@ -310,6 +290,7 @@ input:-webkit-autofill:focus {
     color: var(--gold-light);
 }
 
+/* ── BUTTONS & LINKS ── */
 .btn-editorial-gold {
     width: 100%;
     padding: 22px;
@@ -328,18 +309,13 @@ input:-webkit-autofill:focus {
     transform: translateY(-2px);
 }
 
-/* ── LINK & ALERT STYLES ── */
 .link-gold {
     color: var(--gold-light) !important;
     font-weight: 600;
-    text-decoration: none;
     transition: 0.3s;
 }
 
-.link-gold:hover {
-    color: white !important;
-    opacity: 1 !important;
-}
+.link-gold:hover { color: white !important; }
 
 .success-alert-text {
     color: var(--gold-light);
@@ -347,4 +323,25 @@ input:-webkit-autofill:focus {
     font-size: 0.8rem;
     margin-top: 10px;
     letter-spacing: 1px;
+}
+
+/* ── DROPDOWN REFINEMENT ── */
+.luxury-dropdown {
+    background: var(--dark-chocolate) !important;
+    border: 1px solid rgba(229, 178, 125, 0.2) !important;
+    border-radius: 0 !important;
+    padding: 10px 0 !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.luxury-dropdown .dropdown-item {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    padding: 10px 20px;
+    color: var(--white-soft) !important;
+}
+
+.luxury-dropdown .dropdown-item:hover {
+    background: rgba(229, 178, 125, 0.1) !important;
+    color: var(--gold-light) !important;
 }

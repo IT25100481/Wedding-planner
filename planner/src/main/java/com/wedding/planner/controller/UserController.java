@@ -29,7 +29,6 @@ public class UserController {
 
     @PostMapping("/login")
     public String doLogin(@RequestParam String username, @RequestParam String password, HttpSession session) {
-        // CHANGED: Search by Username instead of Email
         User user = userService.findByUsername(username);
 
         if (user == null) {
@@ -37,11 +36,14 @@ public class UserController {
         }
 
         if (user.getPassword().equals(password)) {
-            String firstName = user.getFullName().trim().split("\\s+")[0];
+            // --- INITIALS & NAME LOGIC ---
+            String fullName = user.getFullName().trim();
+            String firstName = fullName.split("\\s+")[0];
 
-            // Set session attributes using Username
+            // Set session attributes
+            session.setAttribute("userInitials", getInitials(fullName));
             session.setAttribute("loggedInUser", user.getUsername());
-            session.setAttribute("userName", user.getFullName());
+            session.setAttribute("userName", fullName);
             session.setAttribute("navName", firstName);
             session.setAttribute("userRole", user.getRole());
 
@@ -60,10 +62,8 @@ public class UserController {
 
     @PostMapping("/forgot-password")
     public String processForgotPassword(@RequestParam String username, @RequestParam String email) {
-        // SECURITY UPDATE: Find by Username first
         User user = userService.findByUsername(username);
 
-        // CHECK: Does username exist AND does the registered email match the input?
         if (user != null && user.getEmail().equalsIgnoreCase(email)) {
             String token = UUID.randomUUID().toString();
             String resetLink = "http://localhost:8080/reset-password?token=" + token + "&email=" + email;
@@ -71,7 +71,6 @@ public class UserController {
             return "redirect:/login?sent=true";
         }
 
-        // Return with error if they don't match
         return "redirect:/forgot-password?mismatch=true";
     }
 
@@ -86,7 +85,6 @@ public class UserController {
     public String handlePasswordReset(@RequestParam String email, @RequestParam String newPassword) {
         User user = userService.findByEmail(email);
         if (user != null) {
-            // Service method that overwrites the file line
             userService.updatePassword(email, newPassword);
         }
         return "redirect:/login?resetSuccess=true";
@@ -102,16 +100,19 @@ public class UserController {
 
     @PostMapping("/register")
     public String doRegister(@ModelAttribute User user, HttpSession session) {
-        // CHECK: Unique Username Validation
         if (userService.isUsernameTaken(user.getUsername())) {
             return "redirect:/register?usernameTaken=true";
         }
 
         userService.saveUser(user);
 
-        String firstName = user.getFullName().trim().split("\\s+")[0];
+        String fullName = user.getFullName().trim();
+        String firstName = fullName.split("\\s+")[0];
+
+        // Set session attributes for immediate login effect
+        session.setAttribute("userInitials", getInitials(fullName));
         session.setAttribute("loggedInUser", user.getUsername());
-        session.setAttribute("userName", user.getFullName());
+        session.setAttribute("userName", fullName);
         session.setAttribute("navName", firstName);
         session.setAttribute("userRole", user.getRole());
 
@@ -122,5 +123,17 @@ public class UserController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/login?logout";
+    }
+
+    // HELPER METHOD: Generates Initials (e.g. "Yakshanth Nagarathnam" -> "YN")
+    private String getInitials(String fullName) {
+        String[] parts = fullName.trim().split("\\s+");
+        if (parts.length == 0) return "??";
+
+        String initials = parts[0].substring(0, 1).toUpperCase();
+        if (parts.length > 1) {
+            initials += parts[parts.length - 1].substring(0, 1).toUpperCase();
+        }
+        return initials;
     }
 }

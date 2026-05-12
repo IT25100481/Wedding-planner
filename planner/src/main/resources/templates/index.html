@@ -47,10 +47,14 @@
                 <div class="dropdown">
                     <div class="d-flex align-items-center gap-2" data-bs-toggle="dropdown" style="cursor: pointer;">
                         <span class="d-none d-xl-inline user-name-nav" th:text="${session.navName}">User</span>
-                        <div class="profile-avatar">IY</div>
+
+                        <div class="profile-avatar">
+                            <span th:text="${session.userInitials}">??</span>
+                        </div>
                     </div>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark luxury-dropdown">
                         <li><a class="dropdown-item" href="/dashboard">MY DASHBOARD</a></li>
+                        <li><a class="dropdown-item" href="/profile">VIEW PROFILE</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item text-danger" href="/logout">LOGOUT</a></li>
                     </ul>

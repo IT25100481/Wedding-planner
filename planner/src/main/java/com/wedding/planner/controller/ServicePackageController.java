@@ -2,59 +2,96 @@ package com.wedding.planner.controller;
 
 import com.wedding.planner.model.ServicePackage;
 import com.wedding.planner.service.ServicePackageService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-// Validate that the package price is not null before saving
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/packages")
 public class ServicePackageController {
 
     @Autowired
     private ServicePackageService packageService;
 
-    // ── READ - Show all packages ──
-    @GetMapping
-    public String listPackages(@RequestParam(required = false, defaultValue = "ALL") String type,
-                               Model model) {
+    // ════════════════════════════════════════════
+    // CLIENT SIDE
+    // /packages → client-packages.html (view only + Book Now)
+    // ════════════════════════════════════════════
+
+    @GetMapping("/packages")
+    public String clientPackages(
+            @RequestParam(required = false, defaultValue = "ALL") String type,
+            Model model) {
+        model.addAttribute("packages", packageService.getPackagesByType(type));
+        model.addAttribute("selectedType", type);
+        return "packages/client-packages";       // → templates/packages/client-packages.html
+    }
+
+    // ════════════════════════════════════════════
+    // ADMIN SIDE
+    // /admin/packages → packages.html (existing file, add + edit + delete)
+    // ════════════════════════════════════════════
+
+    private boolean isAdmin(HttpSession session) {
+        return session.getAttribute("admin") != null;
+    }
+
+    // Admin views all packages + add form
+    @GetMapping("/admin/packages")
+    public String adminPackages(
+            @RequestParam(required = false, defaultValue = "ALL") String type,
+            Model model, HttpSession session) {
+        if (!isAdmin(session)) return "redirect:/admin/login";
         model.addAttribute("packages", packageService.getPackagesByType(type));
         model.addAttribute("selectedType", type);
         model.addAttribute("newPackage", new ServicePackage());
-        return "packages";
+        return "packages/packages";              // → templates/packages/packages.html (existing)
     }
 
-    // ── CREATE - Add new package ──
-    @PostMapping("/add")
-    public String addPackage(@ModelAttribute ServicePackage pkg) {
+    // Admin adds a package
+    @PostMapping("/admin/packages/add")
+    public String addPackage(@ModelAttribute ServicePackage pkg,
+                             HttpSession session,
+                             RedirectAttributes ra) {
+        if (!isAdmin(session)) return "redirect:/admin/login";
         pkg.setActive(true);
         packageService.addPackage(pkg);
-        return "redirect:/packages?success=added";
+        ra.addFlashAttribute("message", "Package added successfully!");
+        return "redirect:/admin/packages";
     }
-    // Redirecting to the dashboard after a successful update
-    // ── READ - Show edit form ──
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable String id, Model model) {
+
+    // Admin edit form
+    @GetMapping("/admin/packages/edit/{id}")
+    public String showEditForm(@PathVariable String id,
+                               Model model, HttpSession session) {
+        if (!isAdmin(session)) return "redirect:/admin/login";
         ServicePackage pkg = packageService.getPackageById(id);
-        if (pkg == null) return "redirect:/packages";
+        if (pkg == null) return "redirect:/admin/packages";
         model.addAttribute("package", pkg);
-        return "package-edit";
+        return "packages/package-edit";          // → templates/packages/package-edit.html
     }
-    // Ensure the package object contains valid data before database persistence
-    // ── UPDATE - Save edited package ──
-    @PostMapping("/update")
-    public String updatePackage(@ModelAttribute ServicePackage pkg) {
+
+    // Admin saves edit
+    @PostMapping("/admin/packages/update")
+    public String updatePackage(@ModelAttribute ServicePackage pkg,
+                                HttpSession session,
+                                RedirectAttributes ra) {
+        if (!isAdmin(session)) return "redirect:/admin/login";
         packageService.updatePackage(pkg);
-        return "redirect:/packages?success=updated";
+        ra.addFlashAttribute("message", "Package updated successfully!");
+        return "redirect:/admin/packages";
     }
-    // Redirecting back to the package list view to show updated status
-    // ── DELETE - Remove package ──
-    @GetMapping("/delete/{id}")
-    public String deletePackage(@PathVariable String id) {
+
+    // Admin deletes package
+    @GetMapping("/admin/packages/delete/{id}")
+    public String deletePackage(@PathVariable String id,
+                                HttpSession session,
+                                RedirectAttributes ra) {
+        if (!isAdmin(session)) return "redirect:/admin/login";
         packageService.deletePackage(id);
-        return "redirect:/packages?success=deleted";
+        ra.addFlashAttribute("message", "Package deleted.");
+        return "redirect:/admin/packages";
     }
 }

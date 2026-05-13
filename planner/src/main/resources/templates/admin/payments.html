@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Management | Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #c9a84c; --gold-dark: #9a7a2e; --cream: #fdf8f2; --dark: #1a1209; --text-muted: #7a6a50; }
+        body { background: var(--cream); font-family: 'Montserrat', sans-serif; font-weight: 300; }
+        .navbar { background: var(--dark); padding: 16px 40px; }
+        .navbar-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--gold) !important; letter-spacing: 3px; }
+        .nav-link { color: rgba(255,255,255,0.75) !important; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; }
+        .nav-link:hover { color: var(--gold) !important; }
+        .btn-logout { background: transparent; border: 1px solid rgba(201,168,76,0.5); color: var(--gold); font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 0; text-decoration: none; }
+        .main { padding: 50px 80px; }
+        .page-tag { font-size: 0.62rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+        .page-title { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--dark); margin-bottom: 40px; }
+
+        /* STAT CARDS */
+        .stat-card { background: #fff; border: 1px solid rgba(201,168,76,0.2); padding: 24px 28px; }
+        .stat-label { font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+        .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); font-weight: 300; }
+
+        /* PANEL */
+        .panel { background: #fff; border: 1px solid rgba(201,168,76,0.2); padding: 32px; }
+        .panel-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--dark); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(201,168,76,0.15); }
+
+        /* TABLE */
+        table { width: 100%; border-collapse: collapse; }
+        th { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 12px 16px; border-bottom: 2px solid rgba(201,168,76,0.2); text-align: left; }
+        td { font-size: 0.82rem; padding: 14px 16px; border-bottom: 1px solid rgba(201,168,76,0.1); color: var(--dark); vertical-align: middle; }
+        tr:hover td { background: rgba(201,168,76,0.04); }
+
+        /* STATUS BADGES */
+        .status-PENDING { background: rgba(255,193,7,0.15); color: #856404; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; display: inline-block; }
+        .status-PARTIAL_PAID { background: rgba(13,110,253,0.15); color: #084298; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; display: inline-block; }
+        .status-FULLY_PAID { background: rgba(25,135,84,0.15); color: #0a3622; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; display: inline-block; }
+
+        /* ACTION BUTTONS */
+        .btn-edit-sm {
+            font-size: 0.62rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border: 1px solid rgba(201,168,76,0.4);
+            background: transparent;
+            color: var(--gold-dark);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-edit-sm:hover {
+            background: var(--gold);
+            color: var(--dark);
+            border-color: var(--gold);
+        }
+        .btn-delete-sm {
+            font-size: 0.62rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border: 1px solid rgba(220,53,69,0.3);
+            background: transparent;
+            color: #c0392b;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-delete-sm:hover {
+            background: #c0392b;
+            color: #fff;
+        }
+
+        /* ALERT */
+        .alert-success-custom { background: #f0fdf4; border: 1px solid #86efac; color: #166534; padding: 12px 16px; font-size: 0.82rem; margin-bottom: 20px; }
+
+        /* EMPTY STATE */
+        .empty-state { text-align: center; padding: 50px; color: var(--text-muted); }
+
+        @media (max-width: 768px) { .main { padding: 30px 20px; } .navbar { padding: 14px 20px; } }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/admin/dashboard">✦ Admin Panel</a>
+    <div class="d-flex gap-4 ms-4">
+        <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+        <a class="nav-link" href="/admin/vendors">Vendors</a>
+        <a class="nav-link" href="/admin/admins">Admins</a>
+        <a class="nav-link" href="/admin/payments">Payments</a>
+    </div>
+    <div class="ms-auto">
+        <a href="/admin/logout" class="btn-logout">Logout</a>
+    </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+    <div class="page-tag">Admin Panel</div>
+    <div class="page-title">Payment Management</div>
+
+    <!-- SUCCESS MESSAGE -->
+    <div th:if="${message}" class="alert-success-custom" th:text="${message}"></div>
+
+    <!-- STATS -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-label">Total Earnings</div>
+                <div class="stat-value">LKR <span th:text="${#numbers.formatDecimal(totalEarnings, 0, 'COMMA', 0, 'POINT')}">0</span></div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-label">Total Payments</div>
+                <div class="stat-value" th:text="${#lists.size(payments)}">0</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-label">Fully Paid</div>
+                <div class="stat-value" th:text="${#lists.size(payments.?[paymentStatus == 'FULLY_PAID'])}">0</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-label">Pending</div>
+                <div class="stat-value" th:text="${#lists.size(payments.?[paymentStatus == 'PENDING'])}">0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAYMENTS TABLE -->
+    <div class="panel">
+        <div class="panel-title">All Payment Records</div>
+
+        <!-- TABLE -->
+        <div th:if="${not #lists.isEmpty(payments)}" style="overflow-x:auto">
+            <table>
+                <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Vendor</th>
+                    <th>Total</th>
+                    <th>Paid</th>
+                    <th>Method</th>
+                    <th>Transaction ID</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="payment : ${payments}">
+                    <td th:text="${payment.bookingId}"></td>
+                    <td th:text="${payment.vendorName}"></td>
+                    <td th:text="'LKR ' + ${payment.totalAmount}"></td>
+                    <td th:text="'LKR ' + ${payment.amountPaid}"></td>
+                    <td th:text="${payment.paymentMethod}"></td>
+                    <td th:text="${payment.transactionId}"></td>
+                    <td>
+                            <span th:class="'status-' + ${payment.paymentStatus}"
+                                  th:text="${payment.paymentStatus}"></span>
+                    </td>
+                    <td th:text="${payment.createdAt}"></td>
+                    <td>
+                        <!-- EDIT BUTTON -->
+                        <div style="display:flex; gap:6px;">
+                            <a th:href="@{/admin/payments/edit/{id}(id=${payment.id})}"
+                               class="btn-edit-sm">Edit</a>
+                            <!-- DELETE BUTTON -->
+                            <a th:href="@{/admin/payments/delete/{id}(id=${payment.id})}"
+                               class="btn-delete-sm"
+                               onclick="return confirm('Are you sure you want to delete this payment?')">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- EMPTY STATE -->
+        <div class="empty-state" th:if="${#lists.isEmpty(payments)}">
+            <div style="font-size:2rem;">💳</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin:12px 0;">No Payments Yet</div>
+            <div>Payments will appear here once customers start paying.</div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

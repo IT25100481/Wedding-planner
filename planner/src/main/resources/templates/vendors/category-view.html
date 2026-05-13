@@ -285,7 +285,7 @@
         <span>Total Estimate:</span>
         <span id="bucketTotal">0 LKR</span>
     </div>
-    <button class="btn btn-danger w-100 mt-3 btn-sm" onclick="location.href='/payment'">BOOK NOW</button>
+    <button class="btn btn-danger w-100 mt-3 btn-sm" onclick="goToPayment()">BOOK NOW</button>
 </div>
 
 <div class="modal fade" id="traditionModal" data-bs-backdrop="static" tabindex="-1">
@@ -421,6 +421,16 @@
         const total = bucket.reduce((sum, item) => sum + item.price, 0);
         totalEl.innerText = total.toLocaleString() + " LKR";
     }
+    function goToPayment() {
+    if (bucket.length === 0) {
+        alert('Please select at least one vendor!');
+        return;
+    }
+    const total = bucket.reduce((sum, item) => sum + item.price, 0);
+    const vendorNames = bucket.map(item => item.name).join(', ');
+    const bookingId = 'BK-' + Date.now();
+    window.location.href = `/payments?bookingId=${bookingId}&vendorName=${encodeURIComponent(vendorNames)}&totalAmount=${total}`;
+}
 
     function scrollToSection(id) {
         const element = document.getElementById(id);

@@ -154,7 +154,8 @@
                                     th:attr="data-id=${service.id}, data-name=${service.businessName}, data-price=${service.price}"
                                     onclick="addToBucket(this.dataset.id, this.dataset.name, this.dataset.price)">+ BUCKET</button>
                         </div>
-                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold">INQUIRY</button>
+                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold"
+                                th:attr="onclick='location.href=\'/inquiry?vendorId=' + ${service.id} + '\''">INQUIRY</button>
                     </div>
                 </div>
             </div>
@@ -178,7 +179,8 @@
                                     th:attr="data-id=${service.id}, data-name=${service.businessName}, data-price=${service.price}"
                                     onclick="addToBucket(this.dataset.id, this.dataset.name, this.dataset.price)">+ BUCKET</button>
                         </div>
-                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold">INQUIRY</button>
+                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold"
+                                th:attr="onclick='location.href=\'/inquiry?vendorId=' + ${service.id} + '\''">INQUIRY</button>
                     </div>
                 </div>
             </div>
@@ -202,7 +204,8 @@
                                     th:attr="data-id=${service.id}, data-name=${service.businessName}, data-price=${service.price}"
                                     onclick="addToBucket(this.dataset.id, this.dataset.name, this.dataset.price)">+ BUCKET</button>
                         </div>
-                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold">INQUIRY</button>
+                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold"
+                                th:attr="onclick='location.href=\'/inquiry?vendorId=' + ${service.id} + '\''">INQUIRY</button>
                     </div>
                 </div>
             </div>
@@ -226,7 +229,8 @@
                                     th:attr="data-id=${service.id}, data-name=${service.businessName}, data-price=${service.price}"
                                     onclick="addToBucket(this.dataset.id, this.dataset.name, this.dataset.price)">+ BUCKET</button>
                         </div>
-                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold">INQUIRY</button>
+                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold"
+                                th:attr="onclick='location.href=\'/inquiry?vendorId=' + ${service.id} + '\''">INQUIRY</button>
                     </div>
                 </div>
             </div>
@@ -250,6 +254,9 @@
                                     th:attr="data-id=${service.id}, data-name=${service.businessName}, data-price=${service.price}"
                                     onclick="addToBucket(this.dataset.id, this.dataset.name, this.dataset.price)">+ BUCKET</button>
                         </div>
+                        <!-- Added Inquiry Button Below -->
+                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold"
+                                th:attr="onclick='location.href=\'/inquiry?vendorId=' + ${service.id} + '\''">INQUIRY</button>
                     </div>
                 </div>
             </div>
@@ -333,7 +340,6 @@
         const filtered = (style === 'All' || style === 'Mixed')
             ? allServices
             : allServices.filter(s => s && s.tradition === style);
-
         container.innerHTML = filtered.map(s => {
             const imgSrc = s.imagePath && s.imagePath.startsWith('http')
                 ? s.imagePath
@@ -341,18 +347,25 @@
             return `
             <div class="col-md-4">
                 <div class="card vendor-card h-100">
-                    <img src="${imgSrc}" class="card-img-top" alt="Vendor Image" onerror="this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500';">
+                    <img src="${imgSrc}" class="card-img-top" onerror="this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500';">
                     <div class="card-body">
                         <h5 class="gold-italic">${s.businessName}</h5>
                         <p class="small text-white-50">${s.category}</p>
                         <p class="gold-italic" style="color:var(--gold-light)">${s.price} LKR</p>
                         <div class="d-flex gap-2">
                             <button class="btn btn-sm btn-outline-light w-100"
-                                    onclick="viewDetails('${s.businessName}', '${s.description}', '${s.contact}')">DETAILS</button>
+                                    onclick="viewDetails('${s.businessName.replace(/'/g, "\\'")}', '${s.description.replace(/'/g, "\\'")}', '${s.contact}')">
+                                DETAILS
+                            </button>
                             <button id="btn-dyn-${s.id}" class="btn btn-sm btn-main-gold w-100"
-                                    data-id="${s.id}" data-name="${s.businessName}" data-price="${s.price}"
-                                    onclick="addToBucket(this.dataset.id, this.dataset.name, this.dataset.price)">+ BUCKET</button>
+                                    onclick="addToBucket('${s.id}', '${s.businessName.replace(/'/g, "\\'")}', '${s.price}')">
+                                + BUCKET
+                            </button>
                         </div>
+                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold"
+                                onclick="location.href='/inquiry?vendorId=${s.id}'">
+                            INQUIRY
+                        </button>
                     </div>
                 </div>
             </div>`;

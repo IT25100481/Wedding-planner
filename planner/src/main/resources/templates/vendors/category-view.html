@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIVAHA | Vendor Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <style>
+        .nav-link-minimal {
+            color: var(--white-soft);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .nav-link-minimal:hover { color: var(--gold-light); border-bottom: 1px solid var(--gold-light); }
+
+        .btn-style-pill {
+            background: transparent;
+            border: 1px solid var(--gold-light);
+            color: var(--gold-light);
+            border-radius: 30px;
+            padding: 4px 15px;
+            font-size: 0.7rem;
+            transition: 0.3s;
+        }
+        .btn-style-pill:hover { background: var(--gold-light); color: var(--dark-chocolate); }
+
+        .vendor-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(229, 178, 125, 0.15);
+            height: 100%;
+        }
+        .vendor-card img { height: 220px; object-fit: cover; }
+
+        .floating-bucket-trigger {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 60px; height: 60px;
+            background: var(--gold-light);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 4000;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+        .floating-bucket-trigger i { color: var(--dark-chocolate); font-size: 1.8rem; }
+
+        .bucket-count-badge {
+            position: absolute;
+            top: 5px; right: 5px;
+            background: white;
+            color: var(--dark-chocolate);
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .bucket-container {
+            position: fixed;
+            bottom: 110px; right: 30px;
+            width: 350px;
+            background: var(--dark-chocolate);
+            border: 1px solid var(--gold-light);
+            padding: 20px;
+            z-index: 3999;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .btn-selected {
+            background-color: #6c757d !important;
+            border-color: #6c757d !important;
+            color: white !important;
+            cursor: not-allowed;
+        }
+
+        .modal-content.luxury-popup {
+            background-color: var(--dark-chocolate) !important;
+            border: 2px solid var(--gold-light) !important;
+            color: white !important;
+        }
+        .modal-body select {
+            background: rgba(255,255,255,0.05);
+            color: var(--gold-light);
+            border: 1px solid rgba(229, 178, 125, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top" style="background: rgba(26, 18, 9, 0.98); border-bottom: 1px solid rgba(229,178,125,0.1);">
+    <div class="container-fluid px-5">
+        <div class="d-flex align-items-center">
+            <span class="brand-text" style="font-size: 2.2rem;">Vivaha</span>
+            <span id="displayTradition" class="gold-italic" style="font-size: 1.5rem; margin-left: 40px;">Tradition: Modern</span>
+        </div>
+        <div class="ms-auto d-flex align-items-center gap-4">
+            <a href="/" class="nav-link-minimal">BACK TO DASHBOARD</a>
+            <div class="dropdown">
+                <button class="btn-style-pill dropdown-toggle" data-bs-toggle="dropdown">
+                    STYLE: <span id="currentStyleLabel">MODERN</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark luxury-dropdown">
+                    <li><a class="dropdown-item" onclick="updateStyle('Sinhala')">Sinhala</a></li>
+                    <li><a class="dropdown-item" onclick="updateStyle('Hindu')">Hindu</a></li>
+                    <li><a class="dropdown-item" onclick="updateStyle('Islam')">Islam</a></li>
+                    <li><a class="dropdown-item" onclick="updateStyle('Christian')">Christian</a></li>
+                    <li><a class="dropdown-item" onclick="updateStyle('Modern')">Modern</a></li>
+                    <li><a class="dropdown-item" onclick="updateStyle('All')">All Vendors</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid px-5 mt-3">
+    <button class="btn-style-pill" onclick="scrollToSection('tradition-container')"
+            style="border: 1px dashed var(--gold-light); background: rgba(229, 178, 125, 0.05);">
+        <i class="bi bi-stars"></i> Jump to My Recommendations
+    </button>
+</div>
+
+<section class="container my-5 text-center">
+    <h2 class="editorial-title mb-5">The <em>Essentials</em></h2>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <button class="btn-main-outline btn-sm" onclick="scrollToSection('photography-section')">PHOTOGRAPHY</button>
+        <button class="btn-main-outline btn-sm" onclick="scrollToSection('cakes-section')">CAKES</button>
+        <button class="btn-main-outline btn-sm" onclick="scrollToSection('venues-section')">VENUES</button>
+        <button class="btn-main-outline btn-sm" onclick="scrollToSection('makeup-section')">MAKEUP</button>
+        <button class="btn-main-outline btn-sm" onclick="scrollToSection('decorations-section')">DECORATIONS</button>
+    </div>
+</section>
+
+<div class="container pb-5">
+
+    <div id="photography-section" class="mt-5" th:if="${photography != null and not #lists.isEmpty(photography)}">
+        <h3 class="brand-text mb-4">Photography Services</h3>
+        <div class="row g-4">
+            <div class="col-md-4" th:each="service : ${photography}" th:if="${service != null}">
+                <div class="card vendor-card">
+                    <img th:src="@{'/uploads/' + ${service.imagePath}}" class="card-img-top"
+                         onerror="this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500';" alt="Vendor Image">
+                    <div class="card-body">
+                        <h5 class="gold-italic" th:text="${service.businessName}">Name</h5>
+                        <p class="small text-white-50" th:text="${service.price} + ' LKR'">Price</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-light w-100"
+                                    th:attr="onclick='viewDetails(\'' + ${service.businessName} + '\',\'' + ${service.description} + '\',\'' + ${service.contact} + '\')'">DETAILS</button>
+                            <button th:id="'btn-' + ${service.id}" class="btn btn-sm btn-main-gold w-100"
+                                    th:attr="data-id=${service.id}, data-name=${service.businessName}, data-price=${service.price}"
+                                    onclick="addToBucket(this.dataset.id, this.dataset.name, this.dataset.price)">+ BUCKET</button>
+                        </div>
+                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold">INQUIRY</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cakes-section" class="mt-5" th:if="${cakes != null and not #lists.isEmpty(cakes)}">
+        <h3 class="brand-text mb-4">Wedding Cakes</h3>
+        <div class="row g-4">
+            <div class="col-md-4" th:each="service : ${cakes}" th:if="${service != null}">
+                <div class="card vendor-card">
+                    <img th:src="@{'/uploads/' + ${service.imagePath}}" class="card-img-top"
+                         onerror="this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500';" alt="Vendor Image">
+                    <div class="card-body">
+                        <h5 class="gold-italic" th:text="${service.businessName}">Name</h5>
+                        <p class="small text-white-50" th:text="${service.price} + ' LKR'">Price</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-light w-100"
+                                    th:attr="onclick='viewDetails(\'' + ${service.businessName} + '\',\'' + ${service.description} + '\',\'' + ${service.contact} + '\')'">DETAILS</button>
+                            <button th:id="'btn-' + ${service.id}" class="btn btn-sm btn-main-gold w-100"
+                                    th:attr="data-id=${service.id}, data-name=${service.businessName}, data-price=${service.price}"
+                                    onclick="addToBucket(this.dataset.id, this.dataset.name, this.dataset.price)">+ BUCKET</button>
+                        </div>
+                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold">INQUIRY</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="venues-section" class="mt-5" th:if="${venues != null and not #lists.isEmpty(venues)}">
+        <h3 class="brand-text mb-4">Luxury Venues</h3>
+        <div class="row g-4">
+            <div class="col-md-4" th:each="service : ${venues}" th:if="${service != null}">
+                <div class="card vendor-card">
+                    <img th:src="@{'/uploads/' + ${service.imagePath}}" class="card-img-top"
+                         onerror="this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500';" alt="Vendor Image">
+                    <div class="card-body">
+                        <h5 class="gold-italic" th:text="${service.businessName}">Name</h5>
+                        <p class="small text-white-50" th:text="${service.price} + ' LKR'">Price</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-light w-100"
+                                    th:attr="onclick='viewDetails(\'' + ${service.businessName} + '\',\'' + ${service.description} + '\',\'' + ${service.contact} + '\')'">DETAILS</button>
+                            <button th:id="'btn-' + ${service.id}" class="btn btn-sm btn-main-gold w-100"
+                                    th:attr="data-id=${service.id}, data-name=${service.businessName}, data-price=${service.price}"
+                                    onclick="addToBucket(this.dataset.id, this.dataset.name, this.dataset.price)">+ BUCKET</button>
+                        </div>
+                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold">INQUIRY</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="makeup-section" class="mt-5" th:if="${makeup != null and not #lists.isEmpty(makeup)}">
+        <h3 class="brand-text mb-4">Makeup Artists</h3>
+        <div class="row g-4">
+            <div class="col-md-4" th:each="service : ${makeup}" th:if="${service != null}">
+                <div class="card vendor-card">
+                    <img th:src="@{'/uploads/' + ${service.imagePath}}" class="card-img-top"
+                         onerror="this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500';" alt="Vendor Image">
+                    <div class="card-body">
+                        <h5 class="gold-italic" th:text="${service.businessName}">Name</h5>
+                        <p class="small text-white-50" th:text="${service.price} + ' LKR'">Price</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-light w-100"
+                                    th:attr="onclick='viewDetails(\'' + ${service.businessName} + '\',\'' + ${service.description} + '\',\'' + ${service.contact} + '\')'">DETAILS</button>
+                            <button th:id="'btn-' + ${service.id}" class="btn btn-sm btn-main-gold w-100"
+                                    th:attr="data-id=${service.id}, data-name=${service.businessName}, data-price=${service.price}"
+                                    onclick="addToBucket(this.dataset.id, this.dataset.name, this.dataset.price)">+ BUCKET</button>
+                        </div>
+                        <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold">INQUIRY</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="decorations-section" class="mt-5" th:if="${decorations != null and not #lists.isEmpty(decorations)}">
+        <h3 class="brand-text mb-4">Wedding Decorations</h3>
+        <div class="row g-4">
+            <div class="col-md-4" th:each="service : ${decorations}" th:if="${service != null}">
+                <div class="card vendor-card h-100">
+                    <img th:src="@{'/uploads/' + ${service.imagePath}}" class="card-img-top"
+                         onerror="this.src='https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=500';" alt="Vendor Image">
+                    <div class="card-body">
+                        <h5 class="gold-italic" th:text="${service.businessName}">Name</h5>
+                        <p class="small text-white-50" th:text="${service.price} + ' LKR'">Price</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-light w-100"
+                                    th:attr="onclick='viewDetails(\'' + ${service.businessName} + '\',\'' + ${service.description} + '\',\'' + ${service.contact} + '\')'">DETAILS</button>
+                            <button th:id="'btn-' + ${service.id}" class="btn btn-sm btn-main-gold w-100"
+                                    th:attr="data-id=${service.id}, data-name=${service.businessName}, data-price=${service.price}"
+                                    onclick="addToBucket(this.dataset.id, this.dataset.name, this.dataset.price)">+ BUCKET</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<section class="container py-5 border-top border-secondary">
+    <h2 class="editorial-title text-center mb-5">Curated for <em>Your Tradition</em></h2>
+    <div class="row g-4" id="tradition-container"></div>
+</section>
+
+<div class="floating-bucket-trigger" onclick="toggleBucket()">
+    <i class="bi bi-bag-heart"></i>
+    <span class="bucket-count-badge" id="bucketCount">0</span>
+</div>
+
+<div class="bucket-container" id="bucketList" style="display: none;">
+    <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+        <h6 class="brand-text m-0">Your Selection</h6>
+        <i class="bi bi-x-lg text-white" onclick="toggleBucket()" style="cursor:pointer;"></i>
+    </div>
+    <div id="bucketItems" class="my-3" style="max-height: 300px; overflow-y: auto;"></div>
+    <div class="d-flex justify-content-between border-top pt-2 gold-italic">
+        <span>Total Estimate:</span>
+        <span id="bucketTotal">0 LKR</span>
+    </div>
+    <button class="btn btn-danger w-100 mt-3 btn-sm" onclick="location.href='/payment'">BOOK NOW</button>
+</div>
+
+<div class="modal fade" id="traditionModal" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content luxury-popup">
+            <div class="modal-body text-center p-5">
+                <h2 class="brand-text mb-4">Welcome to Vivaha</h2>
+                <p class="mb-4">Let us know your wedding traditional preference</p>
+                <div class="input-group-custom">
+                    <select id="traditionSelect" class="form-select bg-dark text-white border-gold">
+                        <option value="Mixed">Mixed (No specific preference)</option>
+                        <option value="Sinhala">Sinhala</option>
+                        <option value="Hindu">Hindu</option>
+                        <option value="Islam">Islam</option>
+                        <option value="Christian">Christian</option>
+                        <option value="Modern">Modern</option>
+                    </select>
+                </div>
+                <button class="btn-editorial-gold mt-4" onclick="setTradition()">BEGIN EXPLORING</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script th:inline="javascript">
+    const allServices = /*[[${allServices}]]*/ [];
+    let bucket = [];
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const myModal = new bootstrap.Modal(document.getElementById('traditionModal'));
+        myModal.show();
+        const saved = localStorage.getItem('userWeddingTradition');
+        if (saved) { updateStyle(saved); }
+    });
+
+    function setTradition() {
+        const selected = document.getElementById('traditionSelect').value;
+        updateStyle(selected);
+        bootstrap.Modal.getInstance(document.getElementById('traditionModal')).hide();
+    }
+
+    function updateStyle(style) {
+        localStorage.setItem('userWeddingTradition', style);
+        document.getElementById('displayTradition').innerText = "Tradition: " + style;
+        document.getElementById('currentStyleLabel').innerText = style.toUpperCase();
+        renderRecommendations(style);
+    }
+
+    function renderRecommendations(style) {
+        const container = document.getElementById('tradition-container');
+        const filtered = (style === 'All' || style === 'Mixed')
+            ? allServices
+            : allServices.filter(s => s && s.tradition === style);
+
+        container.innerHTML = filtered.map(s => {
+            const imgSrc = s.imagePath && s.imagePath.startsWith('http')
+                ? s.imagePath
+                : '/uploads/' + (s.imagePath || 'default.jpg');
+            return `
+            <div class="col-md-4">
+                <div class="card vendor-card h-100">
+                    <img src="${imgSrc}" class="card-img-top" alt="Vendor Image" onerror="this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500';">
+                    <div class="card-body">
+                        <h5 class="gold-italic">${s.businessName}</h5>
+                        <p class="small text-white-50">${s.category}</p>
+                        <p class="gold-italic" style="color:var(--gold-light)">${s.price} LKR</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-light w-100"
+                                    onclick="viewDetails('${s.businessName}', '${s.description}', '${s.contact}')">DETAILS</button>
+                            <button id="btn-dyn-${s.id}" class="btn btn-sm btn-main-gold w-100"
+                                    data-id="${s.id}" data-name="${s.businessName}" data-price="${s.price}"
+                                    onclick="addToBucket(this.dataset.id, this.dataset.name, this.dataset.price)">+ BUCKET</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function viewDetails(name, desc, contact) {
+        document.getElementById('modalBizName').innerText = name;
+        document.getElementById('modalDesc').innerText = desc;
+        document.getElementById('modalContact').innerText = contact;
+        const myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+        myModal.show();
+    }
+
+    function toggleBucket() {
+        const el = document.getElementById('bucketList');
+        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function addToBucket(id, name, price) {
+        if (bucket.find(item => item.id === id)) return;
+        const numericPrice = parseInt(String(price).replace(/[^0-9]/g, ''));
+        bucket.push({ id, name, price: numericPrice });
+        const btnEssential = document.getElementById('btn-' + id);
+        const btnDynamic = document.getElementById('btn-dyn-' + id);
+        [btnEssential, btnDynamic].forEach(btn => {
+            if (btn) { btn.innerText = "SELECTED"; btn.classList.add('btn-selected'); btn.disabled = true; }
+        });
+        renderBucket();
+    }
+
+    function removeFromBucket(id) {
+        bucket = bucket.filter(item => item.id !== id);
+        const btn = document.getElementById('btn-' + id);
+        if (btn) { btn.innerText = "+ BUCKET"; btn.classList.remove('btn-selected'); btn.disabled = false; }
+        renderBucket();
+    }
+
+    function renderBucket() {
+        const container = document.getElementById('bucketItems');
+        const totalEl = document.getElementById('bucketTotal');
+        const countEl = document.getElementById('bucketCount');
+        countEl.innerText = bucket.length;
+        container.innerHTML = bucket.map(item => `
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <div style="font-weight:600; color:white;">${item.name}</div>
+                    <div class="text-white-50 small">${item.price} LKR</div>
+                </div>
+                <i class="bi bi-trash text-danger" onclick="removeFromBucket('${item.id}')" style="cursor:pointer;"></i>
+            </div>
+        `).join('');
+        const total = bucket.reduce((sum, item) => sum + item.price, 0);
+        totalEl.innerText = total.toLocaleString() + " LKR";
+    }
+
+    function scrollToSection(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            const top = element.getBoundingClientRect().top + window.pageYOffset - 100;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+    }
+</script>
+
+<div class="modal fade" id="detailsModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content luxury-popup">
+            <div class="modal-header border-0">
+                <h5 class="modal-title brand-text" id="modalBizName">Vendor Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="modalDesc" class="mb-3"></p>
+                <div class="d-flex align-items-center gap-2 text-gold">
+                    <i class="bi bi-telephone"></i>
+                    <span id="modalContact"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

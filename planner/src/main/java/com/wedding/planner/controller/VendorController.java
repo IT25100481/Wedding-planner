@@ -86,28 +86,19 @@ public class VendorController {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 7) {
-                    Service s = new Service(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6]);
-                    if (parts.length == 8) {
-                        s.setImagePath(parts[7]);
-                    }
-                    services.add(s);
-                }
+                Service s = Service.fromFileLine(line);
+                if (s != null) services.add(s);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return services;
     }
-
     private void saveServiceToFile(Service s) {
         try (FileWriter fw = new FileWriter(FILE_PATH, true);
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
-            out.println(s.getId() + "," + s.getBusinessName() + "," + s.getCategory() + "," +
-                    s.getTradition() + "," + s.getDescription() + "," + s.getContact() + "," +
-                    s.getPrice() + "," + s.getImagePath());
+            out.println(s.toFileLine());  // uses pipe format automatically
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -116,9 +107,7 @@ public class VendorController {
     private void rewriteFile(List<Service> services) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(FILE_PATH))) {
             for (Service s : services) {
-                pw.println(s.getId() + "," + s.getBusinessName() + "," + s.getCategory() + "," +
-                        s.getTradition() + "," + s.getDescription() + "," + s.getContact() + "," +
-                        s.getPrice() + "," + (s.getImagePath() != null ? s.getImagePath() : ""));
+                pw.println(s.toFileLine());  // uses pipe format automatically
             }
         } catch (IOException e) {
             e.printStackTrace();

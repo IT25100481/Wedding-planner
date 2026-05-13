@@ -1,3 +1,4 @@
 Yakshanth Nagarathnam,yakshanth,yakshanth1018@gmail.com,20041018,Couple
 Yakshanth Nagarathnam,111,yakshath1190@gmail.com,222,Couple
 suresh,ssss,suresh@gmail.com,5555,Vendor
+Kavindu Sandanuwan,kavindusandanuwan68@gmail.com,kavindusandanuwan68@gmail.com,123,Couple

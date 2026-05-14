@@ -27,165 +27,115 @@
             padding: 40px 20px;
         }
 
-        .payment-wrapper {
-            width: 100%;
-            max-width: 520px;
-        }
+        .payment-wrapper { width: 100%; max-width: 520px; }
 
         .brand {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            color: var(--gold);
-            letter-spacing: 3px;
-            text-align: center;
-            margin-bottom: 32px;
-            text-decoration: none;
-            display: block;
+            font-size: 1.8rem; color: var(--gold);
+            letter-spacing: 3px; text-align: center;
+            margin-bottom: 32px; text-decoration: none; display: block;
         }
 
-        .payment-card {
-            background: var(--cream);
-            padding: 48px;
-        }
+        .payment-card { background: var(--cream); padding: 48px; }
 
-        .payment-tag {
-            font-size: 0.62rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 8px;
-        }
-
-        .payment-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
-            font-weight: 300;
-            color: var(--dark);
-            margin-bottom: 32px;
-        }
+        .payment-tag { font-size: 0.62rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+        .payment-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--dark); margin-bottom: 32px; }
 
         /* BOOKING SUMMARY */
-        .booking-summary {
-            background: rgba(201,168,76,0.08);
-            border: 1px solid rgba(201,168,76,0.2);
-            padding: 20px;
-            margin-bottom: 28px;
-        }
-        .summary-title {
-            font-size: 0.62rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 12px;
-        }
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-        .summary-row.total {
-            border-top: 1px solid rgba(201,168,76,0.2);
-            padding-top: 10px;
-            margin-top: 4px;
-            font-weight: 500;
-            color: var(--dark);
-        }
-        .summary-row .amount {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
-            color: var(--gold);
-        }
+        .booking-summary { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); padding: 20px; margin-bottom: 28px; }
+        .summary-title { font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+        .summary-row { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px; }
+        .summary-row.total { border-top: 1px solid rgba(201,168,76,0.2); padding-top: 10px; margin-top: 4px; font-weight: 500; color: var(--dark); }
+        .summary-row .amount { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold); }
 
         /* FORM */
-        .form-label {
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            display: block;
-        }
+        .form-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: block; }
         .form-control, .form-select {
-            border-radius: 0;
-            border: 1px solid rgba(201,168,76,0.3);
-            font-size: 0.85rem;
-            padding: 12px 14px;
-            font-family: 'Montserrat', sans-serif;
-            width: 100%;
-            margin-bottom: 20px;
-            background: #fff;
+            border-radius: 0; border: 1px solid rgba(201,168,76,0.3);
+            font-size: 0.85rem; padding: 12px 14px;
+            font-family: 'Montserrat', sans-serif; width: 100%;
+            margin-bottom: 20px; background: #fff;
         }
-        .form-control:focus, .form-select:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 2px rgba(201,168,76,0.15);
-            outline: none;
-        }
+        .form-control:focus, .form-select:focus { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(201,168,76,0.15); outline: none; }
+        .form-control.is-invalid { border-color: #c0392b; margin-bottom: 4px; }
+        .form-control.is-valid { border-color: #27ae60; }
 
         /* PAYMENT METHOD CARDS */
-        .method-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .method-card {
-            border: 1px solid rgba(201,168,76,0.3);
-            padding: 14px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: #fff;
-        }
+        .method-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+        .method-card { border: 1px solid rgba(201,168,76,0.3); padding: 14px; text-align: center; cursor: pointer; transition: all 0.3s; background: #fff; }
         .method-card:hover { border-color: var(--gold); }
         .method-card.selected { border-color: var(--gold); background: rgba(201,168,76,0.08); }
-        .method-card input { display: none; }
         .method-icon { font-size: 1.4rem; margin-bottom: 6px; display: block; }
         .method-name { font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+        .method-card.selected .method-name { color: var(--gold-dark); }
 
-        /* VALIDATION */
+        /* CARD DETAILS PANEL */
+        .card-details-panel {
+            background: #fff;
+            border: 1px solid rgba(201,168,76,0.3);
+            padding: 24px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .card-details-panel.show { display: block; }
+        .card-panel-title {
+            font-size: 0.65rem; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--gold);
+            margin-bottom: 18px; padding-bottom: 10px;
+            border-bottom: 1px solid rgba(201,168,76,0.15);
+        }
+
+        /* CARD PREVIEW */
+        .card-preview {
+            background: linear-gradient(135deg, #1a1209 0%, #3a2a15 50%, #1a1209 100%);
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            position: relative;
+            min-height: 160px;
+            color: #fff;
+        }
+        .card-preview .chip {
+            width: 36px; height: 28px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 4px; margin-bottom: 16px;
+        }
+        .card-preview .card-number-display {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem; letter-spacing: 3px;
+            color: rgba(255,255,255,0.9); margin-bottom: 16px;
+        }
+        .card-preview .card-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+        .card-preview .card-label { font-size: 0.55rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 2px; }
+        .card-preview .card-value { font-size: 0.8rem; color: rgba(255,255,255,0.85); text-transform: uppercase; letter-spacing: 1px; }
+        .card-preview .card-network { position: absolute; top: 20px; right: 20px; font-size: 1.4rem; color: var(--gold); font-weight: 600; font-family: 'Montserrat', sans-serif; letter-spacing: 1px; }
+
+        /* CARD FIELDS */
+        .card-input-wrap { position: relative; }
+        .card-input-icon { position: absolute; right: 14px; top: 13px; font-size: 1rem; color: var(--text-muted); pointer-events: none; }
+        .card-input-wrap .form-control { padding-right: 40px; }
+
+        /* ERROR */
+        .field-error { color: #c0392b; font-size: 0.68rem; margin-bottom: 14px; display: none; }
+        .field-error.show { display: block; }
         .error-msg { color: #c0392b; font-size: 0.72rem; margin-top: -14px; margin-bottom: 14px; display: none; }
-        .form-control.is-invalid { border-color: #c0392b; }
-        .form-control.is-valid { border-color: #27ae60; }
 
         /* BUTTON */
         .btn-pay {
-            width: 100%;
-            background: var(--gold);
-            color: var(--dark);
-            border: none;
-            padding: 16px;
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 8px;
+            width: 100%; background: var(--gold); color: var(--dark);
+            border: none; padding: 16px; font-size: 0.75rem;
+            letter-spacing: 3px; text-transform: uppercase; font-weight: 500;
+            cursor: pointer; transition: all 0.3s; margin-top: 8px;
+            font-family: 'Montserrat', sans-serif;
         }
         .btn-pay:hover { background: var(--gold-dark); color: #fff; }
 
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 16px;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.5);
-            text-decoration: none;
-        }
+        .back-link { display: block; text-align: center; margin-top: 16px; font-size: 0.75rem; color: rgba(255,255,255,0.5); text-decoration: none; }
         .back-link:hover { color: var(--gold); }
 
-        /* SUCCESS */
-        .success-box {
-            background: #f0fdf4;
-            border: 1px solid #86efac;
-            color: #166534;
-            padding: 16px;
-            font-size: 0.82rem;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+        .success-box { background: #f0fdf4; border: 1px solid #86efac; color: #166534; padding: 16px; font-size: 0.82rem; margin-bottom: 20px; text-align: center; }
+        .secure-note { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 14px; font-size: 0.62rem; color: rgba(255,255,255,0.25); letter-spacing: 1px; }
     </style>
 </head>
 <body>
@@ -226,7 +176,7 @@
             <input type="hidden" th:field="*{totalAmount}">
             <input type="hidden" name="paymentMethod" id="selectedMethod" value="CASH">
 
-            <!-- AMOUNT TO PAY -->
+            <!-- AMOUNT -->
             <label class="form-label">Amount to Pay (LKR)</label>
             <input type="number" class="form-control" id="amountPaid"
                    th:field="*{amountPaid}" placeholder="Enter amount" step="0.01" required>
@@ -253,6 +203,68 @@
                 </label>
             </div>
 
+            <!-- CARD DETAILS PANEL -->
+            <div class="card-details-panel" id="cardDetailsPanel">
+                <div class="card-panel-title">💳 Card Details</div>
+
+                <!-- CARD PREVIEW -->
+                <div class="card-preview">
+                    <div class="chip"></div>
+                    <div class="card-number-display" id="previewNumber">•••• •••• •••• ••••</div>
+                    <div class="card-bottom">
+                        <div>
+                            <div class="card-label">Card Holder</div>
+                            <div class="card-value" id="previewName">YOUR NAME</div>
+                        </div>
+                        <div>
+                            <div class="card-label">Expires</div>
+                            <div class="card-value" id="previewExpiry">MM/YY</div>
+                        </div>
+                    </div>
+                    <div class="card-network" id="cardNetwork">💳</div>
+                </div>
+
+                <!-- CARD NUMBER -->
+                <label class="form-label">Card Number</label>
+                <div class="card-input-wrap">
+                    <input type="text" class="form-control" id="cardNumber"
+                           placeholder="1234 5678 9012 3456"
+                           maxlength="19"
+                           oninput="formatCardNumber(this); updatePreview()">
+                    <span class="card-input-icon" id="cardTypeIcon">💳</span>
+                </div>
+                <div class="field-error" id="cardNumberError">⚠ Please enter a valid 16-digit card number</div>
+
+                <!-- CARD HOLDER NAME -->
+                <label class="form-label">Card Holder Name</label>
+                <input type="text" class="form-control" id="cardHolder"
+                       placeholder="As it appears on your card"
+                       oninput="checkHolderInput(this); updatePreview()"
+                       style="text-transform:uppercase">
+                <div class="field-error" id="cardHolderError">⚠ Please enter the card holder name</div>
+
+                <!-- EXPIRY & CVV -->
+                <div class="row g-3">
+                    <div class="col-6">
+                        <label class="form-label">Expiry Date</label>
+                        <input type="text" class="form-control" id="cardExpiry"
+                               placeholder="MM/YY" maxlength="5"
+                               oninput="formatExpiry(this); updatePreview()">
+                        <div class="field-error" id="cardExpiryError">⚠ Invalid expiry date</div>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">CVV</label>
+                        <div class="card-input-wrap">
+                            <input type="password" class="form-control" id="cardCvv"
+                                   placeholder="•••" maxlength="4"
+                                   oninput="validateCvvInput(this)">
+                            <span class="card-input-icon">🔒</span>
+                        </div>
+                        <div class="field-error" id="cardCvvError">⚠ Enter valid CVV (3-4 digits)</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- TRANSACTION ID -->
             <label class="form-label">Transaction ID <span style="color:var(--text-muted)">(optional)</span></label>
             <input type="text" class="form-control" th:field="*{transactionId}" placeholder="Auto-generated if empty">
@@ -261,22 +273,199 @@
             <label class="form-label">Notes <span style="color:var(--text-muted)">(optional)</span></label>
             <input type="text" class="form-control" th:field="*{notes}" placeholder="Any special instructions...">
 
-            <button type="submit" class="btn-pay">Confirm Payment</button>
+            <button type="submit" class="btn-pay" id="payBtn">Confirm Payment</button>
         </form>
     </div>
 
     <a href="/" class="back-link">← Back to Home</a>
+    <div class="secure-note">🔒 &nbsp; Your payment is securely processed</div>
 </div>
 
 <script>
+    // ── METHOD SELECTION ──
     function selectMethod(method, el) {
         document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
         el.classList.add('selected');
         document.getElementById('selectedMethod').value = method;
+        const panel = document.getElementById('cardDetailsPanel');
+        if (method === 'CARD') {
+            panel.classList.add('show');
+            document.getElementById('payBtn').textContent = 'Pay with Card';
+        } else {
+            panel.classList.remove('show');
+            document.getElementById('payBtn').textContent = 'Confirm Payment';
+            clearCardFields();
+        }
     }
 
+    function clearCardFields() {
+        ['cardNumber','cardHolder','cardExpiry','cardCvv'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) { el.value = ''; el.classList.remove('is-invalid','is-valid'); }
+        });
+        document.querySelectorAll('.field-error').forEach(e => e.classList.remove('show'));
+        document.getElementById('previewNumber').textContent = '•••• •••• •••• ••••';
+        document.getElementById('previewName').textContent = 'YOUR NAME';
+        document.getElementById('previewExpiry').textContent = 'MM/YY';
+        document.getElementById('cardNetwork').textContent = '💳';
+        document.getElementById('cardTypeIcon').textContent = '💳';
+    }
+
+    // ── CARD NUMBER FORMAT ──
+    function formatCardNumber(input) {
+        let value = input.value.replace(/\D/g, '').substring(0, 16);
+        input.value = value.replace(/(.{4})/g, '$1 ').trim();
+    }
+
+    // ── EXPIRY FORMAT ──
+    function formatExpiry(input) {
+        let value = input.value.replace(/\D/g, '').substring(0, 4);
+        if (value.length >= 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2);
+        }
+        input.value = value;
+    }
+
+    // ── CVV NUMBERS ONLY ──
+    function validateCvvInput(input) {
+        input.value = input.value.replace(/\D/g, '').substring(0, 4);
+    }
+
+    // ── LIVE CARD HOLDER CHECK — special characters blocked ──
+    function checkHolderInput(input) {
+        const specialCharPattern = /[^a-zA-Z\s]/;
+        const err = document.getElementById('cardHolderError');
+        if (specialCharPattern.test(input.value)) {
+            err.textContent = '⚠ Name cannot contain special characters or numbers';
+            err.classList.add('show');
+            input.classList.add('is-invalid');
+            input.classList.remove('is-valid');
+        } else if (input.value.trim().length > 0) {
+            err.classList.remove('show');
+            input.classList.remove('is-invalid');
+        } else {
+            err.classList.remove('show');
+            input.classList.remove('is-invalid');
+            input.classList.remove('is-valid');
+        }
+    }
+
+    // ── LIVE CARD PREVIEW ──
+    function updatePreview() {
+        const number = document.getElementById('cardNumber').value;
+        const name   = document.getElementById('cardHolder').value.toUpperCase();
+        const expiry = document.getElementById('cardExpiry').value;
+
+        const raw = number.replace(/\s/g, '');
+        let display = '';
+        for (let i = 0; i < 16; i++) {
+            if (i > 0 && i % 4 === 0) display += ' ';
+            display += raw[i] ? raw[i] : '•';
+        }
+
+        document.getElementById('previewNumber').textContent = display;
+        document.getElementById('previewName').textContent = name || 'YOUR NAME';
+        document.getElementById('previewExpiry').textContent = expiry || 'MM/YY';
+
+        const firstDigit = raw[0];
+        const firstTwo   = raw.substring(0, 2);
+        let network = '💳';
+        if (firstDigit === '4') network = 'VISA';
+        else if (['51','52','53','54','55'].includes(firstTwo)) network = 'MC';
+        else if (firstTwo === '34' || firstTwo === '37') network = 'AMEX';
+        document.getElementById('cardNetwork').textContent = network;
+        document.getElementById('cardTypeIcon').textContent = network === '💳' ? '💳' : network;
+    }
+
+    // ── CARD FIELDS VALIDATION ──
+    function validateCardFields() {
+        let valid = true;
+
+        // Card Number
+        const cardNum = document.getElementById('cardNumber').value.replace(/\s/g, '');
+        const cardNumErr = document.getElementById('cardNumberError');
+        const cardNumField = document.getElementById('cardNumber');
+        if (cardNum.length !== 16 || !/^\d+$/.test(cardNum)) {
+            cardNumErr.textContent = '⚠ Please enter a valid 16-digit card number';
+            cardNumErr.classList.add('show');
+            cardNumField.classList.add('is-invalid');
+            cardNumField.classList.remove('is-valid');
+            valid = false;
+        } else {
+            cardNumErr.classList.remove('show');
+            cardNumField.classList.remove('is-invalid');
+            cardNumField.classList.add('is-valid');
+        }
+
+        // Card Holder — no special characters, no numbers
+        const holder = document.getElementById('cardHolder').value.trim();
+        const holderErr = document.getElementById('cardHolderError');
+        const holderField = document.getElementById('cardHolder');
+        const specialCharPattern = /[^a-zA-Z\s]/;
+        if (!holder || holder.length < 3) {
+            holderErr.textContent = '⚠ Please enter the card holder name';
+            holderErr.classList.add('show');
+            holderField.classList.add('is-invalid');
+            holderField.classList.remove('is-valid');
+            valid = false;
+        } else if (specialCharPattern.test(holder)) {
+            holderErr.textContent = '⚠ Name cannot contain special characters or numbers';
+            holderErr.classList.add('show');
+            holderField.classList.add('is-invalid');
+            holderField.classList.remove('is-valid');
+            valid = false;
+        } else {
+            holderErr.classList.remove('show');
+            holderField.classList.remove('is-invalid');
+            holderField.classList.add('is-valid');
+        }
+
+        // Expiry
+        const expiry = document.getElementById('cardExpiry').value;
+        const expiryErr = document.getElementById('cardExpiryError');
+        const expiryField = document.getElementById('cardExpiry');
+        const expiryPattern = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
+        let expiryValid = expiryPattern.test(expiry);
+        if (expiryValid) {
+            const [month, year] = expiry.split('/');
+            const expDate = new Date(2000 + parseInt(year), parseInt(month) - 1);
+            const now = new Date();
+            now.setDate(1); now.setHours(0,0,0,0);
+            if (expDate < now) expiryValid = false;
+        }
+        if (!expiryValid) {
+            expiryErr.textContent = expiry ? '⚠ Card has expired or invalid date' : '⚠ Invalid expiry date';
+            expiryErr.classList.add('show');
+            expiryField.classList.add('is-invalid');
+            expiryField.classList.remove('is-valid');
+            valid = false;
+        } else {
+            expiryErr.classList.remove('show');
+            expiryField.classList.remove('is-invalid');
+            expiryField.classList.add('is-valid');
+        }
+
+        // CVV
+        const cvv = document.getElementById('cardCvv').value;
+        const cvvErr = document.getElementById('cardCvvError');
+        const cvvField = document.getElementById('cardCvv');
+        if (!/^\d{3,4}$/.test(cvv)) {
+            cvvErr.classList.add('show');
+            cvvField.classList.add('is-invalid');
+            cvvField.classList.remove('is-valid');
+            valid = false;
+        } else {
+            cvvErr.classList.remove('show');
+            cvvField.classList.remove('is-invalid');
+            cvvField.classList.add('is-valid');
+        }
+
+        return valid;
+    }
+
+    // ── MAIN FORM VALIDATION ──
     function validatePayment() {
-        const amountPaid = parseFloat(document.getElementById('amountPaid').value);
+        const amountPaid  = parseFloat(document.getElementById('amountPaid').value);
         const totalAmount = parseFloat('[[${newPayment.totalAmount != null ? newPayment.totalAmount : 999999999}]]');
         const amountError = document.getElementById('amountError');
         const amountField = document.getElementById('amountPaid');
@@ -288,6 +477,12 @@
         }
         amountError.style.display = 'none';
         amountField.classList.remove('is-invalid');
+
+        const method = document.getElementById('selectedMethod').value;
+        if (method === 'CARD') {
+            return validateCardFields();
+        }
+
         return true;
     }
 </script>

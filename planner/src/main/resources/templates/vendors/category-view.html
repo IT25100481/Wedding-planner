@@ -99,6 +99,8 @@
             <span id="displayTradition" class="gold-italic" style="font-size: 1.5rem; margin-left: 40px;">Tradition: Modern</span>
         </div>
         <div class="ms-auto d-flex align-items-center gap-4">
+            <!-- PACKAGES is now LEFT of BACK TO DASHBOARD -->
+            <a href="/packages" class="nav-link-minimal">PACKAGES</a>
             <a href="/" class="nav-link-minimal">BACK TO DASHBOARD</a>
             <div class="dropdown">
                 <button class="btn-style-pill dropdown-toggle" data-bs-toggle="dropdown">
@@ -254,7 +256,6 @@
                                     th:attr="data-id=${service.id}, data-name=${service.businessName}, data-price=${service.price}"
                                     onclick="addToBucket(this.dataset.id, this.dataset.name, this.dataset.price)">+ BUCKET</button>
                         </div>
-                        <!-- Added Inquiry Button Below -->
                         <button class="btn btn-sm btn-dark w-100 mt-2 border-gold text-gold"
                                 th:attr="onclick='location.href=\'/inquiry?vendorId=' + ${service.id} + '\''">INQUIRY</button>
                     </div>
@@ -421,16 +422,17 @@
         const total = bucket.reduce((sum, item) => sum + item.price, 0);
         totalEl.innerText = total.toLocaleString() + " LKR";
     }
+
     function goToPayment() {
-    if (bucket.length === 0) {
-        alert('Please select at least one vendor!');
-        return;
+        if (bucket.length === 0) {
+            alert('Please select at least one vendor!');
+            return;
+        }
+        const total = bucket.reduce((sum, item) => sum + item.price, 0);
+        const vendorNames = bucket.map(item => item.name).join(', ');
+        const bookingId = 'BK-' + Date.now();
+        window.location.href = `/payments?bookingId=${bookingId}&vendorName=${encodeURIComponent(vendorNames)}&totalAmount=${total}`;
     }
-    const total = bucket.reduce((sum, item) => sum + item.price, 0);
-    const vendorNames = bucket.map(item => item.name).join(', ');
-    const bookingId = 'BK-' + Date.now();
-    window.location.href = `/payments?bookingId=${bookingId}&vendorName=${encodeURIComponent(vendorNames)}&totalAmount=${total}`;
-}
 
     function scrollToSection(id) {
         const element = document.getElementById(id);

@@ -1,7 +1,10 @@
 package com.wedding.planner.controller;
 
+import com.wedding.planner.model.Payment;
 import com.wedding.planner.model.User;
+import com.wedding.planner.service.PaymentService;
 import com.wedding.planner.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +13,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 public class DashboardController {
 
     private final UserService userService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     public DashboardController(UserService userService) {
         this.userService = userService;
@@ -30,21 +39,25 @@ public class DashboardController {
         model.addAttribute("navName", session.getAttribute("navName"));
         model.addAttribute("initials", session.getAttribute("userInitials"));
 
+        // get only this client's payments
+        String userId = (String) session.getAttribute("loggedInUser");
+        List<Payment> allPayments = paymentService.getAllPayments();
+        List<Payment> myPayments = allPayments.stream()
+                .filter(p -> p.getUserId() != null && p.getUserId().equals(userId))
+                .collect(Collectors.toList());
+        model.addAttribute("myPayments", myPayments);
+
         return "dashboard";
     }
 
-    /* ── NEW: WEDDING PLANNER ROUTE ── */
     @GetMapping("/planner")
     public String showPlanner(HttpSession session, Model model) {
         if (session.getAttribute("loggedInUser") == null) {
             return "redirect:/login";
         }
-
-        // Pass essential navbar data
         model.addAttribute("role", session.getAttribute("userRole"));
         model.addAttribute("navName", session.getAttribute("navName"));
         model.addAttribute("initials", session.getAttribute("userInitials"));
-
         return "planner";
     }
 
@@ -53,35 +66,28 @@ public class DashboardController {
         if (session.getAttribute("loggedInUser") == null) {
             return "redirect:/login";
         }
-
         model.addAttribute("username", session.getAttribute("loggedInUser"));
         model.addAttribute("fullName", session.getAttribute("userName"));
         model.addAttribute("email", session.getAttribute("userEmail"));
         model.addAttribute("role", session.getAttribute("userRole"));
         model.addAttribute("initials", session.getAttribute("userInitials"));
-
         return "profile";
     }
 
     @PostMapping("/update-profile")
     public String updateProfile(@RequestParam String fullName, HttpSession session) {
         String username = (String) session.getAttribute("loggedInUser");
-
         userService.updateFullName(username, fullName);
-
         String trimmedName = fullName.trim();
         session.setAttribute("userName", trimmedName);
-
         String firstName = trimmedName.split("\\s+")[0];
         session.setAttribute("navName", firstName);
-
         String initials = firstName.substring(0, 1).toUpperCase();
         String[] parts = trimmedName.split("\\s+");
         if (parts.length > 1) {
             initials += parts[parts.length - 1].substring(0, 1).toUpperCase();
         }
         session.setAttribute("userInitials", initials);
-
         return "redirect:/profile?updated=true";
     }
 
@@ -91,12 +97,10 @@ public class DashboardController {
                                  HttpSession session) {
         String username = (String) session.getAttribute("loggedInUser");
         User user = userService.findByUsername(username);
-
         if (user != null && user.getPassword().equals(currentPassword)) {
             userService.updatePasswordByUsername(username, newPassword);
             return "redirect:/profile?passSuccess=true";
         }
-
         return "redirect:/profile?passError=true";
     }
 

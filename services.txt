@@ -1,42 +1,40 @@
-1|Velvet Crème Patisserie|Cakes|universal|Luxury floral wedding cakes with elegant handcrafted detailing.|+94 77 234 5678|85000|vendor_1.jpg|APPROVED|admin@vivaha.com
-2|Moonlit Sugar Studio|Cakes|universal|Modern fondant and buttercream cakes for grand wedding receptions.|+94 71 445 6677|72000|vendor_2.jpg|APPROVED|admin@vivaha.com
-3|Ivory Bloom Cakes|Cakes|universal|Premium custom cakes with unique flavors and artistic finishes.|+94 76 889 3344|110000|vendor_3.jpg|APPROVED|admin@vivaha.com
-4|Rosé Whisk Atelier|Cakes|universal|Chic and affordable wedding cakes for intimate celebrations.|+94 70 998 2211|48000|vendor_4.jpg|APPROVED|admin@vivaha.com
-5|Arul’s Jathakam Decor|Venue|universal|Grand floral stages and luxury wedding hall transformations.|+94 77 901 2233|650000|vendor_5.jpg|APPROVED|admin@vivaha.com
-6|Celestial Petals Events|Venue|universal|Elegant wedding décor with fresh flowers and crystal lighting.|+94 71 334 8899|480000|vendor_6.jpg|APPROVED|admin@vivaha.com
-7|Golden Veil Creations|Venue|universal|Traditional and modern wedding setups with luxurious themes.|+94 76 118 5522|920000|vendor_7.jpg|APPROVED|admin@vivaha.com
-8|Enchanted Aura Décor|Venue|universal|Stylish and romantic décor packages for indoor receptions.|+94 75 440 7766|350000|vendor_8.jpg|APPROVED|admin@vivaha.com
-9|EverAfter Motion Studio|Photography|universal|Cinematic wedding photography with drone and highlight films.|+94 77 654 8899|540000|vendor_9.jpg|APPROVED|admin@vivaha.com
-10|Lumora Wedding Films|Photography|universal|Creative storytelling photography for timeless wedding memories.|+94 71 555 7711|390000|vendor_10.jpg|APPROVED|admin@vivaha.com
-11|Opal Frame Studios|Photography|universal|Luxury wedding photography and cinematic videography packages.|+94 76 902 1122|710000|vendor_11.jpg|APPROVED|admin@vivaha.com
-12|Starlight Memoirs|Photography|universal|Affordable candid photography for elegant wedding moments.|+94 70 123 6644|260000|vendor_12.jpg|APPROVED|admin@vivaha.com
-13|Sapphire Crown Ballroom|Venue|universal|Luxury ballroom venue ideal for grand wedding receptions.|+94 11 234 7788|4800000|vendor_13.jpg|APPROVED|admin@vivaha.com
-14|Ocean Mirage Resort|Venue|universal|Stunning beachfront wedding venue with sunset reception options.|+94 77 456 2233|3600000|vendor_14.jpg|APPROVED|admin@vivaha.com
-15|Ivory Garden Banquets|Venue|universal|Elegant banquet hall with customizable wedding packages.|+94 71 223 1199|2400000|vendor_15.jpg|APPROVED|admin@vivaha.com
-16|The Velvet Orchid Hall|Venue|universal|Sophisticated indoor wedding venue with premium dining facilities.|+94 75 998 4411|5200000|vendor_16.jpg|APPROVED|admin@vivaha.com
-17|Blush & Glow by Nethara|Makeup|universal|Glamorous bridal makeup with luxury hairstyling services.|+94 77 667 1122|185000|vendor_17.jpg|APPROVED|admin@vivaha.com
-18|Velvet Vanity Studio|Makeup|universal|Modern bridal makeup and saree draping for wedding events.|+94 71 778 9900|220000|vendor_18.jpg|APPROVED|admin@vivaha.com
-19|Aurora Bridal Lounge|Makeup|universal|Premium bridal beauty services with elegant styling.|+94 76 554 8822|310000|vendor_19.jpg|APPROVED|admin@vivaha.com
-20|Radiance Muse Atelier|Makeup|universal|Affordable bridal makeup packages with trendy modern looks.|+94 70 889 5533|125000|vendor_20.jpg|APPROVED|admin@vivaha.com
-21|Lotus Henna by Kavya|Mehendi|Hindu|Traditional bridal mehendi with intricate Tamil designs.|+94 77 221 4455|55000|hindu_mehendi.jpg|APPROVED|admin@vivaha.com
-22|Sacred Kolam Creations|Kolam|Hindu|Elegant ceremonial kolam art designs for temple and home weddings.|+94 71 110 5544|48000|hindu_kolam.jpg|APPROVED|admin@vivaha.com
-23|Emerald Thoranam Studio|Thoranam|Hindu|Traditional banana leaf arches and floral thoranam décor.|+94 76 775 3322|165000|hindu_banana_leaf.jpg|APPROVED|admin@vivaha.com
-24|Shaivam Wedding Films|Photography|Hindu|Captures traditional Hindu temple ceremonies with cinematic photography.|+94 70 441 8899|420000|hindu_photo.jpg|APPROVED|admin@vivaha.com
-25|Moonlight Henna Lounge|Mehendi|Islamic|Arabic and Mughal-inspired bridal mehendi for Nikah ceremonies.|+94 77 992 3300|62000|islam_mehendi.jpg|APPROVED|admin@vivaha.com
-26|Noor Mahal Events|Venue|Islamic|Royal Mughal-themed wedding décor with chandeliers and arches.|+94 71 883 2200|780000|islam_mughal.jpg|APPROVED|admin@vivaha.com
-27|Crescent Luxe Weddings|Stage|Islamic|Elegant white and gold Nikah stage styling with Islamic motifs.|+94 76 114 7788|520000|islam_nikah_stage.jpg|APPROVED|admin@vivaha.com
-28|Zariya Moments Studio|Photography|Islamic|Cinematic photography for Nikah, Walima, and Mehendi events.|+94 70 226 1199|48000|islam_photo.jpg|APPROVED|admin@vivaha.com
-29|Heavenly Aisle Creations|Aisle|Christian|Luxury floral aisle décor and candle styling for church weddings.|+94 77 551 2299|490000|christian_cathedral.jpg|APPROVED|admin@vivaha.com
-30|Angelic Harmony Choir|Choir|Christian|Live choir performances and instrumental music for wedding masses.|+94 71 773 5522|125000|christian_choir.jpg|APPROVED|admin@vivaha.com
-31|White Rose Bridal Florals|Florals|Christian|Elegant bridal bouquets and pastel floral arrangements.|+94 76 112 3399|95000|christian_florals.jpg|APPROVED|admin@vivaha.com
-32|Grace & Light Studios|Photography|Christian|Romantic photography and cinematic films for church ceremonies.|+94 70 883 2211|510000|christian_photo.jpg|APPROVED|admin@vivaha.com
-33|Ran Muthu Kandyan Décor|Venue|Sinhalese|Traditional Kandyan wedding décor with cultural stage styling.|+94 77 114 8822|620000|sinhala_kandyan.jpg|APPROVED|admin@vivaha.com
-34|Hewisi Beats Collective|Drummers|Sinhalese|Kandyan drummers and Ves dancers for wedding entrances.|+94 71 991 5533|210000|sinhala_drummers.jpg|APPROVED|admin@vivaha.com
-35|Golden Poruwa Creations|Poruwa|Sinhalese|Elegant handcrafted Poruwa setups inspired by royal weddings.|+94 76 220 4499|340000|sinhala_poruwa.jpg|APPROVED|admin@vivaha.com
-36|Sandalwood Memories Studio|Photography|Sinhalese|Traditional Sinhala wedding photography with cinematic storytelling.|+94 70 552 3377|460000|sinhala_photo.jpg|APPROVED|admin@vivaha.com
-37|Velvet Aura Events|Venue|Modern|Elegant minimalist wedding décor with luxury floral styling.|+94 77 661 2244|850000|modern_decor.jpg|APPROVED|admin@vivaha.com
-38|Neon Vows Entertainment|Effects|Modern|LED dance floors, cold sparks, and luxury reception lighting.|+94 71 882 5500|390000|modern_effects.jpg|APPROVED|admin@vivaha.com
-39|Azure Knot Weddings|Planning|Modern|Premium beach and luxury resort destination wedding planning.|+94 76 445 1188|1200000|modern_destination.jpg|APPROVED|admin@vivaha.com
-40|Modern EverAfter Studio|Photography|Modern|Trendy cinematic wedding films with drone and social media reels.|+94 70 993 4411|690000|modern_photo.jpg|APPROVED|admin@vivaha.com
-a6b48795-8d64-4299-bc5c-f2964de03bac|Royal Cakes|Cakes|Sinhalese|We can customize cakes according to your preference|0778656988|30000|no-image.jpg|APPROVED|admin@vivaha.com
-8fc5e36f-8e7d-46b1-9404-b947555991e7|Royal Photo|Photography|Sinhalese|Professional wedding photography services.|077694984|300000|no-image.jpg|APPROVED|admin@vivaha.com
+v1|Velvet Crème Patisserie|Cake|Universal|Luxury floral wedding cakes with elegant handcrafted detailing.|+94 77 234 5678|85000|https://images.unsplash.com/photo-1535254973040-607b474cb8c2?w=500|Available
+v2|Moonlit Sugar Studio|Cake|Universal|Modern fondant and buttercream cakes for grand wedding receptions.|+94 71 445 6677|72000|https://images.unsplash.com/photo-1525467022096-1d372ef3a060?w=500|Available
+v3|Ivory Bloom Cakes|Cake|Universal|Premium custom cakes with unique flavors and artistic finishes.|+94 76 889 3344|110000|https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500|Available
+v4|Rosé Whisk Atelier|Cake|Universal|Chic and affordable wedding cakes for intimate celebrations.|+94 70 998 2211|48000|https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=500|Available
+v5|Arul’s Jathakam Decor|Decoration|Universal|Grand floral stages and luxury wedding hall transformations.|+94 77 901 2233|650000|https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=500|Available
+v6|Celestial Petals Events|Decoration|Universal|Elegant wedding décor with fresh flowers and crystal lighting.|+94 71 334 8899|480000|https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500|Available
+v7|Golden Veil Creations|Decoration|Universal|Traditional and modern wedding setups with luxurious themes.|+94 76 118 5522|920000|https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=500|Available
+v8|Enchanted Aura Décor|Decoration|Universal|Stylish and romantic décor packages for indoor receptions.|+94 75 440 7766|350000|https://images.unsplash.com/photo-1507504031003-b417219a0fde?w=500|Available
+v9|EverAfter Motion Studio|Photography|Universal|Cinematic wedding photography with drone and highlight films.|+94 77 654 8899|540000|https://images.unsplash.com/photo-1519741497674-611481863552?w=500|Available
+v10|Lumora Wedding Films|Photography|Universal|Creative storytelling photography for timeless wedding memories.|+94 71 555 7711|390000|https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=500|Available
+v11|Opal Frame Studios|Photography|Universal|Luxury wedding photography and cinematic videography packages.|+94 76 902 1122|710000|https://images.unsplash.com/photo-1606800052052-a08af7148866?w=500|Available
+v12|Starlight Memoirs|Photography|Universal|Affordable candid photography for elegant wedding moments.|+94 70 123 6644|260000|https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=500|Available
+v13|Sapphire Crown Ballroom|Venue|Universal|Luxury ballroom venue ideal for grand wedding receptions.|+94 11 234 7788|4800000|https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=500|Available
+v14|Ocean Mirage Resort|Venue|Universal|Stunning beachfront wedding venue with sunset reception options.|+94 77 456 2233|3600000|https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=500|Available
+v15|Ivory Garden Banquets|Venue|Universal|Elegant banquet hall with customizable wedding packages.|+94 71 223 1199|2400000|https://images.unsplash.com/photo-1519741497674-611481863552?w=500|Available
+v16|The Velvet Orchid Hall|Venue|Universal|Sophisticated indoor wedding venue with premium dining facilities.|+94 75 998 4411|5200000|https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=500|Available
+v17|Blush & Glow by Nethara|Makeup|Universal|Glamorous bridal makeup with luxury hairstyling services.|+94 77 667 1122|185000|https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=500|Available
+v18|Velvet Vanity Studio|Makeup|Universal|Modern bridal makeup and saree draping for wedding events.|+94 71 778 9900|220000|https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500|Available
+v19|Aurora Bridal Lounge|Makeup|Universal|Premium bridal beauty services with elegant styling.|+94 76 554 8822|310000|https://images.unsplash.com/photo-1512496011931-625246738392?w=500|Available
+v20|Radiance Muse Atelier|Makeup|Universal|Affordable bridal makeup packages with trendy modern looks.|+94 70 889 5533|125000|https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=500|Available
+h1|Lotus Henna by Kavya|Mehendi|Hindu|Traditional bridal mehendi with intricate Tamil and South Indian inspired designs.|+94 77 221 4455|55000|https://images.unsplash.com/photo-1543157145-f78c636d023d?w=500|Available
+h2|Sacred Kolam Creations|Kolam Decoration|Hindu|Elegant ceremonial kolam art designs for temple and home weddings.|+94 71 110 5544|48000|https://images.unsplash.com/photo-1621359982465-b13d508b0751?w=500|Available
+h3|Emerald Thoranam Studio|Banana Leaf Decoration|Hindu|Traditional banana leaf arches and floral thoranam décor for Tamil weddings.|+94 76 775 3322|165000|https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=500|Available
+h4|Shaivam Wedding Films|Photography|Hindu|Captures traditional Hindu temple ceremonies with cinematic photography.|+94 70 441 8899|420000|https://images.unsplash.com/photo-1604312686737-01369528be48?w=500|Available
+i1|Moonlight Henna Lounge|Mehendi|Islam|Arabic and Mughal-inspired bridal mehendi for Nikah ceremonies.|+94 77 992 3300|62000|https://images.unsplash.com/photo-1590422329381-807d472f8832?w=500|Available
+i2|Noor Mahal Events|Mughal Decoration|Islam|Royal Mughal-themed wedding décor with chandeliers and floral arches.|+94 71 883 2200|780000|https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=500|Available
+i3|Crescent Luxe Weddings|Nikah Stage Decoration|Islam|Elegant white and gold Nikah stage styling with Islamic motifs.|+94 76 114 7788|520000|https://images.unsplash.com/photo-1510076857177-7470076d4098?w=500|Available
+i4|Zariya Moments Studio|Photography|Islam|Cinematic photography for Nikah, Walima, and Mehendi events.|+94 70 226 1199|48000|https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=500|Available
+c1|Heavenly Aisle Creations|Cathedral Decoration|Christian|Luxury floral aisle décor and candle styling for church weddings.|+94 77 551 2299|490000|https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=500|Available
+c2|Angelic Harmony Choir|Wedding Choir|Christian|Live choir performances and instrumental music for wedding masses.|+94 71 773 5522|125000|https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=500|Available
+c3|White Rose Bridal Florals|Bridal Florals|Christian|Elegant bridal bouquets and arrangements for cathedral weddings.|+94 76 112 3399|95000|https://images.unsplash.com/photo-1519741497674-611481863552?w=500|Available
+c4|Grace & Light Studios|Photography|Christian|Romantic photography and cinematic films for church ceremonies.|+94 70 883 2211|510000|https://images.unsplash.com/photo-1522673607200-164883efcdf1?w=500|Available
+s1|Ran Muthu Kandyan Décor|Kandyan Decoration|Sinhala|Traditional Kandyan wedding décor with cultural stage styling.|+94 77 114 8822|620000|https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=500|Available
+s2|Hewisi Beats Collective|Traditional Drummers|Sinhala|Kandyan drummers and Ves dancers for wedding entrances.|+94 71 991 5533|210000|https://images.unsplash.com/photo-1624510072709-382a93c76f57?w=500|Available
+s3|Golden Poruwa Creations|Poruwa Ceremony|Sinhala|Elegant handcrafted Poruwa setups inspired by Sinhala royal weddings.|+94 76 220 4499|340000|https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=500|Available
+s4|Sandalwood Memories Studio|Photography|Sinhala|Traditional Sinhala wedding photography with cinematic storytelling.|+94 70 552 3377|460000|https://images.unsplash.com/photo-1513273395968-997e5bc0f5d2?w=500|Available
+m1|Velvet Aura Events|Modern Decoration|Modern|Elegant minimalist wedding décor with luxury floral styling.|+94 77 661 2244|850000|https://images.unsplash.com/photo-1532712938310-34cb3982ef74?w=500|Available
+m2|Neon Vows Entertainment|Wedding Effects|Modern|LED dance floors, cold sparks, and luxury lighting effects.|+94 71 882 5500|390000|https://images.unsplash.com/photo-1472653423587-59a346995006?w=500|Available
+m3|Azure Knot Weddings|Destination Planning|Modern|Premium beach and luxury resort destination wedding planning services.|+94 76 445 1188|1200000|https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=500|Available
+m4|EverAfter Motion Studio|Photography|Modern|Trendy cinematic wedding films with drone and social media reels.|+94 70 993 4411|690000|https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500|Available

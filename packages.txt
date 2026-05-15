@@ -1,0 +1,2 @@
+a3c2a82a|platinum|PREMIUM|everything|500000.0|sanchukan|yeah|true
+f42c8bd3|silver|BASIC|good for budget|299999.98|cake ,decor|photography|true

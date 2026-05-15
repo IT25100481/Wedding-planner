@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Package | Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #c9a84c; --gold-dark: #9a7a2e; --cream: #fdf8f2; --dark: #1a1209; --text-muted: #7a6a50; }
+        body { background: var(--cream); font-family: 'Montserrat', sans-serif; font-weight: 300; }
+        .navbar { background: rgba(26,18,9,0.97) !important; padding: 16px 40px; }
+        .navbar-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--gold) !important; letter-spacing: 3px; }
+        .nav-link { color: rgba(255,255,255,0.75) !important; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; }
+        .nav-link:hover { color: var(--gold) !important; }
+        .btn-logout { background: transparent; border: 1px solid rgba(201,168,76,0.5); color: var(--gold); font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 0; text-decoration: none; }
+        .main { padding: 50px 80px; max-width: 700px; margin: 0 auto; }
+        .panel { background: #fff; border: 1px solid rgba(201,168,76,0.2); padding: 36px; }
+        .panel-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--dark); margin-bottom: 24px; padding-bottom: 14px; border-bottom: 1px solid rgba(201,168,76,0.15); }
+        .info-badge { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); padding: 12px 16px; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 24px; }
+        .form-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+        .form-control, .form-select { border-radius: 0; border: 1px solid rgba(201,168,76,0.3); font-size: 0.85rem; }
+        .form-control:focus, .form-select:focus { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(201,168,76,0.15); outline: none; }
+        .btn-gold { background: var(--gold); color: var(--dark); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; padding: 12px 28px; border-radius: 0; border: none; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .btn-gold:hover { background: var(--gold-dark); color: #fff; }
+        .btn-back { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; padding: 12px 28px; border-radius: 0; border: 1px solid rgba(201,168,76,0.4); background: transparent; color: var(--text-muted); text-decoration: none; transition: all 0.2s; }
+        .btn-back:hover { border-color: var(--gold); color: var(--gold); }
+        @media (max-width: 768px) { .main { padding: 30px 20px; } .navbar { padding: 14px 20px; } }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg d-flex align-items-center">
+    <a class="navbar-brand" href="/admin/dashboard">✦ Admin Panel</a>
+    <div class="d-flex gap-4 ms-4">
+        <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+        <a class="nav-link" href="/admin/packages">Packages</a>
+        <a class="nav-link" href="/admin/payments">Payments</a>
+    </div>
+    <div class="ms-auto">
+        <a href="/admin/logout" class="btn-logout">Logout</a>
+    </div>
+</nav>
+
+<div class="main">
+    <div class="panel">
+        <div class="panel-title">✏️ Edit Package</div>
+
+        <div class="info-badge">
+            ℹ️ Editing package ID: <strong th:text="${package.id}"></strong>
+        </div>
+
+        <!-- FIXED: action now points to /admin/packages/update -->
+        <form th:action="@{/admin/packages/update}" th:object="${package}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{active}">
+
+            <div class="mb-3">
+                <label class="form-label">Package Name</label>
+                <input type="text" class="form-control" th:field="*{packageName}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Package Type</label>
+                <select class="form-select" th:field="*{packageType}">
+                    <option value="BASIC">Basic</option>
+                    <option value="PREMIUM">Premium</option>
+                    <option value="CUSTOM">Custom</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Price (LKR)</label>
+                <input type="number" class="form-control" th:field="*{price}" step="0.01" min="0" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" th:field="*{description}" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Inclusions <span style="opacity:.6">(comma separated)</span></label>
+                <textarea class="form-control" th:field="*{inclusions}" rows="2"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Exclusions <span style="opacity:.6">(comma separated)</span></label>
+                <textarea class="form-control" th:field="*{exclusions}" rows="2"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Active</label>
+                <select class="form-select" th:field="*{active}">
+                    <option value="true">Yes — visible to clients</option>
+                    <option value="false">No — hidden from clients</option>
+                </select>
+            </div>
+
+            <div class="d-flex gap-3 mt-4">
+                <!-- FIXED: cancel goes back to /admin/packages -->
+                <a href="/admin/packages" class="btn-back">Cancel</a>
+                <button type="submit" class="btn-gold">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

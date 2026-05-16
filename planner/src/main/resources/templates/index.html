@@ -91,11 +91,12 @@
                 </p>
 
                 <div class="hero-btn-group">
-                    <a th:href="${session.loggedInUser != null ? '/dashboard' : '/register'}"
-                       class="btn-main-gold"
-                       th:text="${session.loggedInUser != null ? 'MY DASHBOARD' : 'BEGIN PLANNING'}">
-                        BEGIN PLANNING
-                    </a>
+                    <a th:if="${session.loggedInUser == null}" href="/register" class="btn-main-gold">BEGIN PLANNING</a>
+
+                    <a th:if="${session.loggedInUser != null and session.userRole == 'Vendor'}" href="/vendor/dashboard" class="btn-main-gold">VENDOR DASHBOARD</a>
+
+                    <a th:if="${session.loggedInUser != null and session.userRole != 'Vendor'}" href="/dashboard" class="btn-main-gold">MY DASHBOARD</a>
+
                     <a href="/gallery" class="btn-main-outline">VIEW GALLERY</a>
                 </div>
             </div>
@@ -114,6 +115,22 @@
         } else {
             nav.style.background = 'rgba(26, 18, 9, 0.95)';
             nav.style.padding = '15px 0';
+        }
+    });
+
+    // Add this inside the script block at the bottom of index.html
+    window.addEventListener('DOMContentLoaded', (event) => {
+        // Check if the login was successful based on the URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('loginSuccess') || urlParams.has('welcome')) {
+
+            // Read the session attribute directly into JS via Thymeleaf expressions
+            const userRole = '[[${session.userRole}]]';
+
+            // If they are a Vendor, hijack the page flow and send them to your dashboard
+            if (userRole === 'Vendor') {
+                window.location.href = '/vendor/dashboard';
+            }
         }
     });
 </script>

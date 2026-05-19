@@ -14,3 +14,4 @@ W A K S WIJESURIYA,Sandanuwan,it25102693@my.sliit.lk,1234,Couple
 Thisumi Gajaman,Thisumi123,thisumicgajaman@gmail.com,Thisumi123,Vendor
 sanchukan22,sanchukan22,sajeevrat@gmail.com,sanchukan,Couple
 >>>>>>> 1214152c09cdc78897e68f0e5987e8ae956c1a61
+Gimantha Tharushi ,Gimantha ,kavindusandanuwan68@gmail.com,111,Vendor

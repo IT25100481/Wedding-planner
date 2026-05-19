@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Review | Vivaha Boutique</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #c9a84c; --gold-dark: #9a7a2e; --cream: #fdf8f2; --dark: #1a1209; --text-muted: #7a6a50; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--cream); font-family: 'Montserrat', sans-serif; font-weight: 300; }
+
+        .navbar { background: var(--dark); padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+        .navbar-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--gold); letter-spacing: 3px; text-decoration: none; }
+        .nav-link { color: rgba(255,255,255,0.75); font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; margin-left: 24px; }
+        .nav-link:hover { color: var(--gold); }
+
+        .hero { background: var(--dark); padding: 60px 0 40px; text-align: center; }
+        .hero-tag   { font-size: 0.62rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+        .hero-title { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; color: #fff; }
+
+        .main { max-width: 720px; margin: 60px auto; padding: 0 20px 80px; }
+
+        .info-strip { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.3); padding: 14px 20px; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 32px; }
+
+        .form-card { background: #fff; border: 1px solid rgba(201,168,76,0.25); padding: 48px; }
+        .form-label { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: block; }
+        .form-control { border: 1px solid rgba(201,168,76,0.3); border-radius: 0; font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.9rem; padding: 12px 16px; background: #fdfaf5; color: var(--dark); }
+        .form-control:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.1); background: #fff; }
+        textarea.form-control { min-height: 140px; resize: vertical; }
+
+        .star-group { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 6px; }
+        .star-group input { display: none; }
+        .star-group label { font-size: 2rem; color: #d6cfc4; cursor: pointer; transition: color 0.2s; }
+        .star-group input:checked ~ label,
+        .star-group label:hover,
+        .star-group label:hover ~ label { color: var(--gold); }
+
+        .btn-gold { background: var(--gold); color: var(--dark); border: none; border-radius: 0; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; padding: 14px 40px; font-family: 'Montserrat', sans-serif; font-weight: 600; cursor: pointer; transition: background 0.3s; }
+        .btn-gold:hover { background: var(--gold-dark); }
+        .divider { border: none; border-top: 1px solid rgba(201,168,76,0.2); margin: 32px 0; }
+        .back-link { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); text-decoration: none; }
+        .back-link:hover { color: var(--gold-dark); }
+        .alert-danger { border-radius: 0; font-size: 0.85rem; }
+        .readonly-field { font-size: 0.9rem; color: var(--dark); padding: 12px 16px; background: #f5f0e8; border: 1px solid rgba(201,168,76,0.2); }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" href="/dashboard">✦ Vivaha Boutique</a>
+    <div>
+        <a class="nav-link" href="/dashboard">Dashboard</a>
+        <a class="nav-link" href="/reviews/my-reviews">My Reviews</a>
+        <a class="nav-link" href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="hero">
+    <div class="hero-tag">Update Feedback</div>
+    <div class="hero-title">Edit Your Review</div>
+</div>
+
+<div class="main">
+
+    <div class="info-strip">
+        ⚠ Editing your review will reset its status to <strong>Pending</strong> until re-approved by the admin.
+    </div>
+
+    <div th:if="${error}" class="alert alert-danger mb-4" th:text="${error}"></div>
+
+    <div class="form-card">
+        <form th:action="@{/reviews/edit/{id}(id=${review.id})}" method="post">
+
+            <!-- Read-only info -->
+            <div class="mb-4">
+                <label class="form-label">Service</label>
+                <div class="readonly-field" th:text="${review.serviceType}"></div>
+                <input type="hidden" name="serviceType" th:value="${review.serviceType}">
+            </div>
+
+            <div class="mb-4" th:if="${review.vendorName != null and !review.vendorName.isEmpty()}">
+                <label class="form-label">Vendor</label>
+                <div class="readonly-field" th:text="${review.vendorName}"></div>
+                <input type="hidden" name="vendorName" th:value="${review.vendorName}">
+            </div>
+
+            <hr class="divider">
+
+            <!-- Editable: Star Rating -->
+            <div class="mb-4">
+                <label class="form-label">Update Rating *</label>
+                <div class="star-group">
+                    <input type="radio" id="s5" name="rating" value="5" th:checked="${review.rating == 5}"><label for="s5">★</label>
+                    <input type="radio" id="s4" name="rating" value="4" th:checked="${review.rating == 4}"><label for="s4">★</label>
+                    <input type="radio" id="s3" name="rating" value="3" th:checked="${review.rating == 3}"><label for="s3">★</label>
+                    <input type="radio" id="s2" name="rating" value="2" th:checked="${review.rating == 2}"><label for="s2">★</label>
+                    <input type="radio" id="s1" name="rating" value="1" th:checked="${review.rating == 1}"><label for="s1">★</label>
+                </div>
+            </div>
+
+            <!-- Editable: Comment -->
+            <div class="mb-4">
+                <label class="form-label" for="comment">Update Your Comment *</label>
+                <textarea class="form-control" id="comment" name="comment"
+                          th:text="${review.comment}" required></textarea>
+            </div>
+
+            <hr class="divider">
+
+            <div class="d-flex align-items-center justify-content-between">
+                <a href="/reviews/my-reviews" class="back-link">← Cancel</a>
+                <button type="submit" class="btn-gold">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

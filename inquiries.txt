@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+kavindusandanuwan68@gmail.com,Kavindu Sandanuwan,0707298290,2020-12-22,hi ,General Inquiry
+=======
 Name: kavindu, Contact: 0770298290, Date: 2026-10-28, Message: ddkahdjdjmd
 kavindu,0770298290,2026-01-10,kkkjhb
 kavindusandanuwan68@gmail.com,Kavindu Sandanuwan,0707298290,2025-01-10,ghhjhj
 Thisumi,Thisumi Gajaman,099876544,2026-05-06,hi
+>>>>>>> 1214152c09cdc78897e68f0e5987e8ae956c1a61

@@ -27,186 +27,88 @@
             padding: 40px 20px;
         }
 
-        .success-wrapper {
-            width: 100%;
-            max-width: 520px;
-            text-align: center;
-        }
+        .success-wrapper { width: 100%; max-width: 520px; text-align: center; }
 
         .brand {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            color: var(--gold);
-            letter-spacing: 3px;
-            text-align: center;
-            margin-bottom: 32px;
-            text-decoration: none;
-            display: block;
+            font-size: 1.8rem; color: var(--gold);
+            letter-spacing: 3px; text-align: center;
+            margin-bottom: 32px; text-decoration: none; display: block;
         }
 
-        .success-card {
-            background: var(--cream);
-            padding: 48px;
-        }
+        .success-card { background: var(--cream); padding: 48px; }
 
         /* SUCCESS ICON */
         .success-icon {
-            width: 80px;
-            height: 80px;
+            width: 80px; height: 80px;
             background: rgba(25,135,84,0.1);
             border: 2px solid rgba(25,135,84,0.3);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             margin: 0 auto 24px;
             font-size: 2rem;
             animation: scaleIn 0.5s ease;
         }
-
         @keyframes scaleIn {
             from { transform: scale(0); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
 
-        .success-tag {
-            font-size: 0.62rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: #27ae60;
-            margin-bottom: 8px;
-        }
-
-        .success-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.2rem;
-            font-weight: 300;
-            color: var(--dark);
-            margin-bottom: 8px;
-        }
-
-        .success-subtitle {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            margin-bottom: 32px;
-            line-height: 1.7;
-        }
+        .success-tag { font-size: 0.62rem; letter-spacing: 5px; text-transform: uppercase; color: #27ae60; margin-bottom: 8px; }
+        .success-title { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; color: var(--dark); margin-bottom: 8px; }
+        .success-subtitle { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 32px; line-height: 1.7; }
 
         /* PAYMENT DETAILS */
         .details-box {
             background: rgba(201,168,76,0.06);
             border: 1px solid rgba(201,168,76,0.2);
-            padding: 24px;
-            margin-bottom: 28px;
-            text-align: left;
+            padding: 24px; margin-bottom: 28px; text-align: left;
         }
-
-        .details-title {
-            font-size: 0.62rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 16px;
-        }
-
+        .details-title { font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
         .detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(201,168,76,0.1);
-            font-size: 0.82rem;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 0; border-bottom: 1px solid rgba(201,168,76,0.1); font-size: 0.82rem;
         }
-
         .detail-row:last-child { border-bottom: none; }
-
         .detail-label { color: var(--text-muted); }
-
-        .detail-value {
-            color: var(--dark);
-            font-weight: 400;
-        }
-
-        .detail-value.amount {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
-            color: var(--gold);
-        }
+        .detail-value { color: var(--dark); font-weight: 400; }
+        .detail-value.amount { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold); }
 
         /* STATUS BADGE */
-        .status-badge {
-            font-size: 0.62rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 4px 12px;
-            display: inline-block;
-        }
-        .status-FULLY_PAID { background: rgba(25,135,84,0.15); color: #0a3622; }
+        .status-badge { font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; display: inline-block; }
+        .status-FULLY_PAID   { background: rgba(25,135,84,0.15); color: #0a3622; }
         .status-PARTIAL_PAID { background: rgba(13,110,253,0.15); color: #084298; }
-        .status-PENDING { background: rgba(255,193,7,0.15); color: #856404; }
+        .status-PENDING      { background: rgba(255,193,7,0.15);  color: #856404; }
 
         /* TRANSACTION ID */
-        .txn-box {
-            background: var(--dark);
-            padding: 12px 16px;
-            margin-bottom: 28px;
-            text-align: center;
-        }
-        .txn-label {
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.4);
-            margin-bottom: 4px;
-        }
-        .txn-value {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
-            color: var(--gold);
-            letter-spacing: 2px;
-        }
+        .txn-box { background: var(--dark); padding: 12px 16px; margin-bottom: 28px; text-align: center; }
+        .txn-label { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+        .txn-value { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold); letter-spacing: 2px; }
 
         /* BUTTONS */
         .btn-home {
-            display: block;
-            width: 100%;
-            background: var(--gold);
-            color: var(--dark);
-            border: none;
-            padding: 14px;
-            font-size: 0.72rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s;
-            margin-bottom: 12px;
+            display: block; width: 100%;
+            background: var(--gold); color: var(--dark); border: none;
+            padding: 14px; font-size: 0.72rem; letter-spacing: 3px;
+            text-transform: uppercase; font-weight: 500;
+            text-decoration: none; transition: all 0.3s; margin-bottom: 12px;
+            font-family: 'Montserrat', sans-serif; text-align: center;
         }
         .btn-home:hover { background: var(--gold-dark); color: #fff; }
 
+        /* VIEW PAYMENT HISTORY — goes to dashboard My Payments section */
         .btn-outline {
-            display: block;
-            width: 100%;
-            background: transparent;
-            color: var(--text-muted);
+            display: block; width: 100%;
+            background: transparent; color: var(--text-muted);
             border: 1px solid rgba(201,168,76,0.3);
-            padding: 14px;
-            font-size: 0.72rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            text-decoration: none;
-            transition: all 0.3s;
+            padding: 14px; font-size: 0.72rem; letter-spacing: 3px;
+            text-transform: uppercase; text-decoration: none;
+            transition: all 0.3s; font-family: 'Montserrat', sans-serif;
+            text-align: center;
         }
         .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 16px;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.4);
-            text-decoration: none;
-        }
+        .back-link { display: block; text-align: center; margin-top: 16px; font-size: 0.75rem; color: rgba(255,255,255,0.4); text-decoration: none; }
         .back-link:hover { color: var(--gold); }
     </style>
 </head>
@@ -269,7 +171,10 @@
 
         <!-- BUTTONS -->
         <a href="/" class="btn-home">Back to Home</a>
-        <a href="/payments/history" class="btn-outline">View Payment History</a>
+
+        <!-- VIEW PAYMENT HISTORY → goes to dashboard and opens My Payments section -->
+        <a href="/dashboard?section=payments" class="btn-outline">View Payment History</a>
+
     </div>
 
     <a href="/" class="back-link">← Return to Vivaha</a>

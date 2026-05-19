@@ -20,9 +20,20 @@
         input[type="file"]::-webkit-file-upload-button { background: var(--gold-light); border: none; color: var(--dark-chocolate); padding: 5px 15px; margin-right: 10px; border-radius: 4px; cursor: pointer; }
         ::placeholder { color: rgba(255, 255, 255, 0.3) !important; }
         .modal-body label { font-weight: 500; letter-spacing: 0.5px; }
+
+        /* Smooth transition style for the auto-fading effect */
+        .welcome-overlay-toast {
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
     </style>
 </head>
 <body>
+
+<div id="vendorWelcomeToast" class="welcome-overlay-toast">
+    <div class="container py-2 text-center">
+        <span>Welcome back, <em>Distinguished Vendor</em>. Your premium studio is synchronized.</span>
+    </div>
+</div>
 
 <nav class="navbar navbar-expand-lg sticky-top" style="background: rgba(26, 18, 9, 0.98); border-bottom: 1px solid rgba(229,178,125,0.1);">
     <div class="container-fluid px-5">
@@ -100,7 +111,6 @@
     </div>
 </div>
 
-<!-- Add Service Modal -->
 <div class="modal fade" id="addServiceModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -171,7 +181,6 @@
     </div>
 </div>
 
-<!-- Edit Service Modal -->
 <div class="modal fade" id="editServiceModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -206,7 +215,6 @@
     </div>
 </div>
 
-<!-- Profile Modal -->
 <div class="modal fade" id="profileModal" tabindex="-1">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
@@ -244,7 +252,6 @@
     </div>
 </div>
 
-<!-- Bookings Section -->
 <div class="container my-5 pt-5 border-top border-secondary">
     <h2 id="bookings-section" class="editorial-title mb-4">Recent <em>Bookings</em></h2>
 
@@ -263,7 +270,6 @@
     </div>
 </div>
 
-<!-- Payments Section -->
 <div id="payments-section" class="container my-5 pt-5 border-top border-secondary">
     <h2 class="editorial-title mb-4">Financial <em>Overview</em></h2>
     <div class="card vendor-card p-4">
@@ -293,6 +299,23 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    // ADDED: Automatic sliding hide & fade routine on layout load
+    window.addEventListener('DOMContentLoaded', () => {
+        const toast = document.getElementById('vendorWelcomeToast');
+        if (toast) {
+            // Wait 3.5 seconds for display, then start fading and shifting up smoothly
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+
+                // Completely drop layout resource presence after fade ends (1 second duration)
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 1000);
+            }, 3500);
+        }
+    });
+
     function scrollToSection(id) {
         const element = document.getElementById(id);
         if (element) {

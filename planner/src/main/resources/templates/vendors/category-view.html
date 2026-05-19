@@ -34,9 +34,52 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(229, 178, 125, 0.15);
             height: 100%;
+            position: relative; /* Added to keep absolute hearts inside */
         }
         .vendor-card img { height: 220px; object-fit: cover; }
 
+        /* --- LUXURY FAVOURITE HEART BUTTON STYLES --- */
+
+        .fav-heart-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            /* Stronger, opaque dark chocolate base to block out busy photo backgrounds completely */
+            background: #1a1209;
+            border: 2px solid var(--gold-light); /* Thick luxury golden rim */
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Gives depth, making the medallion stand up off the surface */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 8px rgba(229, 178, 125, 0.2);
+        }
+        .fav-heart-btn i {
+            font-size: 1.15rem;
+            color: var(--gold-light);
+            transition: all 0.2s ease;
+        }
+        .fav-heart-btn.is-fav {
+            background: #1a1209; /* Keeps the solid background when favorited */
+            border-color: #dc3545; /* Golden rim turns to vibrant crimson */
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+        }
+        .fav-heart-btn.is-fav i {
+            color: #dc3545;
+            transform: scale(1.15);
+        }
+        .fav-heart-btn:hover {
+            transform: scale(1.08);
+            border-color: #fff; /* Highlights white gold on hover */
+            box-shadow: 0 4px 15px rgba(229, 178, 125, 0.5);
+        }
+
+        /* --- DOUBLE FLOATING TRIGGER ALIGNMENT --- */
         .floating-bucket-trigger {
             position: fixed; bottom: 30px; right: 30px;
             width: 60px; height: 60px;
@@ -47,6 +90,21 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.5);
         }
         .floating-bucket-trigger i { color: var(--dark-chocolate); font-size: 1.8rem; }
+
+        /* Cute floating heart trigger sitting right above bucket trigger */
+        .floating-fav-trigger {
+            position: fixed; bottom: 105px; right: 30px;
+            width: 60px; height: 60px;
+            background: #1a1209;
+            border: 1px solid var(--gold-light);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 4000;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+        .floating-fav-trigger i { color: #dc3545; font-size: 1.6rem; }
+        .floating-fav-trigger:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(220, 53, 69, 0.4); }
 
         .bucket-count-badge {
             position: absolute;
@@ -60,9 +118,10 @@
             display: flex; align-items: center; justify-content: center;
         }
 
+        /* Side-drawer layout containers */
         .bucket-container {
             position: fixed;
-            bottom: 110px; right: 30px;
+            bottom: 180px; right: 30px;
             width: 350px;
             background: var(--dark-chocolate);
             border: 1px solid var(--gold-light);
@@ -79,14 +138,66 @@
         }
 
         .modal-content.luxury-popup {
-            background-color: var(--dark-chocolate) !important;
-            border: 2px solid var(--gold-light) !important;
-            color: white !important;
+            background: rgba(26, 18, 9, 0.85) !important; /* Rich dark chocolate with high opacity */
+            backdrop-filter: blur(15px) !important; /* High-end frosted glass backdrop blur */
+            -webkit-backdrop-filter: blur(15px) !important;
+            border: 1px solid rgba(229, 178, 125, 0.35) !important; /* Soft, fine golden rim */
+            border-radius: 15px !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(229, 178, 125, 0.1) !important; /* Gentle outer gold ambience */
+            padding: 20px;
         }
+
         .modal-body select {
-            background: rgba(255,255,255,0.05);
-            color: var(--gold-light);
-            border: 1px solid rgba(229, 178, 125, 0.3);
+            background: rgba(26, 18, 9, 0.6) !important;
+            border: 1px solid rgba(229, 178, 125, 0.25) !important;
+            color: #f3d4b4 !important; /* Cream champagne gold text color */
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem !important;
+            letter-spacing: 1px;
+            padding: 12px 20px !important;
+            border-radius: 8px !important;
+            text-align: center;
+            text-align-last: center; /* Center-align the chosen text option */
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Added to fix the dropdown focus & option look inside the modal body select */
+        .modal-body select:focus {
+            border-color: var(--gold-light) !important;
+            box-shadow: 0 0 12px rgba(229, 178, 125, 0.3) !important;
+            background: #1a1209 !important;
+            outline: none;
+        }
+
+        .modal-body select option {
+            background-color: #1a1209 !important;
+            color: #f3d4b4 !important;
+            padding: 15px !important;
+        }
+
+        /* Refined Editorial Gold button alignment specifically for this popup */
+        .btn-editorial-gold {
+            background-color: var(--gold-light) !important;
+            color: var(--dark-chocolate) !important;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            padding: 12px 40px;
+            border-radius: 4px;
+            border: 1px solid var(--gold-light);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            margin-top: 30px;
+        }
+
+        .btn-editorial-gold:hover {
+            background-color: transparent !important;
+            color: var(--gold-light) !important;
+            border-color: var(--gold-light) !important;
+            box-shadow: 0 0 20px rgba(229, 178, 125, 0.4);
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -99,7 +210,6 @@
             <span id="displayTradition" class="gold-italic" style="font-size: 1.5rem; margin-left: 40px;">Tradition: Modern</span>
         </div>
         <div class="ms-auto d-flex align-items-center gap-4">
-            <!-- PACKAGES is now LEFT of BACK TO DASHBOARD -->
             <a href="/packages" class="nav-link-minimal">PACKAGES</a>
             <a href="/" class="nav-link-minimal">BACK TO DASHBOARD</a>
             <div class="dropdown">
@@ -144,6 +254,9 @@
         <div class="row g-4">
             <div class="col-md-4" th:each="service : ${photography}" th:if="${service != null}">
                 <div class="card vendor-card">
+                    <div th:class="'fav-heart-btn fav-' + ${service.id}" th:attr="onclick='toggleFavorite(\''+${service.id}+'\', \''+${#strings.escapeJavaScript(service.businessName)}+'\', \''+${service.price}+'\')'">
+                        <i class="bi bi-heart"></i>
+                    </div>
                     <img th:src="@{'/uploads/' + ${service.imagePath}}" class="card-img-top"
                          onerror="this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500';" alt="Vendor Image">
                     <div class="card-body">
@@ -169,6 +282,9 @@
         <div class="row g-4">
             <div class="col-md-4" th:each="service : ${cakes}" th:if="${service != null}">
                 <div class="card vendor-card">
+                    <div th:class="'fav-heart-btn fav-' + ${service.id}" th:attr="onclick='toggleFavorite(\''+${service.id}+'\', \''+${#strings.escapeJavaScript(service.businessName)}+'\', \''+${service.price}+'\')'">
+                        <i class="bi bi-heart"></i>
+                    </div>
                     <img th:src="@{'/uploads/' + ${service.imagePath}}" class="card-img-top"
                          onerror="this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500';" alt="Vendor Image">
                     <div class="card-body">
@@ -194,6 +310,9 @@
         <div class="row g-4">
             <div class="col-md-4" th:each="service : ${venues}" th:if="${service != null}">
                 <div class="card vendor-card">
+                    <div th:class="'fav-heart-btn fav-' + ${service.id}" th:attr="onclick='toggleFavorite(\''+${service.id}+'\', \''+${#strings.escapeJavaScript(service.businessName)}+'\', \''+${service.price}+'\')'">
+                        <i class="bi bi-heart"></i>
+                    </div>
                     <img th:src="@{'/uploads/' + ${service.imagePath}}" class="card-img-top"
                          onerror="this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500';" alt="Vendor Image">
                     <div class="card-body">
@@ -219,6 +338,9 @@
         <div class="row g-4">
             <div class="col-md-4" th:each="service : ${makeup}" th:if="${service != null}">
                 <div class="card vendor-card">
+                    <div th:class="'fav-heart-btn fav-' + ${service.id}" th:attr="onclick='toggleFavorite(\''+${service.id}+'\', \''+${#strings.escapeJavaScript(service.businessName)}+'\', \''+${service.price}+'\')'">
+                        <i class="bi bi-heart"></i>
+                    </div>
                     <img th:src="@{'/uploads/' + ${service.imagePath}}" class="card-img-top"
                          onerror="this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500';" alt="Vendor Image">
                     <div class="card-body">
@@ -244,6 +366,9 @@
         <div class="row g-4">
             <div class="col-md-4" th:each="service : ${decorations}" th:if="${service != null}">
                 <div class="card vendor-card h-100">
+                    <div th:class="'fav-heart-btn fav-' + ${service.id}" th:attr="onclick='toggleFavorite(\''+${service.id}+'\', \''+${#strings.escapeJavaScript(service.businessName)}+'\', \''+${service.price}+'\')'">
+                        <i class="bi bi-heart"></i>
+                    </div>
                     <img th:src="@{'/uploads/' + ${service.imagePath}}" class="card-img-top"
                          onerror="this.src='https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=500';" alt="Vendor Image">
                     <div class="card-body">
@@ -271,9 +396,22 @@
     <div class="row g-4" id="tradition-container"></div>
 </section>
 
+<div class="floating-fav-trigger" onclick="toggleFavList()">
+    <i class="bi bi-heart-fill"></i>
+    <span class="bucket-count-badge bg-danger text-white" id="favCount">0</span>
+</div>
+
 <div class="floating-bucket-trigger" onclick="toggleBucket()">
     <i class="bi bi-bag-heart"></i>
     <span class="bucket-count-badge" id="bucketCount">0</span>
+</div>
+
+<div class="bucket-container" id="favListContainer" style="display: none; bottom: 180px;">
+    <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+        <h6 class="brand-text m-0" style="color: #dc3545;"><i class="bi bi-heart-fill me-2"></i>My Favourites</h6>
+        <i class="bi bi-x-lg text-white" onclick="toggleFavList()" style="cursor:pointer;"></i>
+    </div>
+    <div id="favItems" class="my-3" style="max-height: 250px; overflow-y: auto;"></div>
 </div>
 
 <div class="bucket-container" id="bucketList" style="display: none;">
@@ -289,23 +427,33 @@
     <button class="btn btn-danger w-100 mt-3 btn-sm" onclick="goToPayment()">BOOK NOW</button>
 </div>
 
-<div class="modal fade" id="traditionModal" data-bs-backdrop="static" tabindex="-1">
+<div class="modal fade" id="traditionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content luxury-popup">
-            <div class="modal-body text-center p-5">
-                <h2 class="brand-text mb-4">Welcome to Vivaha</h2>
-                <p class="mb-4">Let us know your wedding traditional preference</p>
-                <div class="input-group-custom">
-                    <select id="traditionSelect" class="form-select bg-dark text-white border-gold">
+            <div class="modal-body text-center p-4">
+                <div class="mb-2" style="color: var(--gold-light); font-size: 1.5rem; opacity: 0.8;">
+                    <i class="bi bi-stars"></i>
+                </div>
+
+                <h2 class="brand-text mb-3" style="font-size: 2.4rem;">Welcome to <em>Vivaha</em></h2>
+                <p class="text-white-50 small mb-4" style="letter-spacing: 0.5px; font-family: 'Montserrat', sans-serif;">
+                    Select your traditional preference to calibrate your marketplace curation
+                </p>
+
+                <div class="luxury-select-wrapper">
+                    <select id="traditionSelect" class="form-select luxury-select">
                         <option value="Mixed">Mixed (No specific preference)</option>
-                        <option value="Sinhala">Sinhala</option>
-                        <option value="Hindu">Hindu</option>
-                        <option value="Islam">Islam</option>
-                        <option value="Christian">Christian</option>
-                        <option value="Modern">Modern</option>
+                        <option value="Sinhala">Sinhala Tradition</option>
+                        <option value="Hindu">Hindu Tradition</option>
+                        <option value="Islam">Islam Tradition</option>
+                        <option value="Christian">Christian Tradition</option>
+                        <option value="Modern">Modern Showcase</option>
                     </select>
                 </div>
-                <button class="btn-editorial-gold mt-4" onclick="setTradition()">BEGIN EXPLORING</button>
+
+                <button class="btn-editorial-gold text-uppercase" onclick="setTradition()">
+                    Begin Exploring
+                </button>
             </div>
         </div>
     </div>
@@ -315,10 +463,19 @@
 <script th:inline="javascript">
     const allServices = /*[[${allServices}]]*/ [];
     let bucket = [];
+    let favorites = []; // Array tracking favorite collections
 
     document.addEventListener('DOMContentLoaded', function() {
         const myModal = new bootstrap.Modal(document.getElementById('traditionModal'));
         myModal.show();
+
+        // Retrieve local storage assets
+        const savedFavorites = localStorage.getItem('vivahaFavorites');
+        if (savedFavorites) {
+            favorites = JSON.parse(savedFavorites);
+            renderFavorites();
+        }
+
         const saved = localStorage.getItem('userWeddingTradition');
         if (saved) { updateStyle(saved); }
     });
@@ -334,6 +491,83 @@
         document.getElementById('displayTradition').innerText = "Tradition: " + style;
         document.getElementById('currentStyleLabel').innerText = style.toUpperCase();
         renderRecommendations(style);
+        syncHeartUI(); // Redraw hearts after filter modification
+    }
+
+    /* --- LUXURY FAVOURITE CORE LOGIC FUNCTIONS --- */
+    function toggleFavorite(id, name, price) {
+        const index = favorites.findIndex(f => f.id === id);
+
+        if (index > -1) {
+            // Remove from array tracking
+            favorites.splice(index, 1);
+        } else {
+            // Append fresh luxury data profile
+            favorites.push({ id, name, price });
+        }
+
+        localStorage.setItem('vivahaFavorites', JSON.stringify(favorites));
+        renderFavorites();
+        syncHeartUI();
+    }
+
+    function removeFavoriteDirectly(id) {
+        favorites = favorites.filter(f => f.id !== id);
+        localStorage.setItem('vivahaFavorites', JSON.stringify(favorites));
+        renderFavorites();
+        syncHeartUI();
+    }
+
+    function syncHeartUI() {
+        // Clear all elements back to default states
+        document.querySelectorAll('.fav-heart-btn').forEach(btn => {
+            btn.classList.remove('is-fav');
+            btn.innerHTML = `<i class="bi bi-heart"></i>`;
+        });
+
+        // Set matching favorites active
+        favorites.forEach(fav => {
+            const targets = document.querySelectorAll('.fav-' + fav.id);
+            targets.forEach(target => {
+                target.classList.add('is-fav');
+                target.innerHTML = `<i class="bi bi-heart-fill"></i>`;
+            });
+        });
+    }
+
+    // Direct interface generation hook
+    function renderFavorites() {
+        const container = document.getElementById('favItems');
+        const countEl = document.getElementById('favCount');
+        countEl.innerText = favorites.length;
+
+        if (favorites.length === 0) {
+            container.innerHTML = `<div class="text-center text-white-50 small py-3">No favorite vendors added yet.</div>`;
+            return;
+        }
+
+        container.innerHTML = favorites.map(f => `
+            <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-secondary pb-2">
+                <div>
+                    <div style="font-weight:600; color:white; font-size:0.9rem;">${f.name}</div>
+                    <div class="text-gold small">${f.price}</div>
+                </div>
+                <i class="bi bi-trash3 text-danger fs-5" onclick="removeFavoriteDirectly('${f.id}')" style="cursor:pointer;"></i>
+            </div>
+        `).join('');
+    }
+
+    function toggleFavList() {
+        const favBox = document.getElementById('favListContainer');
+        const bucketBox = document.getElementById('bucketList');
+
+        // Auto close open boxes to secure clear view space
+        if (favBox.style.display === 'none') {
+            favBox.style.display = 'block';
+            bucketBox.style.display = 'none';
+        } else {
+            favBox.style.display = 'none';
+        }
     }
 
     function renderRecommendations(style) {
@@ -348,6 +582,9 @@
             return `
             <div class="col-md-4">
                 <div class="card vendor-card h-100">
+                    <div class="fav-heart-btn fav-${s.id}" onclick="toggleFavorite('${s.id}', '${s.businessName.replace(/'/g, "\\'")}', '${s.price} LKR')">
+                        <i class="bi bi-heart"></i>
+                    </div>
                     <img src="${imgSrc}" class="card-img-top" onerror="this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500';">
                     <div class="card-body">
                         <h5 class="gold-italic">${s.businessName}</h5>
@@ -371,6 +608,7 @@
                 </div>
             </div>`;
         }).join('');
+        syncHeartUI(); // Recalculate heart metrics for custom elements
     }
 
     function viewDetails(name, desc, contact) {
@@ -383,7 +621,13 @@
 
     function toggleBucket() {
         const el = document.getElementById('bucketList');
-        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        const favBox = document.getElementById('favListContainer');
+        if (el.style.display === 'none') {
+            el.style.display = 'block';
+            favBox.style.display = 'none';
+        } else {
+            el.style.display = 'none';
+        }
     }
 
     function addToBucket(id, name, price) {
@@ -401,7 +645,10 @@
     function removeFromBucket(id) {
         bucket = bucket.filter(item => item.id !== id);
         const btn = document.getElementById('btn-' + id);
-        if (btn) { btn.innerText = "+ BUCKET"; btn.classList.remove('btn-selected'); btn.disabled = false; }
+        const btnDyn = document.getElementById('btn-dyn-' + id);
+        [btn, btnDyn].forEach(b => {
+            if (b) { b.innerText = "+ BUCKET"; b.classList.remove('btn-selected'); b.disabled = false; }
+        });
         renderBucket();
     }
 

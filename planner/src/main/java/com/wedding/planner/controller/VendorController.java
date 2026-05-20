@@ -20,17 +20,21 @@ public class VendorController {
     private final String PROFILE_FILE = "planner/profile.txt";
     private final String BOOKINGS_FILE = "bookings.txt";
     private final String PAYMENTS_FILE = "payments.txt";
+    private final String BACKUP_FILE = "planner/services-backup.txt";
 
-    // ════════════════════════════════════════
-    // DASHBOARD
-    // ════════════════════════════════════════
+    // ================= DASHBOARD =================
     @GetMapping("/vendor/dashboard")
     public String showDashboard(Model model, HttpSession session) {
 
         String vendorName = (String) session.getAttribute("vendorName");
 
+        if (vendorName == null) {
+            return "redirect:/login";
+        }
+
         List<Service> services = getAllServices();
-        List<Map<String, String>> bookings = getBookings();   // ✅ FIX ADDED
+
+        List<Map<String, String>> bookings = getBookings();
         List<Map<String, String>> payments = getPayments();
 
         double total = payments.stream()
@@ -44,7 +48,7 @@ public class VendorController {
                 .sum();
 
         model.addAttribute("services", services);
-        model.addAttribute("bookings", bookings);   // ✅ FIX ADDED
+        model.addAttribute("bookings", bookings);
         model.addAttribute("payments", payments);
         model.addAttribute("totalPayments", String.format("%,.0f", total));
         model.addAttribute("newService", new Service());
@@ -52,9 +56,7 @@ public class VendorController {
         return "vendors/vendor-dashboard";
     }
 
-    // ════════════════════════════════════════
-    // BOOKINGS (✅ MISSING BEFORE — THIS FIXES YOUR ISSUE)
-    // ════════════════════════════════════════
+    // ================= BOOKINGS =================
     private List<Map<String, String>> getBookings() {
         Path path = Paths.get(BOOKINGS_FILE);
         if (!Files.exists(path)) return new ArrayList<>();
@@ -78,18 +80,27 @@ public class VendorController {
         }
     }
 
-    // ════════════════════════════════════════
-    // ADD SERVICE
-    // ════════════════════════════════════════
+    // ================= ADD SERVICE =================
     @PostMapping("/vendor/add-service")
     public String addService(@ModelAttribute Service service,
                              @RequestParam("offeringType") String offeringType,
                              @RequestParam(value = "imageFile", required = false) MultipartFile file,
-                             @RequestParam(value = "imageUrl", required = false) String imageUrl) {
+                             @RequestParam(value = "imageUrl", required = false) String imageUrl,
+                             HttpSession session) {
 
         try {
             service.setId("v" + System.currentTimeMillis());
             service.setStatus("Available");
+
+            // ✅ FIX: prevent null vendor
+            String vendorName = (String) session.getAttribute("vendorName");
+            if (vendorName == null) {
+
+
+                return "redirect:/vendor/dashboard?error=noSession";
+            }
+
+            service.setBusinessName(vendorName);
 
             if ("essential".equals(offeringType)) {
                 service.setTradition("Universal");
@@ -109,7 +120,9 @@ public class VendorController {
                 service.setImagePath("https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500");
             }
 
+            createBackup();
             saveServiceToFile(service);
+
             return "redirect:/vendor/dashboard";
 
         } catch (IOException e) {
@@ -118,14 +131,17 @@ public class VendorController {
         }
     }
 
+    // ================= DELETE =================
     @GetMapping("/vendor/delete/{id}")
     public String deleteService(@PathVariable String id) {
         List<Service> services = getAllServices();
         services.removeIf(s -> s.getId().equals(id));
+        createBackup();
         rewriteFile(services);
         return "redirect:/vendor/dashboard";
     }
 
+    // ================= UPDATE =================
     @PostMapping("/vendor/update")
     public String updateService(@ModelAttribute Service updatedService) {
 
@@ -139,15 +155,18 @@ public class VendorController {
                 updatedService.setCategory(services.get(i).getCategory());
                 updatedService.setTradition(services.get(i).getTradition());
 
+                updatedService.setBusinessName(services.get(i).getBusinessName());
                 services.set(i, updatedService);
                 break;
             }
         }
 
+        createBackup();
         rewriteFile(services);
         return "redirect:/vendor/dashboard";
     }
 
+    // ================= PROFILE =================
     @PostMapping("/vendor/update-profile")
     public String updateProfile(@RequestParam String name,
                                 @RequestParam String location,
@@ -175,6 +194,7 @@ public class VendorController {
         return "redirect:/vendor/dashboard";
     }
 
+    // ================= FILE READ =================
     private List<Service> getAllServices() {
         List<Service> services = new ArrayList<>();
         File file = new File(FILE_PATH);
@@ -193,6 +213,7 @@ public class VendorController {
         return services;
     }
 
+    // ================= SAVE =================
     private void saveServiceToFile(Service s) {
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(FILE_PATH, true)))) {
             out.println(s.toFileLine());
@@ -201,6 +222,7 @@ public class VendorController {
         }
     }
 
+    // ================= REWRITE =================
     private void rewriteFile(List<Service> services) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(FILE_PATH))) {
             for (Service s : services) {
@@ -211,6 +233,7 @@ public class VendorController {
         }
     }
 
+    // ================= PAYMENTS =================
     private List<Map<String, String>> getPayments() {
         Path path = Paths.get(PAYMENTS_FILE);
         if (!Files.exists(path)) return new ArrayList<>();
@@ -233,6 +256,20 @@ public class VendorController {
         } catch (IOException e) {
             e.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+
+    // ================= BACKUP =================
+    private void createBackup() {
+        try {
+            Path source = Paths.get(FILE_PATH);
+            Path backup = Paths.get(BACKUP_FILE);
+
+            if (Files.exists(source)) {
+                Files.copy(source, backup, StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

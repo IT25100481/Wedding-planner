@@ -1,17 +1,18 @@
 package com.wedding.planner.model;
 
 public class Inquiry {
+    // Private variables enforce Encapsulation
     private String customerEmail;
     private String customerName;
     private String contactNo;
     private String weddingDate;
     private String message;
-    private String vendorName; // 👈 වෙන්ඩර් නම සේව් කරන්න මේක අනිවාර්යයි!
+    private String vendorName;
 
     // Default Constructor
     public Inquiry() {}
 
-    // Getters and Setters
+    // Public Getters and Setters (Encapsulation Accessors)
     public String getCustomerEmail() { return customerEmail; }
     public void setCustomerEmail(String customerEmail) { this.customerEmail = customerEmail; }
 

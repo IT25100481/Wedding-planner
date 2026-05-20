@@ -89,15 +89,18 @@
     <div class="form-card">
         <form th:action="@{/reviews/submit}" th:object="${review}" method="post">
 
-            <!-- Star Rating -->
+            <!-- Star Rating — use plain name="rating" only, no th:field to avoid int=0 crash -->
             <div class="mb-4">
                 <label class="form-label">Your Rating *</label>
                 <div class="star-group">
-                    <input type="radio" id="s5" name="rating" value="5" th:field="*{rating}"><label for="s5">★</label>
-                    <input type="radio" id="s4" name="rating" value="4" th:field="*{rating}"><label for="s4">★</label>
-                    <input type="radio" id="s3" name="rating" value="3" th:field="*{rating}"><label for="s3">★</label>
-                    <input type="radio" id="s2" name="rating" value="2" th:field="*{rating}"><label for="s2">★</label>
-                    <input type="radio" id="s1" name="rating" value="1" th:field="*{rating}"><label for="s1">★</label>
+                    <input type="radio" id="s5" name="rating" value="5" required><label for="s5">★</label>
+                    <input type="radio" id="s4" name="rating" value="4"><label for="s4">★</label>
+                    <input type="radio" id="s3" name="rating" value="3"><label for="s3">★</label>
+                    <input type="radio" id="s2" name="rating" value="2"><label for="s2">★</label>
+                    <input type="radio" id="s1" name="rating" value="1"><label for="s1">★</label>
+                </div>
+                <div style="font-size:0.72rem;color:#dc3545;margin-top:6px;" id="rating-warning" style="display:none;">
+                    Please select a star rating.
                 </div>
             </div>
 
@@ -124,8 +127,15 @@
             <!-- Vendor / Provider -->
             <div class="mb-4">
                 <label class="form-label" for="vendorName">Vendor / Provider Name</label>
+                <!-- pre-filled when coming from payment success page -->
                 <input type="text" class="form-control" id="vendorName"
-                       th:field="*{vendorName}" placeholder="e.g. Lakshmi Photography Studio">
+                       th:field="*{vendorName}"
+                       th:readonly="${prefilledVendor != null and !prefilledVendor.isEmpty()}"
+                       placeholder="e.g. Lakshmi Photography Studio">
+                <div th:if="${prefilledVendor != null and !prefilledVendor.isEmpty()}"
+                     style="font-size:0.7rem;color:var(--text-muted);margin-top:6px;letter-spacing:1px;">
+                    ✓ Auto-filled from your completed payment
+                </div>
             </div>
 
             <!-- Comment -->

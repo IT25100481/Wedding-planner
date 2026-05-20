@@ -21,13 +21,20 @@ public class ReviewController {
 
     /** Show the "Submit a Review" form (GET) */
     @GetMapping("/reviews/submit")
-    public String showSubmitForm(Model model, HttpSession session,
+    public String showSubmitForm(@RequestParam(required = false, defaultValue = "") String vendorName,
+                                 @RequestParam(required = false, defaultValue = "") String bookingId,
+                                 Model model, HttpSession session,
                                  RedirectAttributes ra) {
         if (session.getAttribute("loggedInUser") == null) {
             ra.addFlashAttribute("error", "Please log in to leave a review.");
             return "redirect:/login";
         }
-        model.addAttribute("review", new Review());
+        Review review = new Review();
+        // pre-fill vendor name and bookingId if coming from payment success page
+        if (!vendorName.isEmpty()) review.setVendorName(vendorName);
+        if (!bookingId.isEmpty())  review.setServiceType("Wedding Package");
+        model.addAttribute("review", review);
+        model.addAttribute("prefilledVendor", vendorName);
         return "reviews/submit-review";
     }
 
@@ -37,7 +44,7 @@ public class ReviewController {
                                HttpSession session,
                                RedirectAttributes ra) {
         String userId = (String) session.getAttribute("loggedInUser");
-        String fullName = (String) session.getAttribute("loggedInUserName");
+        String fullName = (String) session.getAttribute("userName");
         if (userId == null) return "redirect:/login";
 
         review.setUserId(userId);

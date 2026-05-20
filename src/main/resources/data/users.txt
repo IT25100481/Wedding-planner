@@ -7,12 +7,6 @@ Kavindu Sandanuwan,kavindusandanuwan68@gmail.com,kavindusandanuwan68@gmail.com,1
 sanchukan ,sanchukan,sanchukan1234@gmail.com,sanchukan,Couple
 Thisumi Gajaman,Thisumi,thisumijisoogajaman@gmail.com,Thisumi1,Couple
 >>>>>>> 1e7239f0bfd7f3d0369d5904abfed99306ddf690
-<<<<<<< HEAD
-Kavindu Sandanuwan,Kavindu,kavindusandanuwan68@gmail.com,1234,Couple
-W A K S WIJESURIYA,Sandanuwan,it25102693@my.sliit.lk,1234,Couple
-=======
 Thisumi Gajaman,Thisumi123,thisumicgajaman@gmail.com,Thisumi123,Vendor
 sanchukan22,sanchukan22,sajeevrat@gmail.com,sanchukan,Couple
->>>>>>> 1214152c09cdc78897e68f0e5987e8ae956c1a61
-Gimantha Tharushi ,Gimantha ,kavindusandanuwan68@gmail.com,111,Vendor
-Jane,Jane,thisumijisoogajaman@gmail.com,Jane,Vendor
+Sakithiyan,saki,saki@gmail.com,123456,Couple

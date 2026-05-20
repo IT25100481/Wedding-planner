@@ -74,7 +74,7 @@
           <td th:text="${admin.email}"></td>
           <td th:text="${admin.lastLogin != null ? admin.lastLogin : 'Never'}"></td>
           <td class="d-flex gap-2">
-            <a th:href="@{/admin/admins/add(id=${admin.id})}" class="btn-edit">Edit</a>
+            <a th:href="@{/admin/admins/edit/{id}(id=${admin.id})}" class="btn-edit">Edit</a>
             <a th:href="@{/admin/admins/delete/{id}(id=${admin.id})}"
                class="btn-delete"
                onclick="return confirm('Delete this admin?')">Delete</a>

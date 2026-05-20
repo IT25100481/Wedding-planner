@@ -47,6 +47,7 @@ public class UserController {
             session.setAttribute("userEmail", user.getEmail()); // ADDED: Store email in session
             session.setAttribute("navName", firstName);
             session.setAttribute("userRole", user.getRole());
+            session.setAttribute("vendorName", user.getFullName());
 
             return "redirect:/?loginSuccess=true";
         } else {

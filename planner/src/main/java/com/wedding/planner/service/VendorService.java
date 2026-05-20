@@ -61,4 +61,30 @@ public class VendorService {
             e.printStackTrace();
         }
     }
+
+    private void saveVendor(com.wedding.planner.model.Service vendor) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+            writer.write(vendor.toFileLine());
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addVendor(com.wedding.planner.model.Service vendor) {
+        saveVendor(vendor);
+    }
+
+    public void addVendor(com.wedding.planner.model.Service vendor, String status) {
+        vendor.setStatus(status);
+        saveVendor(vendor);
+    }
+
+    public void addVendor(com.wedding.planner.model.Service vendor, String status, String businessName) {
+        vendor.setStatus(status);
+        vendor.setBusinessName(businessName);
+        saveVendor(vendor);
+    }
+
+
 }

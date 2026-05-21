@@ -14,3 +14,5 @@ Sakithiyan,saki,saki@gmail.com,123456,Couple
 Kavindu Sandanuwan,Kavindus,kavindusandanuwan68@gmail.com,1212,Couple
 Kavindu Sandanuwan,Kavindus11,kavindusandanuwan68@gmail.com,1212,Vendor
 Kavindu Sandanuwan,Kavindu1,kavindusandanuwan68@gmail.com,1212,Couple
+Jane J,Jane J,thisumijisoogajaman@gmail.com,12345,Couple
+Ann,Ann,thisumijisoogajaman@gmail.com,123456,Couple

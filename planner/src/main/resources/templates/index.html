@@ -94,7 +94,7 @@
 
                     <a th:if="${session.loggedInUser != null and session.userRole == 'Vendor'}" th:href="@{/vendor/dashboard}" class="btn-main-gold">VENDOR DASHBOARD</a>
 
-                    <a th:if="${session.loggedInUser != null and session.userRole != 'Vendor'}" th:href="@{/dashboard" class="btn-main-gold">MY DASHBOARD</a>
+                    <a th:if="${session.loggedInUser != null and session.userRole != 'Vendor'}" th:href="@{/dashboard}" class="btn-main-gold">MY DASHBOARD</a>
 
                     <a th:href="@{/gallery}" class="btn-main-outline">VIEW GALLERY</a>
                 </div>

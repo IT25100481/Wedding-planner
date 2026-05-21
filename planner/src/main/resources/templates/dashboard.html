@@ -119,7 +119,7 @@
 
             <div th:if="${role == 'Couple'}">
                 <a href="/planner" class="dash-nav-link">Wedding Planner</a>
-                <a th:href="@{/saved-vendors}" class="dash-nav-link">Saved Vendors</a>
+                <a href="#" class="dash-nav-link" id="link-saved" onclick="return showSection('saved', this)">Saved Vendors</a>
                 <a href="#" class="dash-nav-link">Budget Tracker</a>
                 <a href="#" class="dash-nav-link" id="link-payments" onclick="return showSection('payments', this)">My Payments</a>
                 <a href="/reviews/my-reviews" class="dash-nav-link">My Reviews</a>
@@ -283,6 +283,15 @@
             </div>
         </div>
 
+        <div id="section-saved" class="section-content">
+            <div class="section-tag">Favourites</div>
+            <div class="section-title">Saved <em>Vendors</em></div>
+            <p style="color:rgba(255,255,255,0.35); font-size:0.75rem; letter-spacing:1px; margin-bottom:28px;">
+                Vendors you hearted in the marketplace.
+            </p>
+            <div id="savedVendorsList"></div>
+        </div>
+
     </main>
 </div>
 
@@ -298,6 +307,33 @@
     }
 
     window.addEventListener('DOMContentLoaded', function() {
+
+        // Load saved vendors from localStorage into the section
+        const savedFavs = localStorage.getItem('vivahaFavorites');
+        const container = document.getElementById('savedVendorsList');
+        if (container) {
+            const favs = savedFavs ? JSON.parse(savedFavs) : [];
+            if (favs.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-pay">
+                        <div style="font-size:2rem; margin-bottom:12px; opacity:.3">🤍</div>
+                        <p>No saved vendors yet.</p>
+                        <a href="/vendors" style="color:var(--gold-light); font-size:0.72rem; letter-spacing:2px; text-transform:uppercase; text-decoration:none; margin-top:12px; display:inline-block;">
+                            Browse Vendors →
+                        </a>
+                    </div>`;
+            } else {
+                container.innerHTML = favs.map(f => `
+                    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2" style="border-color:rgba(255,255,255,0.08)!important;">
+                        <div>
+                            <div style="font-weight:600; color:white; font-size:0.9rem;">${f.name}</div>
+                            <div style="color:var(--gold-light); font-size:0.8rem;">${f.price} LKR</div>
+                        </div>
+                        <a href="/vendors" style="color:var(--gold-light); font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; text-decoration:none; padding:5px 12px; border:1px solid rgba(229,178,125,0.3);">VIEW →</a>
+                    </div>
+                `).join('');
+            }
+        }
         const params = new URLSearchParams(window.location.search);
         if (params.get('section') === 'payments') {
             const link = document.getElementById('link-payments');

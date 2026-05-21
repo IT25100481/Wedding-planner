@@ -24,6 +24,12 @@ public class UserController {
     @GetMapping("/")
     public String index() { return "index"; }
 
+    /* ── NEW: PUBLIC ABOUT US ROUTE ── */
+    @GetMapping("/about")
+    public String about() {
+        return "about";
+    }
+
     @GetMapping("/login")
     public String login() { return "login"; }
 
@@ -44,7 +50,7 @@ public class UserController {
             session.setAttribute("userInitials", getInitials(fullName));
             session.setAttribute("loggedInUser", user.getUsername());
             session.setAttribute("userName", fullName);
-            session.setAttribute("userEmail", user.getEmail()); // ADDED: Store email in session
+            session.setAttribute("userEmail", user.getEmail()); // Store email in session
             session.setAttribute("navName", firstName);
             session.setAttribute("userRole", user.getRole());
             session.setAttribute("vendorName", user.getUsername());
@@ -115,7 +121,7 @@ public class UserController {
         session.setAttribute("userInitials", getInitials(fullName));
         session.setAttribute("loggedInUser", user.getUsername());
         session.setAttribute("userName", fullName);
-        session.setAttribute("userEmail", user.getEmail()); // ADDED: Store email in session
+        session.setAttribute("userEmail", user.getEmail()); // Store email in session
         session.setAttribute("navName", firstName);
         session.setAttribute("userRole", user.getRole());
 

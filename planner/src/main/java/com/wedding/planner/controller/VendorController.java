@@ -24,15 +24,20 @@ public class VendorController {
 
     // ================= DASHBOARD =================
     @GetMapping("/vendor/dashboard")
-    public String showDashboard(Model model, HttpSession session) {
+    public String showDashboard(Model model, HttpSession session) {  //dependency
 
+        String role = (String) session.getAttribute("userRole");
         String vendorName = (String) session.getAttribute("vendorName");
+
+        if (role == null || !role.equalsIgnoreCase("Vendor")) {
+            return "redirect:/login?unauthorized";
+        }
 
         if (vendorName == null) {
             return "redirect:/login";
         }
 
-        List<Service> services = getAllServices();
+        List<Service> services = getAllServices();      //composition. Dashboard is composed of many Service objects
 
         List<Map<String, String>> bookings = getBookings();
         List<Map<String, String>> payments = getPayments();
@@ -59,11 +64,11 @@ public class VendorController {
     // ================= BOOKINGS =================
     private List<Map<String, String>> getBookings() {
         Path path = Paths.get(BOOKINGS_FILE);
-        if (!Files.exists(path)) return new ArrayList<>();
+        if (!Files.exists(path)) return new ArrayList<>();  //check if file exists. if not return empty list
 
         try {
-            return Files.lines(path)
-                    .filter(line -> line != null && !line.trim().isEmpty())
+            return Files.lines(path)    //reads file line by line
+                    .filter(line -> line != null && !line.trim().isEmpty())   //removes empty spaces
                     .map(line -> line.split("\\|"))
                     .filter(parts -> parts.length >= 3)
                     .map(parts -> {
@@ -89,10 +94,10 @@ public class VendorController {
                              HttpSession session) {
 
         try {
-            service.setId("v" + System.currentTimeMillis());
-            service.setStatus("Available");
+            service.setId("v" + System.currentTimeMillis());   //creates a unique ID
+            service.setStatus("Available");                    //sets status
 
-            // ✅ FIX: prevent null vendor
+            //preventing null vendorName
             String vendorName = (String) session.getAttribute("vendorName");
             if (vendorName == null) {
 
@@ -100,7 +105,8 @@ public class VendorController {
                 return "redirect:/vendor/dashboard?error=noSession";
             }
 
-            service.setBusinessName(vendorName);
+            service.setBusinessName(vendorName);    //set vendor name
+                                                    //Associates service with vendor
 
             if ("essential".equals(offeringType)) {
                 service.setTradition("Universal");
@@ -111,9 +117,9 @@ public class VendorController {
 
             } else if (file != null && !file.isEmpty()) {
                 String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-                Path path = Paths.get(UPLOAD_DIR + fileName);
-                Files.createDirectories(path.getParent());
-                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                Path path = Paths.get(UPLOAD_DIR + fileName);   //created file path
+                Files.createDirectories(path.getParent());  //creates uploads folder if missing
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);   //Copies uploaded file into uploads folder
                 service.setImagePath(fileName);
 
             } else {
@@ -121,12 +127,12 @@ public class VendorController {
             }
 
             createBackup();
-            saveServiceToFile(service);
+            saveServiceToFile(service);  //writes data to file
 
             return "redirect:/vendor/dashboard";
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException e) {   //used to handle file related errors
+            e.printStackTrace();    //print error details for debugging
             return "redirect:/vendor/dashboard?error";
         }
     }
@@ -156,7 +162,7 @@ public class VendorController {
                 updatedService.setTradition(services.get(i).getTradition());
 
                 updatedService.setBusinessName(services.get(i).getBusinessName());
-                services.set(i, updatedService);
+                services.set(i, updatedService);  //Replace old object with new updated object
                 break;
             }
         }

@@ -96,6 +96,28 @@
         }
         .btn-home:hover { background: var(--gold-dark); color: #fff; }
 
+        /* ── REVIEW PROMPT BOX ── */
+        .review-prompt {
+            background: rgba(201,168,76,0.08);
+            border: 1px solid rgba(201,168,76,0.35);
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .review-prompt-stars { font-size: 1.4rem; color: var(--gold); margin-bottom: 8px; }
+        .review-prompt-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--dark); margin-bottom: 4px; }
+        .review-prompt-sub   { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px; }
+
+        .btn-review {
+            display: block; width: 100%;
+            background: var(--gold); color: var(--dark); border: none;
+            padding: 14px; font-size: 0.72rem; letter-spacing: 3px;
+            text-transform: uppercase; font-weight: 500;
+            text-decoration: none; transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif; text-align: center;
+        }
+        .btn-review:hover { background: var(--gold-dark); color: #fff; }
+
         /* VIEW PAYMENT HISTORY — goes to dashboard My Payments section */
         .btn-outline {
             display: block; width: 100%;
@@ -104,7 +126,7 @@
             padding: 14px; font-size: 0.72rem; letter-spacing: 3px;
             text-transform: uppercase; text-decoration: none;
             transition: all 0.3s; font-family: 'Montserrat', sans-serif;
-            text-align: center;
+            text-align: center; margin-bottom: 12px;
         }
         .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
@@ -169,10 +191,23 @@
             <div class="txn-value" th:text="${payment.transactionId}">TXN-XXXXXXXX</div>
         </div>
 
-        <!-- BUTTONS -->
-        <a href="/" class="btn-home">Back to Home</a>
+        <!-- ══════════════════════════════════════════
+             REVIEW PROMPT — only shown when FULLY PAID
+             ══════════════════════════════════════════ -->
+        <div class="review-prompt" th:if="${payment.paymentStatus == 'FULLY_PAID'}">
+            <div class="review-prompt-stars">★ ★ ★ ★ ★</div>
+            <div class="review-prompt-title">How was your experience?</div>
+            <div class="review-prompt-sub">
+                Your payment is complete! Share your feedback to help other couples.
+            </div>
+            <a th:href="@{/reviews/submit(vendorName=${payment.vendorName}, bookingId=${payment.bookingId})}"
+               class="btn-review">
+                ✦ Write a Review
+            </a>
+        </div>
 
-        <!-- VIEW PAYMENT HISTORY → goes to dashboard and opens My Payments section -->
+        <!-- BUTTONS -->
+        <a href="/" class="btn-home" style="margin-bottom:12px;">Back to Home</a>
         <a href="/dashboard?section=payments" class="btn-outline">View Payment History</a>
 
     </div>

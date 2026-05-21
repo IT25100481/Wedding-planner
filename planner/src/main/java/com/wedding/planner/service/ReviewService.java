@@ -4,6 +4,7 @@ import com.wedding.planner.model.Review;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,17 +15,28 @@ import java.util.stream.Collectors;
 @Service
 public class ReviewService {
 
-    private static final String FILE_PATH = "reviews.txt";
+    // Always resolve to the correct folder no matter where the app runs from
+    private static final String FILE_NAME = "reviews.txt";
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    // ── CREATE: Add a new review ──
+    /** Returns the absolute path to reviews.txt, creating the file if needed */
+    private String getFilePath() {
+        // Try working directory first (where other .txt files like payments.txt live)
+        File f = new File(FILE_NAME);
+        if (!f.exists()) {
+            try { f.createNewFile(); } catch (IOException ignored) {}
+        }
+        return f.getAbsolutePath();
+    }
+
+    // ── CREATE ────────────────────────────────────────────────────────────
     public void addReview(Review review) {
         review.setId("REV-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
         review.setCreatedAt(LocalDateTime.now().format(FORMATTER));
-        review.setStatus("PENDING");   // admin must approve before it shows publicly
+        review.setStatus("PENDING");
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(getFilePath(), true))) {
             writer.write(review.toFileLine());
             writer.newLine();
         } catch (IOException e) {
@@ -32,16 +44,17 @@ public class ReviewService {
         }
     }
 
-    // ── READ: Load all reviews from file ──
+    // ── READ: all reviews ─────────────────────────────────────────────────
     public List<Review> getAllReviews() {
         List<Review> reviews = new ArrayList<>();
-        File file = new File(FILE_PATH);
-        if (!file.exists()) return reviews;
+        File file = new File(getFilePath());
+        if (!file.exists() || file.length() == 0) return reviews;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
+                line = line.trim();
+                if (!line.isEmpty()) {
                     Review r = Review.fromFileLine(line);
                     if (r != null) reviews.add(r);
                 }
@@ -52,29 +65,28 @@ public class ReviewService {
         return reviews;
     }
 
-    // ── READ: Get only approved reviews (for public display) ──
+    // ── READ: approved only (public page) ────────────────────────────────
     public List<Review> getApprovedReviews() {
         return getAllReviews().stream()
                 .filter(r -> "APPROVED".equals(r.getStatus()))
                 .collect(Collectors.toList());
     }
 
-    // ── READ: Get reviews submitted by a specific user ──
+    // ── READ: by logged-in user ───────────────────────────────────────────
     public List<Review> getReviewsByUser(String userId) {
         return getAllReviews().stream()
-                .filter(r -> userId.equals(r.getUserId()))
+                .filter(r -> userId != null && userId.equals(r.getUserId()))
                 .collect(Collectors.toList());
     }
 
-    // ── READ: Find a single review by its ID ──
+    // ── READ: single review by ID ─────────────────────────────────────────
     public Review getReviewById(String id) {
         return getAllReviews().stream()
-                .filter(r -> id.equals(r.getId()))
-                .findFirst()
-                .orElse(null);
+                .filter(r -> id != null && id.equals(r.getId()))
+                .findFirst().orElse(null);
     }
 
-    // ── UPDATE: Edit the comment/rating of an existing review ──
+    // ── UPDATE: customer edits rating/comment ─────────────────────────────
     public boolean updateReview(String id, int newRating, String newComment) {
         List<Review> reviews = getAllReviews();
         boolean found = false;
@@ -82,7 +94,7 @@ public class ReviewService {
             if (id.equals(r.getId())) {
                 r.setRating(newRating);
                 r.setComment(newComment);
-                r.setStatus("PENDING");   // reset to pending after edit
+                r.setStatus("PENDING");
                 found = true;
                 break;
             }
@@ -91,7 +103,7 @@ public class ReviewService {
         return found;
     }
 
-    // ── UPDATE: Admin approves or rejects a review ──
+    // ── UPDATE: admin changes status ──────────────────────────────────────
     public boolean updateStatus(String id, String newStatus) {
         List<Review> reviews = getAllReviews();
         boolean found = false;
@@ -106,21 +118,18 @@ public class ReviewService {
         return found;
     }
 
-    // ── DELETE: Remove a review by ID ──
+    // ── DELETE ────────────────────────────────────────────────────────────
     public boolean deleteReview(String id) {
         List<Review> reviews = getAllReviews();
         int before = reviews.size();
         reviews.removeIf(r -> id.equals(r.getId()));
-        if (reviews.size() < before) {
-            saveAll(reviews);
-            return true;
-        }
+        if (reviews.size() < before) { saveAll(reviews); return true; }
         return false;
     }
 
-    // ── HELPER: Overwrite file with current list ──
+    // ── HELPER: write full list back to file ──────────────────────────────
     private void saveAll(List<Review> reviews) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, false))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(getFilePath(), false))) {
             for (Review r : reviews) {
                 writer.write(r.toFileLine());
                 writer.newLine();
@@ -130,7 +139,7 @@ public class ReviewService {
         }
     }
 
-    // ── STAT: Average rating across all approved reviews ──
+    // ── STAT: average rating of approved reviews ──────────────────────────
     public double getAverageRating() {
         List<Review> approved = getApprovedReviews();
         if (approved.isEmpty()) return 0.0;

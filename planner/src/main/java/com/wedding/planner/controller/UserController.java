@@ -21,8 +21,19 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/gallery")
+    public String gallery() {
+        return "gallery";
+    }
+
     @GetMapping("/")
     public String index() { return "index"; }
+
+    /* ── PUBLIC ABOUT US ROUTE ── */
+    @GetMapping("/about")
+    public String about() {
+        return "about";
+    }
 
     @GetMapping("/login")
     public String login() { return "login"; }
@@ -35,16 +46,18 @@ public class UserController {
             return "redirect:/login?notFound=true";
         }
 
-        if (user.getPassword().equals(password)) {
+        // FIXED: Now calls the cryptographic hashing comparison method instead of comparing raw strings
+        if (userService.checkPassword(password, user.getPassword())) {
+
             // --- INITIALS & NAME LOGIC ---
             String fullName = user.getFullName().trim();
             String firstName = fullName.split("\\s+")[0];
 
-            // Set session attributes
+            // Set session attributes securely
             session.setAttribute("userInitials", getInitials(fullName));
             session.setAttribute("loggedInUser", user.getUsername());
             session.setAttribute("userName", fullName);
-            session.setAttribute("userEmail", user.getEmail()); // ADDED: Store email in session
+            session.setAttribute("userEmail", user.getEmail()); // Store email in session
             session.setAttribute("navName", firstName);
             session.setAttribute("userRole", user.getRole());
             session.setAttribute("vendorName", user.getUsername());
@@ -87,7 +100,7 @@ public class UserController {
     public String handlePasswordReset(@RequestParam String email, @RequestParam String newPassword) {
         User user = userService.findByEmail(email);
         if (user != null) {
-            userService.updatePassword(email, newPassword);
+            userService.updatePassword(email, newPassword); // Automatically securely hashes via updated service
         }
         return "redirect:/login?resetSuccess=true";
     }
@@ -106,7 +119,7 @@ public class UserController {
             return "redirect:/register?usernameTaken=true";
         }
 
-        userService.saveUser(user);
+        userService.saveUser(user); // Automatically hashes raw password via updated service
 
         String fullName = user.getFullName().trim();
         String firstName = fullName.split("\\s+")[0];
@@ -115,7 +128,7 @@ public class UserController {
         session.setAttribute("userInitials", getInitials(fullName));
         session.setAttribute("loggedInUser", user.getUsername());
         session.setAttribute("userName", fullName);
-        session.setAttribute("userEmail", user.getEmail()); // ADDED: Store email in session
+        session.setAttribute("userEmail", user.getEmail()); // Store email in session
         session.setAttribute("navName", firstName);
         session.setAttribute("userRole", user.getRole());
 

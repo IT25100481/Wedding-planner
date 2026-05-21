@@ -21,6 +21,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/gallery")
+    public String gallery() {
+        return "gallery";
+    }
+
     @GetMapping("/")
     public String index() { return "index"; }
 

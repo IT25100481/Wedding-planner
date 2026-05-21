@@ -16,57 +16,69 @@ public class ReviewController {
     private ReviewService reviewService;
 
     // ════════════════════════════════════════════════════════
-    //  CLIENT-SIDE ROUTES
+    //  CUSTOMER ROUTES
     // ════════════════════════════════════════════════════════
 
-    /** Show the "Submit a Review" form (GET) */
+    /** GET /reviews/submit — show the form */
     @GetMapping("/reviews/submit")
-    public String showSubmitForm(@RequestParam(required = false, defaultValue = "") String vendorName,
-                                 @RequestParam(required = false, defaultValue = "") String bookingId,
-                                 Model model, HttpSession session,
-                                 RedirectAttributes ra) {
+    public String showSubmitForm(
+            @RequestParam(required = false, defaultValue = "") String vendorName,
+            @RequestParam(required = false, defaultValue = "") String bookingId,
+            Model model, HttpSession session, RedirectAttributes ra) {
+
         if (session.getAttribute("loggedInUser") == null) {
             ra.addFlashAttribute("error", "Please log in to leave a review.");
             return "redirect:/login";
         }
-        Review review = new Review();
-        // pre-fill vendor name and bookingId if coming from payment success page
-        if (!vendorName.isEmpty()) review.setVendorName(vendorName);
-        if (!bookingId.isEmpty())  review.setServiceType("Wedding Package");
-        model.addAttribute("review", review);
+
+        // Pre-fill vendor from payment page if provided
         model.addAttribute("prefilledVendor", vendorName);
+        model.addAttribute("prefilledBookingId", bookingId);
         return "reviews/submit-review";
     }
 
-    /** Handle review form submission (POST) */
+    /** POST /reviews/submit — save the review */
     @PostMapping("/reviews/submit")
-    public String submitReview(@ModelAttribute Review review,
-                               HttpSession session,
-                               RedirectAttributes ra) {
-        String userId = (String) session.getAttribute("loggedInUser");
+    public String submitReview(
+            @RequestParam(defaultValue = "0") int rating,
+            @RequestParam(defaultValue = "") String serviceType,
+            @RequestParam(defaultValue = "") String vendorName,
+            @RequestParam(defaultValue = "") String comment,
+            HttpSession session, RedirectAttributes ra) {
+
+        String userId   = (String) session.getAttribute("loggedInUser");
         String fullName = (String) session.getAttribute("userName");
         if (userId == null) return "redirect:/login";
 
-        review.setUserId(userId);
-        review.setFullName(fullName != null ? fullName : userId);
-
-        // Basic validation
-        if (review.getComment() == null || review.getComment().trim().isEmpty()) {
+        // Validation
+        if (comment.trim().isEmpty()) {
             ra.addFlashAttribute("error", "Please write a comment before submitting.");
             return "redirect:/reviews/submit";
         }
-        if (review.getRating() < 1 || review.getRating() > 5) {
-            ra.addFlashAttribute("error", "Rating must be between 1 and 5.");
+        if (rating < 1 || rating > 5) {
+            ra.addFlashAttribute("error", "Please select a star rating (1–5).");
+            return "redirect:/reviews/submit";
+        }
+        if (serviceType.trim().isEmpty()) {
+            ra.addFlashAttribute("error", "Please select a service type.");
             return "redirect:/reviews/submit";
         }
 
+        Review review = new Review();
+        review.setUserId(userId);
+        review.setFullName(fullName != null ? fullName : userId);
+        review.setRating(rating);
+        review.setServiceType(serviceType);
+        review.setVendorName(vendorName);
+        review.setComment(comment);
+
         reviewService.addReview(review);
         ra.addFlashAttribute("success",
-                "Thank you for your feedback! Your review is pending approval.");
+                "Thank you! Your review has been submitted and is pending approval.");
         return "redirect:/reviews/my-reviews";
     }
 
-    /** Customer views their own submitted reviews */
+    /** GET /reviews/my-reviews — customer sees their own reviews */
     @GetMapping("/reviews/my-reviews")
     public String myReviews(Model model, HttpSession session, RedirectAttributes ra) {
         String userId = (String) session.getAttribute("loggedInUser");
@@ -78,7 +90,7 @@ public class ReviewController {
         return "reviews/my-reviews";
     }
 
-    /** Customer edits their own review — show pre-filled form (GET) */
+    /** GET /reviews/edit/{id} — show pre-filled edit form */
     @GetMapping("/reviews/edit/{id}")
     public String showEditForm(@PathVariable String id, Model model,
                                HttpSession session, RedirectAttributes ra) {
@@ -94,13 +106,12 @@ public class ReviewController {
         return "reviews/edit-review";
     }
 
-    /** Handle edit form submission (POST) */
+    /** POST /reviews/edit/{id} — save edited review */
     @PostMapping("/reviews/edit/{id}")
     public String updateReview(@PathVariable String id,
-                               @RequestParam int rating,
-                               @RequestParam String comment,
-                               HttpSession session,
-                               RedirectAttributes ra) {
+                               @RequestParam(defaultValue = "0") int rating,
+                               @RequestParam(defaultValue = "") String comment,
+                               HttpSession session, RedirectAttributes ra) {
         String userId = (String) session.getAttribute("loggedInUser");
         if (userId == null) return "redirect:/login";
 
@@ -109,9 +120,12 @@ public class ReviewController {
             ra.addFlashAttribute("error", "Access denied.");
             return "redirect:/reviews/my-reviews";
         }
-
-        if (comment == null || comment.trim().isEmpty()) {
+        if (comment.trim().isEmpty()) {
             ra.addFlashAttribute("error", "Comment cannot be empty.");
+            return "redirect:/reviews/edit/" + id;
+        }
+        if (rating < 1 || rating > 5) {
+            ra.addFlashAttribute("error", "Please select a star rating.");
             return "redirect:/reviews/edit/" + id;
         }
 
@@ -120,11 +134,10 @@ public class ReviewController {
         return "redirect:/reviews/my-reviews";
     }
 
-    /** Customer deletes their own review */
+    /** POST /reviews/delete/{id} — customer deletes their own review */
     @PostMapping("/reviews/delete/{id}")
     public String deleteReview(@PathVariable String id,
-                               HttpSession session,
-                               RedirectAttributes ra) {
+                               HttpSession session, RedirectAttributes ra) {
         String userId = (String) session.getAttribute("loggedInUser");
         if (userId == null) return "redirect:/login";
 
@@ -138,7 +151,7 @@ public class ReviewController {
         return "redirect:/reviews/my-reviews";
     }
 
-    /** Public page: show all approved reviews */
+    /** GET /reviews — public approved reviews page */
     @GetMapping("/reviews")
     public String publicReviews(Model model) {
         model.addAttribute("reviews", reviewService.getApprovedReviews());
@@ -147,13 +160,14 @@ public class ReviewController {
     }
 
     // ════════════════════════════════════════════════════════
-    //  ADMIN-SIDE ROUTES
+    //  ADMIN ROUTES  — uses "admin" session key (matches AdminController)
     // ════════════════════════════════════════════════════════
 
-    /** Admin: view all reviews */
+    /** GET /admin/reviews — admin sees all reviews */
     @GetMapping("/admin/reviews")
     public String adminReviews(Model model, HttpSession session, RedirectAttributes ra) {
-        if (session.getAttribute("adminLoggedIn") == null) {
+        // FIX: your AdminController sets "admin", not "adminLoggedIn"
+        if (session.getAttribute("admin") == null) {
             ra.addFlashAttribute("error", "Admin access required.");
             return "redirect:/admin/login";
         }
@@ -162,31 +176,31 @@ public class ReviewController {
         return "reviews/admin-reviews";
     }
 
-    /** Admin: approve a review */
+    /** POST /admin/reviews/approve/{id} */
     @PostMapping("/admin/reviews/approve/{id}")
-    public String approveReview(@PathVariable String id, RedirectAttributes ra,
-                                HttpSession session) {
-        if (session.getAttribute("adminLoggedIn") == null) return "redirect:/admin/login";
+    public String approveReview(@PathVariable String id,
+                                HttpSession session, RedirectAttributes ra) {
+        if (session.getAttribute("admin") == null) return "redirect:/admin/login";
         reviewService.updateStatus(id, "APPROVED");
-        ra.addFlashAttribute("success", "Review approved.");
+        ra.addFlashAttribute("success", "Review approved successfully.");
         return "redirect:/admin/reviews";
     }
 
-    /** Admin: reject a review */
+    /** POST /admin/reviews/reject/{id} */
     @PostMapping("/admin/reviews/reject/{id}")
-    public String rejectReview(@PathVariable String id, RedirectAttributes ra,
-                               HttpSession session) {
-        if (session.getAttribute("adminLoggedIn") == null) return "redirect:/admin/login";
+    public String rejectReview(@PathVariable String id,
+                               HttpSession session, RedirectAttributes ra) {
+        if (session.getAttribute("admin") == null) return "redirect:/admin/login";
         reviewService.updateStatus(id, "REJECTED");
         ra.addFlashAttribute("success", "Review rejected.");
         return "redirect:/admin/reviews";
     }
 
-    /** Admin: delete any review */
+    /** POST /admin/reviews/delete/{id} */
     @PostMapping("/admin/reviews/delete/{id}")
-    public String adminDeleteReview(@PathVariable String id, RedirectAttributes ra,
-                                    HttpSession session) {
-        if (session.getAttribute("adminLoggedIn") == null) return "redirect:/admin/login";
+    public String adminDeleteReview(@PathVariable String id,
+                                    HttpSession session, RedirectAttributes ra) {
+        if (session.getAttribute("admin") == null) return "redirect:/admin/login";
         reviewService.deleteReview(id);
         ra.addFlashAttribute("success", "Review deleted.");
         return "redirect:/admin/reviews";

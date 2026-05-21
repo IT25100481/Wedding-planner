@@ -11,7 +11,7 @@ public class Service {
     private String contact;
     private String price;
     private String imagePath;
-    private String status; // Ensure this field exists
+    private String status;
 
     public Service() {}
 
@@ -34,19 +34,17 @@ public class Service {
         }
     }
 
-    // ─── ADD THIS METHOD FOR SAVING ───
-    // This fixes the "cannot find symbol method toFileLine()" error
+
     public String toFileLine() {
         return id + "|" + businessName + "|" + category + "|" + tradition + "|" +
                 description + "|" + contact + "|" + price + "|" + imagePath + "|" + status;
     }
 
-    // ─── ADD GETTER AND SETTER FOR STATUS ───
-    // This fixes the "cannot find symbol method getStatus()/setStatus()" errors
+
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
-    // ─── ENSURE ALL OTHER GETTERS/SETTERS ARE PRESENT ───
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     public String getBusinessName() { return businessName; }

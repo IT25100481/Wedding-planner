@@ -124,6 +124,8 @@
                 <a href="#" class="dash-nav-link">Budget Tracker</a>
                 <!-- MY PAYMENTS -->
                 <a href="#" class="dash-nav-link" id="link-payments" onclick="return showSection('payments', this)">My Payments</a>
+                <!-- MY REVIEWS -->
+                <a href="/reviews/my-reviews" class="dash-nav-link">My Reviews</a>
             </div>
 
             <div th:if="${role == 'Vendor'}">
@@ -247,6 +249,7 @@
                         <th>Method</th>
                         <th>Status</th>
                         <th>Date</th>
+                        <th>Review</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -261,6 +264,21 @@
                                       th:text="${p.paymentStatus.replace('_',' ')}">—</span>
                         </td>
                         <td style="font-size:0.68rem; color:rgba(255,255,255,0.3)" th:text="${p.createdAt}">—</td>
+                        <td>
+                            <!-- Review button only appears when payment is FULLY_PAID -->
+                            <a th:if="${p.paymentStatus == 'FULLY_PAID'}"
+                               th:href="@{/reviews/submit(vendorName=${p.vendorName}, bookingId=${p.bookingId})}"
+                               style="font-size:0.62rem; letter-spacing:2px; text-transform:uppercase;
+                                      padding:6px 14px; background:rgba(201,168,76,0.15);
+                                      color:var(--gold-light); border:1px solid rgba(201,168,76,0.3);
+                                      text-decoration:none; white-space:nowrap; display:inline-block;">
+                                ★ Review
+                            </a>
+                            <span th:if="${p.paymentStatus != 'FULLY_PAID'}"
+                                  style="font-size:0.62rem; color:rgba(255,255,255,0.2); letter-spacing:1px;">
+                                —
+                            </span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

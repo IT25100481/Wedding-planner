@@ -111,7 +111,6 @@
 
 <div class="dash-container">
 
-    <!-- SIDEBAR -->
     <aside class="dash-sidebar">
         <h6 class="mb-4 text-uppercase" style="letter-spacing: 4px; font-size: 0.65rem; color: var(--gold-light);">Navigation</h6>
         <nav>
@@ -120,11 +119,9 @@
 
             <div th:if="${role == 'Couple'}">
                 <a href="/planner" class="dash-nav-link">Wedding Planner</a>
-                <a href="#" class="dash-nav-link">Saved Vendors</a>
+                <a th:href="@{/saved-vendors}" class="dash-nav-link">Saved Vendors</a>
                 <a href="#" class="dash-nav-link">Budget Tracker</a>
-                <!-- MY PAYMENTS -->
                 <a href="#" class="dash-nav-link" id="link-payments" onclick="return showSection('payments', this)">My Payments</a>
-                <!-- MY REVIEWS -->
                 <a href="/reviews/my-reviews" class="dash-nav-link">My Reviews</a>
             </div>
 
@@ -142,14 +139,12 @@
         </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="dash-main">
         <header class="mb-5">
             <h2 class="editorial-title">Welcome back, <em th:text="${session.navName}">User</em></h2>
             <p class="text-white-50 small" style="letter-spacing: 1px;">MANAGEMENT DASHBOARD • <span th:text="${role}">Role</span></p>
         </header>
 
-        <!-- ── OVERVIEW SECTION ── -->
         <div id="section-overview" class="section-content active">
 
             <div th:if="${role == 'Couple'}" class="row g-4">
@@ -171,7 +166,6 @@
                         <h2 class="main-heading" style="font-size: 2.8rem;">65%</h2>
                     </div>
                 </div>
-                <!-- MY PAYMENTS STAT CARD -->
                 <div class="col-md-4" th:if="${myPayments != null}">
                     <div class="stat-card" onclick="showSection('payments', document.getElementById('link-payments'))">
                         <label class="d-block mb-2 small" style="color:var(--gold-light); letter-spacing: 2px;">MY PAYMENTS</label>
@@ -207,7 +201,6 @@
             </div>
         </div>
 
-        <!-- ── MY PAYMENTS SECTION ── -->
         <div id="section-payments" class="section-content">
             <div class="section-tag">Payment History</div>
             <div class="section-title">My <em>Payments</em></div>
@@ -215,7 +208,6 @@
                 All your booking payments and their current status.
             </p>
 
-            <!-- SUMMARY BAR -->
             <div class="pay-summary" th:if="${myPayments != null and !#lists.isEmpty(myPayments)}">
                 <div class="pay-sum-item">
                     <div class="pay-sum-label">Total Bookings</div>
@@ -237,7 +229,6 @@
                 </div>
             </div>
 
-            <!-- PAYMENTS TABLE -->
             <div th:if="${myPayments != null and !#lists.isEmpty(myPayments)}" style="overflow-x:auto">
                 <table class="pay-table">
                     <thead>
@@ -265,7 +256,6 @@
                         </td>
                         <td style="font-size:0.68rem; color:rgba(255,255,255,0.3)" th:text="${p.createdAt}">—</td>
                         <td>
-                            <!-- Review button only appears when payment is FULLY_PAID -->
                             <a th:if="${p.paymentStatus == 'FULLY_PAID'}"
                                th:href="@{/reviews/submit(vendorName=${p.vendorName}, bookingId=${p.bookingId})}"
                                style="font-size:0.62rem; letter-spacing:2px; text-transform:uppercase;
@@ -284,7 +274,6 @@
                 </table>
             </div>
 
-            <!-- EMPTY STATE -->
             <div class="empty-pay" th:if="${myPayments == null or #lists.isEmpty(myPayments)}">
                 <div style="font-size:2rem; margin-bottom:12px; opacity:.3">💳</div>
                 <p>No payments yet. Book a vendor or package to get started.</p>
@@ -308,7 +297,6 @@
         return false;
     }
 
-    // ── AUTO-OPEN PAYMENTS SECTION if redirected from success page ──
     window.addEventListener('DOMContentLoaded', function() {
         const params = new URLSearchParams(window.location.search);
         if (params.get('section') === 'payments') {

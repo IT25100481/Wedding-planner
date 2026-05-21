@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" th:href="@{'/images/logo color.png'}">
+    <title>Saved Vendors | Vivaha Boutique</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <style>
+        .dash-container { display: flex; min-height: 100vh; padding-top: 90px; }
+        .dash-sidebar {
+            width: 280px;
+            border-right: 1px solid var(--white-alpha);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        .dash-main { flex: 1; padding: 40px 60px; background: rgba(26, 18, 9, 0.2); }
+
+        .dash-nav-link {
+            display: block;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 25px;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none !important;
+            transition: 0.3s;
+        }
+        .dash-nav-link:hover, .dash-nav-link.active { color: var(--gold-light); padding-left: 10px; }
+        .sidebar-footer { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--white-alpha); }
+
+        /* Boutique Vendor Cards */
+        .vendor-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--white-alpha);
+            padding: 25px;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .vendor-card:hover {
+            border-color: var(--gold-light);
+            background: rgba(229, 178, 125, 0.03);
+            transform: translateY(-5px);
+        }
+        .vendor-img-placeholder {
+            width: 100%;
+            height: 200px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--white-alpha);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .vendor-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 5px; }
+        .vendor-category { font-size: 0.65rem; color: var(--gold-light); letter-spacing: 2px; text-transform: uppercase; }
+
+        .remove-btn {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: none; border: none;
+            color: rgba(255,255,255,0.3);
+            transition: 0.3s;
+        }
+        .remove-btn:hover { color: #ff6b6b; }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{index :: nav}"></div>
+
+<div class="dash-container">
+    <aside class="dash-sidebar">
+        <h6 class="mb-4 text-uppercase" style="letter-spacing: 4px; font-size: 0.65rem; color: var(--gold-light);">Navigation</h6>
+        <nav>
+            <a href="/dashboard" class="dash-nav-link">Overview</a>
+            <a href="/profile" class="dash-nav-link">Account Profile</a>
+
+            <div th:if="${role == 'Couple'}">
+                <a href="/planner" class="dash-nav-link">Wedding Planner</a>
+                <a href="/saved-vendors" class="dash-nav-link active">Saved Vendors</a>
+                <a href="#" class="dash-nav-link">Budget Tracker</a>
+            </div>
+
+            <a href="#" class="dash-nav-link">Messages</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="/logout" class="dash-nav-link text-danger" style="opacity: 0.8;">Sign Out</a>
+        </div>
+    </aside>
+
+    <main class="dash-main">
+        <header class="mb-5">
+            <h2 class="editorial-title">Curated <em>Artisans</em></h2>
+            <p class="text-white-50 small" style="letter-spacing: 1px;">YOUR COLLECTION OF FAVORITE VENDORS</p>
+        </header>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-xl-4">
+                <div class="vendor-card">
+                    <button class="remove-btn" title="Remove Favorite"><i class="bi bi-heart-fill"></i></button>
+                    <div class="vendor-img-placeholder">
+                        <i class="bi bi-camera text-white-50" style="font-size: 2rem;"></i>
+                    </div>
+                    <span class="vendor-category">Photography</span>
+                    <h4 class="vendor-title text-white mt-1">Golden Hour Studios</h4>
+                    <p class="text-white-50 small mb-4"><i class="bi bi-geo-alt me-2"></i>Colombo, Sri Lanka</p>
+                    <a href="#" class="btn-main-outline w-100 text-center py-2 btn-sm" style="font-size: 0.7rem; letter-spacing: 1px;">INQUIRE ACCORDINGLY</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <div class="vendor-card">
+                    <button class="remove-btn" title="Remove Favorite"><i class="bi bi-heart-fill"></i></button>
+                    <div class="vendor-img-placeholder">
+                        <i class="bi bi-flower1 text-white-50" style="font-size: 2rem;"></i>
+                    </div>
+                    <span class="vendor-category">Floral & Decor</span>
+                    <h4 class="vendor-title text-white mt-1">Petals & Porcelain</h4>
+                    <p class="text-white-50 small mb-4"><i class="bi bi-geo-alt me-2"></i>Negombo, Sri Lanka</p>
+                    <a href="#" class="btn-main-outline w-100 text-center py-2 btn-sm" style="font-size: 0.7rem; letter-spacing: 1px;">INQUIRE ACCORDINGLY</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <div class="vendor-card">
+                    <button class="remove-btn" title="Remove Favorite"><i class="bi bi-heart-fill"></i></button>
+                    <div class="vendor-img-placeholder">
+                        <i class="bi bi-cake2 text-white-50" style="font-size: 2rem;"></i>
+                    </div>
+                    <span class="vendor-category">Catering & Cakes</span>
+                    <h4 class="vendor-title text-white mt-1">The Confectionist</h4>
+                    <p class="text-white-50 small mb-4"><i class="bi bi-geo-alt me-2"></i>Kandy, Sri Lanka</p>
+                    <a href="#" class="btn-main-outline w-100 text-center py-2 btn-sm" style="font-size: 0.7rem; letter-spacing: 1px;">INQUIRE ACCORDINGLY</a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

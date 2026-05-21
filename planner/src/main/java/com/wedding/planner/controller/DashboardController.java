@@ -104,6 +104,20 @@ public class DashboardController {
         return "redirect:/profile?passError=true";
     }
 
+    @GetMapping("/saved-vendors")
+    public String showSavedVendors(HttpSession session, Model model) {
+        if (session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login";
+        }
+
+        // Keep luxury navbar elements synchronized
+        model.addAttribute("role", session.getAttribute("userRole"));
+        model.addAttribute("navName", session.getAttribute("navName"));
+        model.addAttribute("initials", session.getAttribute("userInitials"));
+
+        return "saved-vendors";
+    }
+
     @PostMapping("/upload-avatar")
     public String uploadAvatar(@RequestParam("avatar") MultipartFile file) {
         if (file.isEmpty()) {

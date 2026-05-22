@@ -172,15 +172,37 @@ public class AdminController {
         return "admin/admin-form";
     }
 
+    @GetMapping("/admins/edit/{id}")
+    public String editAdminForm(@PathVariable String id,
+                                Model model, HttpSession session) {
+        if (session.getAttribute("admin") == null) return "redirect:/admin/login";
+        AdminUser admin = adminService.getAllAdmins().stream()
+                .filter(a -> a.getId().equals(id))
+                .findFirst().orElse(null);
+        if (admin == null) return "redirect:/admin/admins";
+        model.addAttribute("admin", admin);
+        return "admin/admin-form";
+    }
+
     @PostMapping("/admins/save")
     public String saveAdmin(@ModelAttribute AdminUser admin,
                             RedirectAttributes redirectAttributes,
                             HttpSession session) {
         if (session.getAttribute("admin") == null) return "redirect:/admin/login";
+
         if (admin.getId() == null || admin.getId().isEmpty()) {
+            // ── CREATE new admin ──
             adminService.createAdmin(admin);
             redirectAttributes.addFlashAttribute("message", "Admin created successfully!");
         } else {
+            // ── UPDATE existing admin ──
+            // if password field was left empty, keep the existing password
+            if (admin.getPassword() == null || admin.getPassword().isEmpty()) {
+                AdminUser existing = adminService.getAllAdmins().stream()
+                        .filter(a -> a.getId().equals(admin.getId()))
+                        .findFirst().orElse(null);
+                if (existing != null) admin.setPassword(existing.getPassword());
+            }
             adminService.updateAdmin(admin);
             redirectAttributes.addFlashAttribute("message", "Admin updated successfully!");
         }

@@ -10,14 +10,14 @@ import java.util.*;
 @Controller
 public class VendorCustomerController {
 
-    private final String FILE_PATH = "services.txt";
+    private final String FILE_PATH = "planner/services.txt";
 
-    @GetMapping("/vendors")
+    @GetMapping("/vendors")  //loads vendor marketplace page
     public String showVendorMarketplace(Model model) {
         List<Service> allServices = loadServices();
 
         // Essentials (Shown to everyone)
-        model.addAttribute("photography", filterByCategory(allServices, "Photography"));
+        model.addAttribute("photography", filterByCategory(allServices, "Photography"));  //shows only photography vendors
         model.addAttribute("cakes", filterByCategory(allServices, "Cake"));
         model.addAttribute("venues", filterByCategory(allServices, "Venue"));
         model.addAttribute("makeup", filterByCategory(allServices, "Makeup"));
@@ -30,7 +30,7 @@ public class VendorCustomerController {
         }
         model.addAttribute("decorations", allDeco);
 
-        // Pass the full list for the "Curated for You" JS logic
+        //recommended for you logic
         model.addAttribute("allServices", allServices);
 
         return "vendors/category-view";

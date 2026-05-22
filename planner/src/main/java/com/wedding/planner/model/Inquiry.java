@@ -1,53 +1,33 @@
 package com.wedding.planner.model;
 
 public class Inquiry {
-    // Aluthen meka add karanna
+    // Private variables enforce Encapsulation
     private String customerEmail;
-
     private String customerName;
     private String contactNo;
     private String weddingDate;
     private String message;
+    private String vendorName;
 
-    // --- Getters and Setters (Aniva danna ona) ---
+    // Default Constructor
+    public Inquiry() {}
 
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
+    // Public Getters and Setters (Encapsulation Accessors)
+    public String getCustomerEmail() { return customerEmail; }
+    public void setCustomerEmail(String customerEmail) { this.customerEmail = customerEmail; }
 
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
-    }
+    public String getCustomerName() { return customerName; }
+    public void setCustomerName(String customerName) { this.customerName = customerName; }
 
-    public String getCustomerName() {
-        return customerName;
-    }
+    public String getContactNo() { return contactNo; }
+    public void setContactNo(String contactNo) { this.contactNo = contactNo; }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
+    public String getWeddingDate() { return weddingDate; }
+    public void setWeddingDate(String weddingDate) { this.weddingDate = weddingDate; }
 
-    public String getContactNo() {
-        return contactNo;
-    }
+    public String getMessage() { return message; }
+    public void setMessage(String message) { this.message = message; }
 
-    public void setContactNo(String contactNo) {
-        this.contactNo = contactNo;
-    }
-
-    public String getWeddingDate() {
-        return weddingDate;
-    }
-
-    public void setWeddingDate(String weddingDate) {
-        this.weddingDate = weddingDate;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    public String getVendorName() { return vendorName; }
+    public void setVendorName(String vendorName) { this.vendorName = vendorName; }
 }

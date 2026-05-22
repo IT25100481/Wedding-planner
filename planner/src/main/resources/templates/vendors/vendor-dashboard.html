@@ -45,7 +45,7 @@
             <a href="#" class="nav-link text-white border-bottom border-gold">Services</a>
             <a href="javascript:void(0)" onclick="scrollToSection('bookings-section')" class="nav-link text-white-50">Bookings</a>
             <a href="javascript:void(0)" onclick="scrollToSection('payments-section')" class="nav-link text-white-50">Payments</a>
-            <a href="#" class="nav-link text-white-50">Inquiry</a>
+            <a href="#" class="nav-link text-white-50" data-bs-toggle="modal" data-bs-target="#inquiryModal">Inquiry</a>
             <div class="dropdown">
                 <a href="#" class="text-gold fs-4" data-bs-toggle="dropdown"><i class="bi bi-person-circle"></i></a>
                 <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end luxury-dropdown shadow-lg">
@@ -93,7 +93,7 @@
                         <span class="badge rounded-pill border border-gold text-gold small" th:text="${s.tradition}">Tradition</span>
                     </div>
                     <p class="small text-white-50 mt-1" th:text="${s.category}">Category</p>
-                    <p class="text-gold mb-4 fw-bold" th:text="${s.price} + ' LKR'"></p>
+                    <p class="gold-italic mb-4 fw-bold" th:text="${s.price} + ' LKR'"></p>
                     <div class="d-flex gap-2">
                         <button class="btn btn-sm btn-outline-light w-100"
                                 th:attr="onclick='openEditModal(\'' + ${s.id} + '\', \'' + ${#strings.escapeJavaScript(s.businessName)} + '\', \'' + ${s.price} + '\', \'' + ${s.category} + '\', \'' + ${s.tradition} + '\', \'' + ${s.contact} + '\', \'' + ${#strings.escapeJavaScript(s.description)} + '\')'">
@@ -288,9 +288,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="b : ${bookings}">
-                <td th:text="${b.serviceName}">Service Name</td>
-                <td class="text-end text-gold" th:text="${b.price} + ' LKR'">0 LKR</td>
+            <tr th:each="p : ${payments}">
+                <td th:text="${p.vendorName}">Vendor</td>
+                <td class="text-end text-gold" th:text="${p.amount} + ' LKR'">0 LKR</td>
             </tr>
             </tbody>
         </table>
@@ -363,5 +363,37 @@
         editModal.show();
     }
 </script>
+
+<div class="modal fade" id="inquiryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background: #1a1209; border: 2px solid var(--gold-light); color: white;">
+            <div class="modal-header" style="border-bottom: 1px solid rgba(229, 178, 125, 0.2);">
+                <h5 class="modal-title brand-text" style="color: var(--gold-light); font-family: 'Montserrat', sans-serif;">New Inquiry to Admin</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form onsubmit="alert('Inquiry sent successfully to the Vivaha Administrative Team!'); bootstrap.Modal.getInstance(document.getElementById('inquiryModal')).hide(); return false;">
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label small text-uppercase" style="color: var(--gold-light); letter-spacing: 1px;">Subject</label>
+                        <select class="form-select" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(229, 178, 125, 0.3);" required>
+                            <option value="Support" style="background: #1a1209;">Technical Support</option>
+                            <option value="Billing" style="background: #1a1209;">Billing & Account Issues</option>
+                            <option value="General" style="background: #1a1209;">General Feedback</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-uppercase" style="color: var(--gold-light); letter-spacing: 1px;">Message</label>
+                        <textarea class="form-control" rows="4" placeholder="Type your message here..." style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(229, 178, 125, 0.3);" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid rgba(229, 178, 125, 0.2);">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" style="background: transparent; border: 1px solid #6c757d;">Close</button>
+                    <button type="submit" class="btn btn-main-gold btn-sm" style="padding: 6px 15px;">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

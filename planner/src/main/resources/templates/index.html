@@ -21,19 +21,18 @@
 
 <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
     <div class="container-fluid px-5">
-        <a class="navbar-brand-vivaha" href="/" style="text-decoration: none !important;">
+        <a class="navbar-brand-vivaha" th:href="@{/}" style="text-decoration: none !important;">
             <img th:src="@{'/images/logo color.png'}" alt="Vivaha Logo" class="nav-logo">
             <span class="brand-text">Vivaha</span>
         </a>
 
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <div class="navbar-nav gap-4">
-                <a class="nav-link" href="/">HOME</a>
-                <a class="nav-link" href="/vendors">VENDORS</a>
-                <a class="nav-link" href="/hotels">HOTELS</a>
-                <a class="nav-link" href="/gallery">GALLERY</a>
-                <a class="nav-link" href="/about">ABOUT</a>
-                <a class="nav-link" href="/inquiry">INQUIRY</a>
+                <a class="nav-link" th:href="@{/}">HOME</a>
+                <a class="nav-link" th:href="@{/vendors}">VENDORS</a>
+                <a class="nav-link" th:href="@{/gallery}">GALLERY</a>
+                <a class="nav-link" th:href="@{/about}">ABOUT</a>
+                <a class="nav-link" th:href="@{/inquiry}">INQUIRY</a>
             </div>
         </div>
 
@@ -53,17 +52,17 @@
                         </div>
                     </div>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark luxury-dropdown">
-                        <li><a class="dropdown-item" href="/dashboard">MY DASHBOARD</a></li>
-                        <li><a class="dropdown-item" href="/profile">VIEW PROFILE</a></li>
+                        <li><a class="dropdown-item" th:href="@{/dashboard}">MY DASHBOARD</a></li>
+                        <li><a class="dropdown-item" th:href="@{/profile}">VIEW PROFILE</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="/logout">LOGOUT</a></li>
+                        <li><a class="dropdown-item text-danger" th:href="@{/logout}">LOGOUT</a></li>
                     </ul>
                 </div>
             </div>
 
             <div th:if="${session.loggedInUser == null}" class="d-flex gap-3">
-                <a href="/login" class="btn-login-luxury">LOGIN</a>
-                <a href="/register" class="btn-register-luxury">REGISTER</a>
+                <a th:href="@{/login}" class="btn-login-luxury">LOGIN</a>
+                <a th:href="@{/register}" class="btn-register-luxury">REGISTER</a>
             </div>
 
         </div>
@@ -91,13 +90,13 @@
                 </p>
 
                 <div class="hero-btn-group">
-                    <a th:if="${session.loggedInUser == null}" href="/register" class="btn-main-gold">BEGIN PLANNING</a>
+                    <a th:if="${session.loggedInUser == null}" th:href="@{/register}" class="btn-main-gold">BEGIN PLANNING</a>
 
-                    <a th:if="${session.loggedInUser != null and session.userRole == 'Vendor'}" href="/vendor/dashboard" class="btn-main-gold">VENDOR DASHBOARD</a>
+                    <a th:if="${session.loggedInUser != null and session.userRole == 'Vendor'}" th:href="@{/vendor/dashboard}" class="btn-main-gold">VENDOR DASHBOARD</a>
 
-                    <a th:if="${session.loggedInUser != null and session.userRole != 'Vendor'}" href="/dashboard" class="btn-main-gold">MY DASHBOARD</a>
+                    <a th:if="${session.loggedInUser != null and session.userRole != 'Vendor'}" th:href="@{/dashboard}" class="btn-main-gold">MY DASHBOARD</a>
 
-                    <a href="/gallery" class="btn-main-outline">VIEW GALLERY</a>
+                    <a th:href="@{/gallery}" class="btn-main-outline">VIEW GALLERY</a>
                 </div>
             </div>
         </div>
@@ -106,7 +105,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Smooth Navbar scroll effect
+    // Smooth Navbar scroll styling effect
     window.addEventListener('scroll', function() {
         const nav = document.getElementById('mainNavbar');
         if (window.scrollY > 50) {
@@ -118,16 +117,15 @@
         }
     });
 
-    // Add this inside the script block at the bottom of index.html
+    // Handle immediate user redirection upon successful login/welcome actions
     window.addEventListener('DOMContentLoaded', (event) => {
-        // Check if the login was successful based on the URL parameter
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('loginSuccess') || urlParams.has('welcome')) {
 
-            // Read the session attribute directly into JS via Thymeleaf expressions
+            // Capture the dynamic Thymeleaf session role safely inside JavaScript context
             const userRole = '[[${session.userRole}]]';
 
-            // If they are a Vendor, hijack the page flow and send them to your dashboard
+            // Automatically push Vendors to their specialized dashboard view
             if (userRole === 'Vendor') {
                 window.location.href = '/vendor/dashboard';
             }

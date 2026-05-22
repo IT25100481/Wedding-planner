@@ -3,18 +3,17 @@ package com.wedding.planner.model;
 public class Payment {
 
     private String id;
-    private String userId;        // links payment to logged-in client
+    private String userId;        // ← ADDED: logged-in client's username
     private String bookingId;
     private String vendorName;
     private double totalAmount;
     private double amountPaid;
-    private String paymentMethod; // CASH, CARD, BANK_TRANSFER, PAYHERE
-    private String paymentStatus; // PENDING, PARTIAL_PAID, FULLY_PAID
+    private String paymentMethod;
+    private String paymentStatus;
     private String transactionId;
     private String notes;
     private String createdAt;
 
-    // ── Constructors ──
     public Payment() {}
 
     public Payment(String id, String userId, String bookingId, String vendorName,
@@ -34,7 +33,7 @@ public class Payment {
         this.createdAt = createdAt;
     }
 
-    // ── Getters & Setters ──
+    // Getters & Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -68,7 +67,7 @@ public class Payment {
     public String getCreatedAt() { return createdAt; }
     public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
 
-    // ── Convert to file line ──
+    // ── Convert to file line (11 fields now) ──
     public String toFileLine() {
         return String.join("|",
                 id,
@@ -77,30 +76,32 @@ public class Payment {
                 vendorName,
                 String.valueOf(totalAmount),
                 String.valueOf(amountPaid),
-                paymentMethod, paymentStatus,
-                transactionId != null ? transactionId : "",
+                paymentMethod,
+                paymentStatus,
+                transactionId,
                 notes != null ? notes.replace("|", ";") : "",
                 createdAt);
     }
 
     // ── Create from file line ──
-    // supports both old format (10 fields) and new format (11 fields with userId)
     public static Payment fromFileLine(String line) {
         String[] parts = line.split("\\|", -1);
+
+        // Support old format (10 fields) and new format (11 fields with userId)
         if (parts.length == 10) {
-            // old format — no userId field
+            // Old record — no userId
             return new Payment(
-                    parts[0], "",        // id, userId empty
-                    parts[1], parts[2],  // bookingId, vendorName
+                    parts[0], "",      // id, userId=""
+                    parts[1], parts[2],
                     Double.parseDouble(parts[3]),
                     Double.parseDouble(parts[4]),
                     parts[5], parts[6], parts[7], parts[8], parts[9]
             );
         } else if (parts.length >= 11) {
-            // new format — has userId
+            // New record — has userId
             return new Payment(
-                    parts[0], parts[1],  // id, userId
-                    parts[2], parts[3],  // bookingId, vendorName
+                    parts[0], parts[1],
+                    parts[2], parts[3],
                     Double.parseDouble(parts[4]),
                     Double.parseDouble(parts[5]),
                     parts[6], parts[7], parts[8], parts[9], parts[10]

@@ -70,6 +70,18 @@ public class UserService {
         }
     }
 
+    // ── GET ALL USERS PUBLIC — used by AdminController ──
+    public List<User> getAllUsersPublic() {
+        return getAllUsers();
+    }
+
+    // ── DELETE BY USERNAME — used by AdminController ──
+    public void deleteByUsername(String username) {
+        List<User> users = getAllUsers();
+        users.removeIf(u -> u.getUsername().equalsIgnoreCase(username));
+        saveAllUsers(users);
+    }
+
     // ── UPDATE FULL NAME ──
     public void updateFullName(String username, String newName) {
         List<User> users = getAllUsers();

@@ -1,16 +1,19 @@
 package com.wedding.planner.model;
 
-public class AdminUser {
+public class AdminUser{
 
+    //Attributes
     private String id;
     private String username;
     private String password;
     private String email;
     private String lastLogin;
 
-    // ── Constructors ──
+    // ── Polymorphism --> Method Overloading  ──
+    //Default constructor
     public AdminUser() {}
 
+    //Parameterized constructor
     public AdminUser(String id, String username, String password, String email, String lastLogin) {
         this.id = id;
         this.username = username;
@@ -35,7 +38,8 @@ public class AdminUser {
     public String getLastLogin() { return lastLogin; }
     public void setLastLogin(String lastLogin) { this.lastLogin = lastLogin; }
 
-    // ── File storage ──
+
+    // ── File storage Methods (Abstraction layer)──
     public String toFileLine() {
         return String.join("|", id, username, password, email, lastLogin != null ? lastLogin : "");
     }

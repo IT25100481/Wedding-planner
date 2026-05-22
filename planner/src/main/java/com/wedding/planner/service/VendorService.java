@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @org.springframework.stereotype.Service   //marks class as spring service component
 public class VendorService {
@@ -32,6 +33,46 @@ public class VendorService {
             e.printStackTrace();
         }
         return vendors;
+    }
+    // ── GET BY ID (AdminController)──
+    public com.wedding.planner.model.Service getVendorById(String id) {
+        return getAllVendors().stream()
+                .filter(v -> v.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
+    // ── UPDATE (AdminController)──
+    public void updateVendor(com.wedding.planner.model.Service updated) {
+        List<com.wedding.planner.model.Service> vendors = getAllVendors();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, false))) {
+            for (com.wedding.planner.model.Service vendor : vendors) {
+                if (vendor.getId().equals(updated.getId())) {
+                    updated.setImagePath(vendor.getImagePath());
+                    writer.write(updated.toFileLine());
+                } else {
+                    writer.write(vendor.toFileLine());
+                }
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ── DELETE (AdminController)──
+    public void deleteVendor(String id) {
+        List<com.wedding.planner.model.Service> vendors = getAllVendors();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, false))) {
+            for (com.wedding.planner.model.Service vendor : vendors) {
+                if (!vendor.getId().equals(id)) {
+                    writer.write(vendor.toFileLine());
+                    writer.newLine();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // ── GET TOTAL COUNT ──

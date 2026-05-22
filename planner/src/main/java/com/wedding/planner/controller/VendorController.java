@@ -100,13 +100,11 @@ public class VendorController {
             //preventing null vendorName
             String vendorName = (String) session.getAttribute("vendorName");
             if (vendorName == null) {
-
-
                 return "redirect:/vendor/dashboard?error=noSession";
             }
 
             service.setBusinessName(vendorName);    //set vendor name
-                                                    //Associates service with vendor
+            //Associates service with vendor
 
             if ("essential".equals(offeringType)) {
                 service.setTradition("Universal");
@@ -233,46 +231,6 @@ public class VendorController {
         try (PrintWriter pw = new PrintWriter(new FileWriter(FILE_PATH))) {
             for (Service s : services) {
                 pw.println(s.toFileLine());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // ================= PAYMENTS =================
-    private List<Map<String, String>> getPayments() {
-        Path path = Paths.get(PAYMENTS_FILE);
-        if (!Files.exists(path)) return new ArrayList<>();
-
-        try {
-            return Files.lines(path)
-                    .filter(line -> line != null && !line.trim().isEmpty())
-                    .map(line -> line.split("\\|"))
-                    .filter(parts -> parts.length >= 6)
-                    .map(parts -> {
-                        Map<String, String> p = new HashMap<>();
-                        p.put("vendorName", parts.length > 3 ? parts[3] : "");
-                        p.put("bookingId", parts.length > 2 ? parts[2] : "");
-                        p.put("amount", parts.length > 5 ? parts[5] : "0");
-                        p.put("status", parts.length > 7 ? parts[7] : "UNKNOWN");
-                        return p;
-                    })
-                    .collect(Collectors.toList());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
-
-    // ================= BACKUP =================
-    private void createBackup() {
-        try {
-            Path source = Paths.get(FILE_PATH);
-            Path backup = Paths.get(BACKUP_FILE);
-
-            if (Files.exists(source)) {
-                Files.copy(source, backup, StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException e) {
             e.printStackTrace();

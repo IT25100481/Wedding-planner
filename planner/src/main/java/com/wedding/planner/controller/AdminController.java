@@ -16,7 +16,6 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
-
 //Web Application Controller
 @Controller
 @RequestMapping("/admin")
@@ -28,12 +27,11 @@ public class AdminController {
     private final InquiryService inquiryService;
 
     @Autowired
-    public AdminController(AdminService adminService, VendorService vendorService, InquiryService inquiryService) {
     private UserService userService;
 
-    //Parameterized Constructor
+    // Corrected Parameterized Constructor
     @Autowired
-    public AdminController(AdminService adminService, VendorService vendorService) {
+    public AdminController(AdminService adminService, VendorService vendorService, InquiryService inquiryService) {
         this.adminService = adminService;
         this.vendorService = vendorService;
         this.inquiryService = inquiryService;
@@ -229,7 +227,7 @@ public class AdminController {
             adminService.createAdmin(admin);
             redirectAttributes.addFlashAttribute("message", "Admin created successfully!");
         } else {
-			
+
             // ── UPDATE existing admin ──
             if (admin.getPassword() == null || admin.getPassword().isEmpty()) {
                 AdminUser existing = adminService.getAllAdmins().stream()

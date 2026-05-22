@@ -1,16 +1,20 @@
 package com.wedding.planner.service;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-@org.springframework.stereotype.Service
+@org.springframework.stereotype.Service   //marks class as spring service component
 public class VendorService {
 
-    private static final String FILE_PATH = "services.txt";
+    private static final String FILE_PATH = "planner/services.txt";
 
-    // ── READ ALL ──
+    // reads all vendors from file
     public List<com.wedding.planner.model.Service> getAllVendors() {
         List<com.wedding.planner.model.Service> vendors = new ArrayList<>();
         File file = new File(FILE_PATH);
@@ -30,65 +34,19 @@ public class VendorService {
         return vendors;
     }
 
-    // ── GET BY ID ──
-    public com.wedding.planner.model.Service getVendorById(String id) {
-        return getAllVendors().stream()
-                .filter(v -> v.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+    // ── GET TOTAL COUNT ──
+    public int getTotalCount() {  //returns total number of vendors
+        return getAllVendors().size();
     }
 
-    // ── ADD ──
-    public void addVendor(com.wedding.planner.model.Service vendor) {
-        vendor.setId(UUID.randomUUID().toString().substring(0, 8));
-        if (vendor.getStatus() == null || vendor.getStatus().isBlank()) {
-            vendor.setStatus("PENDING");
-        }
-        if (vendor.getImagePath() == null || vendor.getImagePath().isBlank()) {
-            vendor.setImagePath("no-image.jpg");
-        }
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-            writer.write(vendor.toFileLine());
-            writer.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    // ── GET PENDING COUNT ──
+    public int getPendingCount() {   //counts pending vendors
+        return (int) getAllVendors().stream()
+                .filter(v -> "PENDING".equals(v.getStatus()))
+                .count();
     }
 
-    // ── UPDATE ──
-    public void updateVendor(com.wedding.planner.model.Service updated) {
-        List<com.wedding.planner.model.Service> vendors = getAllVendors();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, false))) {
-            for (com.wedding.planner.model.Service vendor : vendors) {
-                if (vendor.getId().equals(updated.getId())) {
-                    updated.setImagePath(vendor.getImagePath());
-                    writer.write(updated.toFileLine());
-                } else {
-                    writer.write(vendor.toFileLine());
-                }
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // ── DELETE ──
-    public void deleteVendor(String id) {
-        List<com.wedding.planner.model.Service> vendors = getAllVendors();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, false))) {
-            for (com.wedding.planner.model.Service vendor : vendors) {
-                if (!vendor.getId().equals(id)) {
-                    writer.write(vendor.toFileLine());
-                    writer.newLine();
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // ── UPDATE STATUS (original) ──
+    // updates vendor approval status
     public void updateStatus(String id, String status) {
         List<com.wedding.planner.model.Service> vendors = getAllVendors();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, false))) {
@@ -104,15 +62,29 @@ public class VendorService {
         }
     }
 
-    // ── GET TOTAL COUNT (original) ──
-    public int getTotalCount() {
-        return getAllVendors().size();
+    private void saveVendor(com.wedding.planner.model.Service vendor) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+            writer.write(vendor.toFileLine());
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    // ── GET PENDING COUNT (original) ──
-    public int getPendingCount() {
-        return (int) getAllVendors().stream()
-                .filter(v -> "PENDING".equals(v.getStatus()))
-                .count();
+    public void addVendor(com.wedding.planner.model.Service vendor) {
+        saveVendor(vendor);
     }
+
+    public void addVendor(com.wedding.planner.model.Service vendor, String status) {
+        vendor.setStatus(status);
+        saveVendor(vendor);
+    }
+
+    public void addVendor(com.wedding.planner.model.Service vendor, String status, String businessName) {
+        vendor.setStatus(status);
+        vendor.setBusinessName(businessName);
+        saveVendor(vendor);
+    }
+
+
 }

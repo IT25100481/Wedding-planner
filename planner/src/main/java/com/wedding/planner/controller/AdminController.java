@@ -32,11 +32,13 @@ public class AdminController {
     }
 
     // ── LOGIN ──
+    //The Web Request Mapping Interface
     @GetMapping("/login")
     public String loginPage() {
         return "admin/login";
     }
 
+    //
     @PostMapping("/login")
     public String processLogin(@RequestParam String username,
                                @RequestParam String password,
@@ -83,7 +85,7 @@ public class AdminController {
         return "admin/vendor-list";
     }
 
-    //Approve Vendor
+    //Approve Vendor and updates a vendor's status to APPROVED
     @PostMapping("/vendors/approve/{id}")
     public String approveVendor(@PathVariable String id,
                                 RedirectAttributes ra,
@@ -94,7 +96,7 @@ public class AdminController {
         return "redirect:/admin/vendors";
     }
 
-    //Reject Vendor
+    //Reject Vendor and updates a vendor's status to REJECTED
     @PostMapping("/vendors/reject/{id}")
     public String rejectVendor(@PathVariable String id,
                                RedirectAttributes ra,
@@ -116,7 +118,7 @@ public class AdminController {
         return "redirect:/admin/vendors";
     }
 
-    //Edit Vendor
+    //Fetches an existing vendor data to display vendor form
     @GetMapping("/vendors/edit/{id}")
     public String editVendorForm(@PathVariable String id,
                                  Model model,
@@ -128,7 +130,7 @@ public class AdminController {
         return "admin/vendor-edit";
     }
 
-    //Update Vendor
+    //Update an existing vendor profile details and redirects back to the vendor list
     @PostMapping("/vendors/update")
     public String updateVendor(@ModelAttribute com.wedding.planner.model.Service vendor,
                                RedirectAttributes ra,
@@ -139,7 +141,7 @@ public class AdminController {
         return "redirect:/admin/vendors";
     }
 
-    //Delete Vendor
+    //Delete vendor record by ID and redirects back to the vendor list
     @GetMapping("/vendors/delete/{id}")
     public String deleteVendor(@PathVariable String id,
                                RedirectAttributes ra,
@@ -166,7 +168,7 @@ public class AdminController {
     }
 
     // ════════════════════════════════════════════
-    // ADMIN CRUD
+    // ADMIN CRUD MANAGEMENT
     // ════════════════════════════════════════════
 
     //Fetch Admin records and display the list of Admins
@@ -185,7 +187,7 @@ public class AdminController {
         return "admin/admin-form";
     }
 
-    //Update Admin
+    //Save Admin records by creation or updates
     @PostMapping("/admins/save")
     public String saveAdmin(@ModelAttribute AdminUser admin,
                             RedirectAttributes redirectAttributes,
@@ -201,7 +203,7 @@ public class AdminController {
         return "redirect:/admin/admins";
     }
 
-    //Delete Admin
+    //Delete Admin account by ID and redirects back to the admin list
     @GetMapping("/admins/delete/{id}")
     public String deleteAdmin(@PathVariable String id,
                               RedirectAttributes redirectAttributes,

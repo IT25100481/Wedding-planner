@@ -12,16 +12,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 
+//Web Application Controller
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
+    //Attributes
     private final AdminService adminService;
     private final VendorService vendorService;
 
     @Autowired
     private UserService userService;
 
+    //Parameterized Constructor
     @Autowired
     public AdminController(AdminService adminService, VendorService vendorService) {
         this.adminService = adminService;
@@ -72,6 +75,7 @@ public class AdminController {
     // VENDOR MANAGEMENT
     // ════════════════════════════════════════════
 
+    //Fetch and Display the list of registered vendors
     @GetMapping("/vendors")
     public String listVendors(Model model, HttpSession session) {
         if (session.getAttribute("admin") == null) return "redirect:/admin/login";
@@ -79,6 +83,7 @@ public class AdminController {
         return "admin/vendor-list";
     }
 
+    //Approve Vendor
     @PostMapping("/vendors/approve/{id}")
     public String approveVendor(@PathVariable String id,
                                 RedirectAttributes ra,
@@ -89,6 +94,7 @@ public class AdminController {
         return "redirect:/admin/vendors";
     }
 
+    //Reject Vendor
     @PostMapping("/vendors/reject/{id}")
     public String rejectVendor(@PathVariable String id,
                                RedirectAttributes ra,
@@ -99,6 +105,7 @@ public class AdminController {
         return "redirect:/admin/vendors";
     }
 
+    //Add Vendor
     @PostMapping("/vendors/add")
     public String addVendor(@ModelAttribute com.wedding.planner.model.Service vendor,
                             RedirectAttributes ra,
@@ -109,6 +116,7 @@ public class AdminController {
         return "redirect:/admin/vendors";
     }
 
+    //Edit Vendor
     @GetMapping("/vendors/edit/{id}")
     public String editVendorForm(@PathVariable String id,
                                  Model model,
@@ -120,6 +128,7 @@ public class AdminController {
         return "admin/vendor-edit";
     }
 
+    //Update Vendor
     @PostMapping("/vendors/update")
     public String updateVendor(@ModelAttribute com.wedding.planner.model.Service vendor,
                                RedirectAttributes ra,
@@ -130,6 +139,7 @@ public class AdminController {
         return "redirect:/admin/vendors";
     }
 
+    //Delete Vendor
     @GetMapping("/vendors/delete/{id}")
     public String deleteVendor(@PathVariable String id,
                                RedirectAttributes ra,
@@ -144,6 +154,7 @@ public class AdminController {
     // CLIENT MANAGEMENT
     // ════════════════════════════════════════════
 
+    //Delete Client by username and redirects back to dashboard
     @GetMapping("/clients/delete/{username}")
     public String deleteClient(@PathVariable String username,
                                RedirectAttributes ra,
@@ -158,6 +169,7 @@ public class AdminController {
     // ADMIN CRUD
     // ════════════════════════════════════════════
 
+    //Fetch Admin records and display the list of Admins
     @GetMapping("/admins")
     public String listAdmins(Model model, HttpSession session) {
         if (session.getAttribute("admin") == null) return "redirect:/admin/login";
@@ -165,6 +177,7 @@ public class AdminController {
         return "admin/admins";
     }
 
+    //Add Admin
     @GetMapping("/admins/add")
     public String addAdminForm(Model model, HttpSession session) {
         if (session.getAttribute("admin") == null) return "redirect:/admin/login";
@@ -172,6 +185,7 @@ public class AdminController {
         return "admin/admin-form";
     }
 
+    //Update Admin
     @PostMapping("/admins/save")
     public String saveAdmin(@ModelAttribute AdminUser admin,
                             RedirectAttributes redirectAttributes,
@@ -187,6 +201,7 @@ public class AdminController {
         return "redirect:/admin/admins";
     }
 
+    //Delete Admin
     @GetMapping("/admins/delete/{id}")
     public String deleteAdmin(@PathVariable String id,
                               RedirectAttributes redirectAttributes,

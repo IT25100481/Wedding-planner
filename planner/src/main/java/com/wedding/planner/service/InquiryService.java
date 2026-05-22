@@ -10,20 +10,19 @@ import java.util.List;
 public class InquiryService {
     private final String FILE_PATH = "inquiries.txt";
 
-    // Writes inquiry data to the text file (Append Mode)
     public void saveInquiry(Inquiry inquiry, String typedEmail) {
-        String vendorName = inquiry.getVendorName() != null && !inquiry.getVendorName().isEmpty()
-                ? inquiry.getVendorName() : "General Inquiry";
+        // Dropdown eke eka empty unoth default 'Guest' kiyala wathenne
+        String role = (inquiry.getUserRole() != null && !inquiry.getUserRole().isEmpty())
+                ? inquiry.getUserRole() : "Guest";
 
-        // Creating a Comma-Separated Values (CSV) record
-        String record = typedEmail + "," +
-                inquiry.getCustomerName() + "," +
-                inquiry.getContactNo() + "," +
-                inquiry.getWeddingDate() + "," +
-                inquiry.getMessage() + "," +
-                vendorName;
+        // Layout: Email, Name, Contact, Message, VendorName, UserRole
+        String record = typedEmail + "," +             // data[0]
+                inquiry.getCustomerName() + "," +      // data[1]
+                inquiry.getContactNo() + "," +         // data[2]
+                inquiry.getMessage() + "," +           // data[3]
+                inquiry.getVendorName() + "," +        // data[4]
+                role;                                  // data[5]
 
-        // Try-with-resources automatically closes streams to prevent data corruption
         try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_PATH, true)))) {
             pw.println(record);
         } catch (IOException e) {
@@ -31,31 +30,34 @@ public class InquiryService {
         }
     }
 
-    // Reads all records from the text file line-by-line
     public List<Inquiry> getAllInquiries() {
         List<Inquiry> allInquiries = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
+        File file = new File(FILE_PATH);
+        if (!file.exists()) return allInquiries;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] data = line.split(","); // Tokenizing string by commas
+                if (line.trim().isEmpty()) continue;
+                String[] data = line.split(",");
                 if (data.length >= 5) {
                     Inquiry inq = new Inquiry();
-                    inq.setCustomerEmail(data[0]);
-                    inq.setCustomerName(data[1]);
-                    inq.setContactNo(data[2]);
-                    inq.setWeddingDate(data[3]);
-                    inq.setMessage(data[4]);
+                    inq.setCustomerEmail(data[0].trim());
+                    inq.setCustomerName(data[1].trim());
+                    inq.setContactNo(data[2].trim());
+                    inq.setMessage(data[3].trim());
+                    inq.setVendorName(data[4].trim());
 
-                    if (data.length >= 6 && data[5] != null && !data[5].isEmpty()) {
-                        inq.setVendorName(data[5]);
+                    if (data.length >= 6) {
+                        inq.setUserRole(data[5].trim());
                     } else {
-                        inq.setVendorName("General Inquiry");
+                        inq.setUserRole("Guest");
                     }
                     allInquiries.add(inq);
                 }
             }
         } catch (IOException e) {
-            System.out.println("Inquiry storage file is empty or not yet created.");
+            System.out.println("Error reading inquiries file.");
         }
         return allInquiries;
     }

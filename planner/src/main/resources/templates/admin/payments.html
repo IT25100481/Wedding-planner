@@ -17,66 +17,22 @@
         .main { padding: 50px 80px; }
         .page-tag { font-size: 0.62rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
         .page-title { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--dark); margin-bottom: 40px; }
-
-        /* STAT CARDS */
         .stat-card { background: #fff; border: 1px solid rgba(201,168,76,0.2); padding: 24px 28px; }
         .stat-label { font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
         .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); font-weight: 300; }
-
-        /* PANEL */
         .panel { background: #fff; border: 1px solid rgba(201,168,76,0.2); padding: 32px; }
         .panel-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--dark); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(201,168,76,0.15); }
-
-        /* TABLE */
         table { width: 100%; border-collapse: collapse; }
         th { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 12px 16px; border-bottom: 2px solid rgba(201,168,76,0.2); text-align: left; }
-        td { font-size: 0.82rem; padding: 14px 16px; border-bottom: 1px solid rgba(201,168,76,0.1); color: var(--dark); vertical-align: middle; }
+        td { font-size: 0.82rem; padding: 14px 16px; border-bottom: 1px solid rgba(201,168,76,0.1); color: var(--dark); }
         tr:hover td { background: rgba(201,168,76,0.04); }
-
-        /* STATUS BADGES */
         .status-PENDING { background: rgba(255,193,7,0.15); color: #856404; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; display: inline-block; }
         .status-PARTIAL_PAID { background: rgba(13,110,253,0.15); color: #084298; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; display: inline-block; }
         .status-FULLY_PAID { background: rgba(25,135,84,0.15); color: #0a3622; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; display: inline-block; }
-
-        /* ACTION BUTTONS */
-        .btn-edit-sm {
-            font-size: 0.62rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            padding: 5px 14px;
-            border: 1px solid rgba(201,168,76,0.4);
-            background: transparent;
-            color: var(--gold-dark);
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        .btn-edit-sm:hover {
-            background: var(--gold);
-            color: var(--dark);
-            border-color: var(--gold);
-        }
-        .btn-delete-sm {
-            font-size: 0.62rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            padding: 5px 14px;
-            border: 1px solid rgba(220,53,69,0.3);
-            background: transparent;
-            color: #c0392b;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        .btn-delete-sm:hover {
-            background: #c0392b;
-            color: #fff;
-        }
-
-        /* ALERT */
-        .alert-success-custom { background: #f0fdf4; border: 1px solid #86efac; color: #166534; padding: 12px 16px; font-size: 0.82rem; margin-bottom: 20px; }
-
-        /* EMPTY STATE */
+        .btn-delete-sm { font-size: 0.62rem; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border: 1px solid rgba(220,53,69,0.3); background: transparent; color: #c0392b; text-decoration: none; }
+        .btn-edit-sm { font-size: 0.62rem; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border: 1px solid rgba(201,168,76,0.4); background: transparent; color: var(--gold-dark); text-decoration: none; }
         .empty-state { text-align: center; padding: 50px; color: var(--text-muted); }
-
+        .alert-success-custom { background: #f0fdf4; border: 1px solid #86efac; color: #166534; padding: 12px 16px; font-size: 0.82rem; margin-bottom: 20px; }
         @media (max-width: 768px) { .main { padding: 30px 20px; } .navbar { padding: 14px 20px; } }
     </style>
 </head>
@@ -136,11 +92,11 @@
     <div class="panel">
         <div class="panel-title">All Payment Records</div>
 
-        <!-- TABLE -->
-        <div th:if="${not #lists.isEmpty(payments)}" style="overflow-x:auto">
+        <div th:if="${not #lists.isEmpty(payments)}">
             <table>
                 <thead>
                 <tr>
+                    <th>Client</th>
                     <th>Booking ID</th>
                     <th>Vendor</th>
                     <th>Total</th>
@@ -149,11 +105,12 @@
                     <th>Transaction ID</th>
                     <th>Status</th>
                     <th>Date</th>
-                    <th>Actions</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="payment : ${payments}">
+                    <td th:text="${payment.userId != null and !#strings.isEmpty(payment.userId) ? payment.userId : '—'}"></td>
                     <td th:text="${payment.bookingId}"></td>
                     <td th:text="${payment.vendorName}"></td>
                     <td th:text="'LKR ' + ${payment.totalAmount}"></td>
@@ -165,23 +122,18 @@
                                   th:text="${payment.paymentStatus}"></span>
                     </td>
                     <td th:text="${payment.createdAt}"></td>
-                    <td>
-                        <!-- EDIT BUTTON -->
-                        <div style="display:flex; gap:6px;">
-                            <a th:href="@{/admin/payments/edit/{id}(id=${payment.id})}"
-                               class="btn-edit-sm">Edit</a>
-                            <!-- DELETE BUTTON -->
-                            <a th:href="@{/admin/payments/delete/{id}(id=${payment.id})}"
-                               class="btn-delete-sm"
-                               onclick="return confirm('Are you sure you want to delete this payment?')">Delete</a>
-                        </div>
+                    <td style="display:flex;gap:8px;">
+                        <a th:href="@{/admin/payments/edit/{id}(id=${payment.id})}"
+                           class="btn-edit-sm">Edit</a>
+                        <a th:href="@{/admin/payments/delete/{id}(id=${payment.id})}"
+                           class="btn-delete-sm"
+                           onclick="return confirm('Delete this payment?')">Delete</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- EMPTY STATE -->
         <div class="empty-state" th:if="${#lists.isEmpty(payments)}">
             <div style="font-size:2rem;">💳</div>
             <div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin:12px 0;">No Payments Yet</div>

@@ -10,47 +10,35 @@
         :root { --gold: #c9a84c; --gold-dark: #9a7a2e; --cream: #fdf8f2; --dark: #1a1209; --text-muted: #7a6a50; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: var(--cream); font-family: 'Montserrat', sans-serif; font-weight: 300; }
-
-        /* NAVBAR */
         .navbar { background: var(--dark); padding: 16px 40px; }
         .navbar-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--gold) !important; letter-spacing: 3px; }
         .nav-link { color: rgba(255,255,255,0.75) !important; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; }
         .nav-link:hover { color: var(--gold) !important; }
         .btn-logout { background: transparent; border: 1px solid rgba(201,168,76,0.5); color: var(--gold); font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 0; text-decoration: none; }
         .btn-logout:hover { background: rgba(201,168,76,0.1); color: var(--gold); }
-
-        /* MAIN */
         .main { padding: 50px 80px; }
         .page-tag { font-size: 0.62rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
         .page-title { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--dark); margin-bottom: 40px; }
-
-        /* STAT CARDS */
         .stat-card { background: #fff; border: 1px solid rgba(201,168,76,0.2); padding: 28px 32px; }
         .stat-label { font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
         .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--gold); font-weight: 300; }
-
-        /* QUICK LINKS */
-        .quick-link {
-            display: block;
-            background: #fff;
-            border: 1px solid rgba(201,168,76,0.2);
-            padding: 24px 28px;
-            text-decoration: none;
-            color: var(--dark);
-            transition: all 0.3s;
-            margin-bottom: 16px;
-        }
+        .quick-link { display: block; background: #fff; border: 1px solid rgba(201,168,76,0.2); padding: 24px 28px; text-decoration: none; color: var(--dark); transition: all 0.3s; margin-bottom: 16px; }
         .quick-link:hover { border-color: var(--gold); transform: translateX(4px); color: var(--dark); }
         .quick-link-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; }
         .quick-link-desc { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
         .quick-link-arrow { color: var(--gold); font-size: 1.2rem; }
-
-        /* RECENT LOGINS */
         .panel { background: #fff; border: 1px solid rgba(201,168,76,0.2); padding: 28px; }
         .panel-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--dark); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(201,168,76,0.15); }
         .login-item { font-size: 0.8rem; color: var(--text-muted); padding: 8px 0; border-bottom: 1px solid rgba(201,168,76,0.08); }
+        /* client table */
+        .client-table { width: 100%; border-collapse: collapse; }
+        .client-table th { font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 8px 12px; border-bottom: 1px solid rgba(201,168,76,0.2); text-align: left; font-weight: 400; }
+        .client-table td { font-size: 0.8rem; padding: 10px 12px; border-bottom: 1px solid rgba(201,168,76,0.07); color: var(--dark); }
+        .client-table tr:last-child td { border-bottom: none; }
+        .client-table tr:hover td { background: rgba(201,168,76,0.03); }
+        .btn-delete-client { font-size: 0.58rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; background: transparent; color: #b91c1c; border: 1px solid rgba(220,38,38,0.3); border-radius: 0; cursor: pointer; font-family: 'Montserrat', sans-serif; transition: all 0.2s; }
+        .btn-delete-client:hover { background: rgba(220,38,38,0.06); }
         .empty-text { font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 20px; }
-
         @media (max-width: 768px) { .main { padding: 30px 20px; } .navbar { padding: 14px 20px; } }
     </style>
 </head>
@@ -63,11 +51,6 @@
         <a class="nav-link" href="/admin/dashboard">Dashboard</a>
         <a class="nav-link" href="/admin/vendors">Vendors</a>
         <a class="nav-link" href="/admin/admins">Admins</a>
-<<<<<<< HEAD
-        <a class="nav-link" href="/admin/view-inquiries">Inquiries</a>
-=======
-        <a class="nav-link" href="/admin/payments">Payments</a>
->>>>>>> 1e7239f0bfd7f3d0369d5904abfed99306ddf690
     </div>
     <div class="ms-auto">
         <a href="/admin/logout" class="btn-logout">Logout</a>
@@ -78,6 +61,9 @@
 <div class="main">
     <div class="page-tag">Admin Panel</div>
     <div class="page-title">Dashboard</div>
+
+    <!-- ALERT -->
+    <div th:if="${message}" style="background:#f0fdf4;border:1px solid #86efac;color:#166534;padding:12px 16px;font-size:0.82rem;margin-bottom:24px;" th:text="${message}"></div>
 
     <!-- STATS -->
     <div class="row g-3 mb-5">
@@ -96,26 +82,24 @@
         <div class="col-md-4">
             <div class="stat-card">
                 <div class="stat-label">Total Admins</div>
-                <div class="stat-value">1</div>
+                <div class="stat-value" th:text="${totalAdmins}">0</div>
             </div>
         </div>
     </div>
 
-    <div class="row g-4">
+    <div class="row g-4 mb-4">
         <!-- QUICK LINKS -->
         <div class="col-lg-6">
             <h5 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:20px;">Quick Actions</h5>
-
             <a href="/admin/vendors" class="quick-link">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <div class="quick-link-title">Manage Vendors</div>
-                        <div class="quick-link-desc">View and approve vendor registrations</div>
+                        <div class="quick-link-desc">View, edit and delete vendor registrations</div>
                     </div>
                     <div class="quick-link-arrow">→</div>
                 </div>
             </a>
-
             <a href="/admin/admins" class="quick-link">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -125,7 +109,6 @@
                     <div class="quick-link-arrow">→</div>
                 </div>
             </a>
-
             <a href="/admin/packages" class="quick-link">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -135,21 +118,18 @@
                     <div class="quick-link-arrow">→</div>
                 </div>
             </a>
-
-            <!-- FIXED: was /payments, now /admin/payments -->
             <a href="/admin/payments" class="quick-link">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <div class="quick-link-title">Payment Records</div>
-                        <div class="quick-link-desc">View and manage all client payments</div>
+                        <div class="quick-link-title">Payments</div>
+                        <div class="quick-link-desc">View all payment records</div>
                     </div>
                     <div class="quick-link-arrow">→</div>
                 </div>
             </a>
         </div>
 
-
-        <!-- RECENT LOGINS -->
+        <!-- RECENT ADMIN LOGINS -->
         <div class="col-lg-6">
             <div class="panel">
                 <div class="panel-title">Recent Logins</div>
@@ -160,11 +140,44 @@
             </div>
         </div>
     </div>
+
+    <!-- REGISTERED CLIENTS -->
+    <div class="panel">
+        <div class="panel-title">Registered Clients</div>
+        <div th:if="${not #lists.isEmpty(registeredClients)}">
+            <table class="client-table">
+                <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="client : ${registeredClients}">
+                    <td th:text="${client.fullName}"></td>
+                    <td th:text="${client.username}"></td>
+                    <td th:text="${client.email}"></td>
+                    <td th:text="${client.role}"></td>
+                    <td>
+                        <form th:action="@{/admin/clients/delete/{username}(username=${client.username})}"
+                              method="get" style="display:inline;"
+                              onsubmit="return confirm('Delete this client?')">
+                            <button type="submit" class="btn-delete-client">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="empty-text" th:if="${#lists.isEmpty(registeredClients)}">
+            No clients registered yet.
+        </div>
+    </div>
 </div>
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

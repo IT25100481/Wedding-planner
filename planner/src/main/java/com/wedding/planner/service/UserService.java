@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final String FILE_PATH = "src/main/resources/data/users.txt";
 
-    // ── GET ALL USERS (Helper for Updates) ──
+    // ── GET ALL USERS (private helper) ──
     private List<User> getAllUsers() {
         try {
             Path path = Paths.get(FILE_PATH);
@@ -26,7 +26,7 @@ public class UserService {
         }
     }
 
-    // ── SAVE ALL USERS (Helper for Overwriting) ──
+    // ── SAVE ALL USERS (private helper) ──
     private void saveAllUsers(List<User> users) {
         try {
             List<String> lines = users.stream()
@@ -39,7 +39,19 @@ public class UserService {
         }
     }
 
-    // ── NEW: UPDATE FULL NAME (Fixes Controller Error) ──
+    // ── GET ALL USERS PUBLIC — used by AdminController ──
+    public List<User> getAllUsersPublic() {
+        return getAllUsers();
+    }
+
+    // ── DELETE BY USERNAME — used by AdminController ──
+    public void deleteByUsername(String username) {
+        List<User> users = getAllUsers();
+        users.removeIf(u -> u.getUsername().equalsIgnoreCase(username));
+        saveAllUsers(users);
+    }
+
+    // ── UPDATE FULL NAME ──
     public void updateFullName(String username, String newName) {
         List<User> users = getAllUsers();
         for (User u : users) {
@@ -51,7 +63,7 @@ public class UserService {
         saveAllUsers(users);
     }
 
-    // ── NEW: UPDATE PASSWORD BY USERNAME (Fixes Controller Error) ──
+    // ── UPDATE PASSWORD BY USERNAME ──
     public void updatePasswordByUsername(String username, String newPassword) {
         List<User> users = getAllUsers();
         for (User u : users) {
@@ -63,7 +75,7 @@ public class UserService {
         saveAllUsers(users);
     }
 
-    // ── UNIQUE CHECK ──
+    // ── USERNAME TAKEN CHECK ──
     public boolean isUsernameTaken(String username) {
         try {
             Path path = Paths.get(FILE_PATH);
@@ -74,7 +86,7 @@ public class UserService {
         } catch (IOException e) { return false; }
     }
 
-    // ── SAVE USER (Single Append) ──
+    // ── SAVE USER (append) ──
     public void saveUser(User user) {
         try {
             Files.createDirectories(Paths.get("src/main/resources/data"));
@@ -84,11 +96,12 @@ public class UserService {
         } catch (IOException e) { e.printStackTrace(); }
     }
 
-    // ── FINDING LOGIC ──
+    // ── FIND BY USERNAME ──
     public User findByUsername(String username) {
         return findByField(1, username);
     }
 
+    // ── FIND BY EMAIL ──
     public User findByEmail(String email) {
         return findByField(2, email);
     }
@@ -105,7 +118,7 @@ public class UserService {
         } catch (IOException e) { return null; }
     }
 
-    // ── UPDATE PASSWORD (Email-based) ──
+    // ── UPDATE PASSWORD (email-based) ──
     public void updatePassword(String email, String newPassword) {
         List<User> users = getAllUsers();
         for (User u : users) {

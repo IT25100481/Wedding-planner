@@ -29,7 +29,7 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    // Corrected Parameterized Constructor
+    //Parameterized Constructor including InquiryService
     @Autowired
     public AdminController(AdminService adminService, VendorService vendorService, InquiryService inquiryService) {
         this.adminService = adminService;
@@ -38,6 +38,7 @@ public class AdminController {
     }
 
     // ── LOGIN ──
+    //The Web Request Mapping Interface
     @GetMapping("/login")
     public String loginPage() {
         return "admin/login";
@@ -89,7 +90,7 @@ public class AdminController {
         return "admin/vendor-list";
     }
 
-    //Approve Vendor
+    //Approve Vendor and updates a vendor's status to APPROVED
     @PostMapping("/vendors/approve/{id}")
     public String approveVendor(@PathVariable String id,
                                 RedirectAttributes ra,
@@ -100,33 +101,7 @@ public class AdminController {
         return "redirect:/admin/vendors";
     }
 
-    // ── INQUIRY MANAGEMENT (FIXED & PROTECTED FROM 500 ERRORS) ──
-    @GetMapping("/inquiries")
-    public String listInquiries(Model model, HttpSession session) {
-        // 1. Guard Clause: Redirect to login page if user session is unauthorized
-        if (session.getAttribute("admin") == null) return "redirect:/admin/login";
-
-        try {
-            // 2. Fetch the absolute total list of all inquiries directly
-            List<Inquiry> allInquiries = inquiryService.getAllInquiries();
-
-            if (allInquiries == null) {
-                allInquiries = new ArrayList<>();
-            }
-
-            // 3. Bind the combined collection safely
-            model.addAttribute("allInquiries", allInquiries);
-        } catch (Exception e) {
-            System.out.println("Gracefully caught mapping read error to prevent 500 crashes.");
-            model.addAttribute("allInquiries", new ArrayList<Inquiry>());
-        }
-
-        // 4. Render the master single table template view
-        return "admin/inquiries-list";
-    }
-
-    // ── ADMIN CRUD ──
-    //Reject Vendor
+    //Reject Vendor and updates a vendor's status to REJECTED
     @PostMapping("/vendors/reject/{id}")
     public String rejectVendor(@PathVariable String id,
                                RedirectAttributes ra,
@@ -148,7 +123,7 @@ public class AdminController {
         return "redirect:/admin/vendors";
     }
 
-    //Edit Vendor
+    //Fetches an existing vendor data to display vendor form
     @GetMapping("/vendors/edit/{id}")
     public String editVendorForm(@PathVariable String id,
                                  Model model,
@@ -160,7 +135,7 @@ public class AdminController {
         return "admin/vendor-edit";
     }
 
-    //Update Vendor
+    //Update an existing vendor profile details and redirects back to the vendor list
     @PostMapping("/vendors/update")
     public String updateVendor(@ModelAttribute com.wedding.planner.model.Service vendor,
                                RedirectAttributes ra,
@@ -171,7 +146,7 @@ public class AdminController {
         return "redirect:/admin/vendors";
     }
 
-    //Delete Vendor
+    //Delete vendor record by ID and redirects back to the vendor list
     @GetMapping("/vendors/delete/{id}")
     public String deleteVendor(@PathVariable String id,
                                RedirectAttributes ra,
@@ -198,7 +173,30 @@ public class AdminController {
     }
 
     // ════════════════════════════════════════════
-    // ADMIN CRUD
+    // INQUIRY MANAGEMENT
+    // ════════════════════════════════════════════
+
+    //Fetch and display the total list of all user inquiries with error protection
+    @GetMapping("/inquiries")
+    public String listInquiries(Model model, HttpSession session) {
+        if (session.getAttribute("admin") == null) return "redirect:/admin/login";
+
+        try {
+            List<Inquiry> allInquiries = inquiryService.getAllInquiries();
+            if (allInquiries == null) {
+                allInquiries = new ArrayList<>();
+            }
+            model.addAttribute("allInquiries", allInquiries);
+        } catch (Exception e) {
+            System.out.println("Gracefully caught mapping read error to prevent 500 crashes.");
+            model.addAttribute("allInquiries", new ArrayList<Inquiry>());
+        }
+
+        return "admin/inquiries-list";
+    }
+
+    // ════════════════════════════════════════════
+    // ADMIN CRUD MANAGEMENT
     // ════════════════════════════════════════════
 
     //Fetch Admin records and display the list of Admins
@@ -217,7 +215,7 @@ public class AdminController {
         return "admin/admin-form";
     }
 
-    //Update Admin
+    //Save Admin records by creation or updates
     @PostMapping("/admins/save")
     public String saveAdmin(@ModelAttribute AdminUser admin,
                             RedirectAttributes redirectAttributes,
@@ -227,22 +225,20 @@ public class AdminController {
             adminService.createAdmin(admin);
             redirectAttributes.addFlashAttribute("message", "Admin created successfully!");
         } else {
-
-            // ── UPDATE existing admin ──
+            // Retain the existing password if the password field is left empty during an update
             if (admin.getPassword() == null || admin.getPassword().isEmpty()) {
                 AdminUser existing = adminService.getAllAdmins().stream()
                         .filter(a -> a.getId().equals(admin.getId()))
                         .findFirst().orElse(null);
                 if (existing != null) admin.setPassword(existing.getPassword());
             }
-
             adminService.updateAdmin(admin);
             redirectAttributes.addFlashAttribute("message", "Admin updated successfully!");
         }
         return "redirect:/admin/admins";
     }
 
-    //Delete Admin
+    //Delete Admin account by ID and redirects back to the admin list
     @GetMapping("/admins/delete/{id}")
     public String deleteAdmin(@PathVariable String id,
                               RedirectAttributes redirectAttributes,

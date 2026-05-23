@@ -13,7 +13,7 @@ public class Service {
     private String imagePath;
     private String status;
 
-    public Service() {}
+    public Service() {}  //for spring object creation
 
     public static Service fromFileLine(String line) {
         if (line == null || line.isEmpty()) return null;

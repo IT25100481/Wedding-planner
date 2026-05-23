@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpSession;
 import java.util.UUID;
 
@@ -66,6 +67,36 @@ public class UserController {
         } else {
             return "redirect:/login?error=true";
         }
+    }
+
+    /* ── SECURE PROFILE SELF-DELETION WITH PASSWORD VERIFICATION ── */
+    @PostMapping("/profile/delete")
+    public String selfDeleteAccount(@RequestParam String verifyPassword,
+                                    HttpSession session,
+                                    RedirectAttributes redirectAttributes) {
+        String currentLoggedInUser = (String) session.getAttribute("loggedInUser");
+
+        if (currentLoggedInUser != null) {
+            // Fetch the complete user object from the database archive
+            User user = userService.findByUsername(currentLoggedInUser);
+
+            // Check if the input password matches the stored SHA-256 hash
+            if (user != null && userService.checkPassword(verifyPassword, user.getPassword())) {
+                // Delete the account entry from our users.txt database tracking layer
+                userService.deleteByUsername(currentLoggedInUser);
+
+                // Invalidate the session
+                session.invalidate();
+
+                redirectAttributes.addFlashAttribute("message", "Your profile archive has been permanently erased.");
+                return "redirect:/login?accountDeleted=true";
+            } else {
+                // Redirect back with an explicit error flag if password validation fails
+                return "redirect:/profile?deleteError=true";
+            }
+        }
+
+        return "redirect:/login";
     }
 
     /* ── FORGOT PASSWORD FLOW ── */

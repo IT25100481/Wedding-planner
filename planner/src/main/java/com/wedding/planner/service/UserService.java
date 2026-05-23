@@ -37,7 +37,7 @@ public class UserService {
         }
     }
 
-    // ── NEW: PUBLIC MATCHING METHOD FOR CONTROLLER LOG-IN VALIDATION ──
+    // ── PUBLIC MATCHING METHOD FOR CONTROLLER LOG-IN VALIDATION ──
     public boolean checkPassword(String plainPassword, String hashedPassword) {
         return hashPassword(plainPassword).equals(hashedPassword);
     }
@@ -48,6 +48,8 @@ public class UserService {
             Path path = Paths.get(FILE_PATH);
             if (!Files.exists(path)) return new ArrayList<>();
             return Files.lines(path)
+                    .map(String::trim)
+                    .filter(line -> !line.isEmpty()) // Skips accidental empty trailing spaces
                     .map(line -> line.split(","))
                     .filter(parts -> parts.length >= 5)
                     .map(parts -> new User(parts[0], parts[1], parts[2], parts[3], parts[4]))
@@ -75,10 +77,11 @@ public class UserService {
         return getAllUsers();
     }
 
-    // ── DELETE BY USERNAME — used by AdminController ──
+    // ── DELETE BY USERNAME — used by AdminController & Profile Self-Deletion ──
     public void deleteByUsername(String username) {
+        if (username == null || username.trim().isEmpty()) return;
         List<User> users = getAllUsers();
-        users.removeIf(u -> u.getUsername().equalsIgnoreCase(username));
+        users.removeIf(u -> u.getUsername().equalsIgnoreCase(username.trim()));
         saveAllUsers(users);
     }
 

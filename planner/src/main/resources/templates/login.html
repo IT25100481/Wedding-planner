@@ -27,7 +27,7 @@
             <header class="mb-5">
                 <h3 class="editorial-title">Sign <em>In</em></h3>
 
-                <div th:if="${message != null or param.accountDeleted}" class="mb-3 p-3 text-center"
+                <div th:if="${message != null or param.accountDeleted != null}" class="mb-3 p-3 text-center"
                      style="background: rgba(229, 178, 125, 0.05); border: 1px solid rgba(229, 178, 125, 0.25);">
                     <p class="mb-0" style="font-size: 0.72rem; letter-spacing: 2px; color: var(--gold-light); text-transform: uppercase; font-weight: 500;">
                         <i class="bi bi-shield-check me-2"></i> Account Permanently Erased
@@ -37,23 +37,23 @@
                     </small>
                 </div>
 
-                <p th:if="${param.sent}" class="success-alert-text">
+                <p th:if="${param.sent != null}" class="success-alert-text">
                     RESET LINK SENT! PLEASE CHECK YOUR GMAIL.
                 </p>
 
-                <p th:if="${param.resetSuccess}" class="success-alert-text">
+                <p th:if="${param.resetSuccess != null}" class="success-alert-text">
                     PASSWORD UPDATED! YOU CAN NOW SIGN IN.
                 </p>
 
-                <p th:if="${param.notFound}" style="color: #ff6b6b; font-weight: 600; font-size: 0.8rem; margin-top: 10px; letter-spacing: 1px;">
+                <p th:if="${param.notFound != null}" style="color: #ff6b6b; font-weight: 600; font-size: 0.8rem; margin-top: 10px; letter-spacing: 1px;">
                     ACCOUNT NOT FOUND. PLEASE REGISTER.
                 </p>
 
-                <p th:if="${param.error}" style="color: #ff6b6b; font-weight: 600; font-size: 0.8rem; margin-top: 10px; letter-spacing: 1px;">
+                <p th:if="${param.error != null}" style="color: #ff6b6b; font-weight: 600; font-size: 0.8rem; margin-top: 10px; letter-spacing: 1px;">
                     INVALID CREDENTIALS. PLEASE TRY AGAIN.
                 </p>
 
-                <p th:if="${message == null and param.accountDeleted == null and param.error == null and param.sent == null and param.resetSuccess == null and param.notFound == null}"
+                <p th:unless="${message != null or param.accountDeleted != null or param.sent != null or param.resetSuccess != null or param.notFound != null or param.error != null}"
                    style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">
                     Access your curated wedding dashboard.
                 </p>

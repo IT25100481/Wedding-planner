@@ -6,6 +6,7 @@
     <link rel="icon" type="image/png" th:href="@{'/images/logo color.png'}">
     <title>Login | Vivaha Boutique</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -26,23 +27,33 @@
             <header class="mb-5">
                 <h3 class="editorial-title">Sign <em>In</em></h3>
 
-                <p th:if="${param.sent}" class="success-alert-text">
+                <div th:if="${message != null or param.accountDeleted != null}" class="mb-3 p-3 text-center"
+                     style="background: rgba(229, 178, 125, 0.05); border: 1px solid rgba(229, 178, 125, 0.25);">
+                    <p class="mb-0" style="font-size: 0.72rem; letter-spacing: 2px; color: var(--gold-light); text-transform: uppercase; font-weight: 500;">
+                        <i class="bi bi-shield-check me-2"></i> Account Permanently Erased
+                    </p>
+                    <small class="text-white-50 d-block mt-1" style="font-size: 0.65rem; letter-spacing: 0.5px;">
+                        Your profile archive has been securely cleared from our servers.
+                    </small>
+                </div>
+
+                <p th:if="${param.sent != null}" class="success-alert-text">
                     RESET LINK SENT! PLEASE CHECK YOUR GMAIL.
                 </p>
 
-                <p th:if="${param.resetSuccess}" class="success-alert-text">
+                <p th:if="${param.resetSuccess != null}" class="success-alert-text">
                     PASSWORD UPDATED! YOU CAN NOW SIGN IN.
                 </p>
 
-                <p th:if="${param.notFound}" style="color: #ff6b6b; font-weight: 600; font-size: 0.8rem; margin-top: 10px; letter-spacing: 1px;">
+                <p th:if="${param.notFound != null}" style="color: #ff6b6b; font-weight: 600; font-size: 0.8rem; margin-top: 10px; letter-spacing: 1px;">
                     ACCOUNT NOT FOUND. PLEASE REGISTER.
                 </p>
 
-                <p th:if="${param.error}" style="color: #ff6b6b; font-weight: 600; font-size: 0.8rem; margin-top: 10px; letter-spacing: 1px;">
+                <p th:if="${param.error != null}" style="color: #ff6b6b; font-weight: 600; font-size: 0.8rem; margin-top: 10px; letter-spacing: 1px;">
                     INVALID CREDENTIALS. PLEASE TRY AGAIN.
                 </p>
 
-                <p th:if="${param.error == null and param.sent == null and param.resetSuccess == null and param.notFound == null}"
+                <p th:unless="${message != null or param.accountDeleted != null or param.sent != null or param.resetSuccess != null or param.notFound != null or param.error != null}"
                    style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">
                     Access your curated wedding dashboard.
                 </p>

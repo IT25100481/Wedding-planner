@@ -1,9 +1,11 @@
 package com.wedding.planner.controller;
 
 import com.wedding.planner.model.AdminUser;
+import com.wedding.planner.model.Inquiry;
 import com.wedding.planner.service.AdminService;
 import com.wedding.planner.service.UserService;
 import com.wedding.planner.service.VendorService;
+import com.wedding.planner.service.InquiryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 //Web Application Controller
 @Controller
@@ -20,19 +24,17 @@ public class AdminController {
     //Attributes
     private final AdminService adminService;
     private final VendorService vendorService;
+    private final InquiryService inquiryService;
 
     @Autowired
     private UserService userService;
 
-
     //Parameterized Constructor including InquiryService
-
-    //Parameterized Constructor
-
     @Autowired
-    public AdminController(AdminService adminService, VendorService vendorService) {
+    public AdminController(AdminService adminService, VendorService vendorService, InquiryService inquiryService) {
         this.adminService = adminService;
         this.vendorService = vendorService;
+        this.inquiryService = inquiryService;
     }
 
     // ── LOGIN ──
@@ -42,7 +44,6 @@ public class AdminController {
         return "admin/login";
     }
 
-    //
     @PostMapping("/login")
     public String processLogin(@RequestParam String username,
                                @RequestParam String password,
@@ -172,7 +173,6 @@ public class AdminController {
     }
 
     // ════════════════════════════════════════════
-
     // INQUIRY MANAGEMENT
     // ════════════════════════════════════════════
 
@@ -196,7 +196,6 @@ public class AdminController {
     }
 
     // ════════════════════════════════════════════
-
     // ADMIN CRUD MANAGEMENT
     // ════════════════════════════════════════════
 
@@ -226,7 +225,6 @@ public class AdminController {
             adminService.createAdmin(admin);
             redirectAttributes.addFlashAttribute("message", "Admin created successfully!");
         } else {
-
             // Retain the existing password if the password field is left empty during an update
             if (admin.getPassword() == null || admin.getPassword().isEmpty()) {
                 AdminUser existing = adminService.getAllAdmins().stream()
@@ -234,7 +232,6 @@ public class AdminController {
                         .findFirst().orElse(null);
                 if (existing != null) admin.setPassword(existing.getPassword());
             }
-			
             adminService.updateAdmin(admin);
             redirectAttributes.addFlashAttribute("message", "Admin updated successfully!");
         }

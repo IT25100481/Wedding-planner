@@ -35,6 +35,23 @@
         .detail-label { font-size: 0.65rem; color: var(--gold-light); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; display: block; }
         .detail-value { font-size: 1.1rem; font-weight: 300; color: white; }
         .status-badge { color: #4CAF50; font-size: 0.8rem; letter-spacing: 1px; font-weight: 600; }
+
+        /* Custom stylings for luxury form layout input alignment inside modals */
+        .input-group-custom input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(229, 178, 125, 0.2);
+            padding: 12px 15px;
+            color: #fff;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            transition: 0.3s;
+        }
+        .input-group-custom input:focus {
+            outline: none;
+            border-color: var(--gold-light);
+            background: rgba(255, 255, 255, 0.05);
+        }
     </style>
 </head>
 <body>
@@ -101,11 +118,29 @@
             </div>
         </div>
 
-        <div class="text-center pt-4">
+        <div class="text-center pt-2">
             <button class="btn-main-outline px-5 w-100" data-bs-toggle="modal" data-bs-target="#passwordModal">CHANGE PASSWORD</button>
-            <div class="mt-4">
-                <a href="/dashboard" class="link-gold small">← RETURN TO DASHBOARD</a>
+        </div>
+
+        <div class="mt-5 pt-4 border-top border-secondary border-opacity-10">
+            <h5 style="font-family: 'Cormorant Garamond', serif; color: #ff6b6b; font-size: 1.3rem;" class="mb-2">Danger <em>Zone</em></h5>
+            <p class="text-white-50 small mb-4" style="font-size: 0.75rem; letter-spacing: 0.5px; line-height: 1.5;">
+                Permanently erase your client credentials, message logs, and boutique configurations from the active registry archive. This action requires identity verification.
+            </p>
+
+            <div th:if="${param.deleteError}" class="alert alert-danger py-2 mb-3 rounded-0 small" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); color: #ff8b8b !important;">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i> SECURITY VERIFICATION FAILED: INCORRECT PASSWORD.
             </div>
+
+            <button type="button" class="btn btn-sm btn-outline-danger px-4 py-2 text-uppercase"
+                    style="font-size: 0.65rem; letter-spacing: 2px; border-radius: 0; font-weight: 600;"
+                    data-bs-toggle="modal" data-bs-target="#deleteProfileModal">
+                <i class="bi bi-trash3-fill me-2"></i> Permanently Erase Profile Archive
+            </button>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/dashboard" class="link-gold small" style="text-decoration: none; letter-spacing: 1px;">← RETURN TO DASHBOARD</a>
         </div>
     </div>
 </div>
@@ -114,15 +149,15 @@
     <div class="modal-dialog modal-dialog-centered">
         <form th:action="@{/change-password}" method="post" class="modal-content p-4">
             <h4 class="editorial-title fs-3 mb-4">Change <em>Security</em></h4>
-            <div class="input-group-custom">
-                <label>CURRENT PASSWORD</label>
+            <div class="input-group-custom mb-3">
+                <label class="detail-label">CURRENT PASSWORD</label>
                 <input type="password" name="currentPassword" placeholder="••••••••" required>
             </div>
-            <div class="input-group-custom">
-                <label>NEW PASSWORD</label>
+            <div class="input-group-custom mb-4">
+                <label class="detail-label">NEW PASSWORD</label>
                 <input type="password" name="newPassword" placeholder="••••••••" required>
             </div>
-            <button type="submit" class="btn-editorial-gold">UPDATE PASSWORD</button>
+            <button type="submit" class="btn-editorial-gold w-100 py-2">UPDATE PASSWORD</button>
         </form>
     </div>
 </div>
@@ -131,11 +166,32 @@
     <div class="modal-dialog modal-dialog-centered">
         <form th:action="@{/update-profile}" method="post" class="modal-content p-4">
             <h4 class="editorial-title fs-3 mb-4">Update <em>Identity</em></h4>
-            <div class="input-group-custom">
-                <label>NEW DISPLAY NAME</label>
+            <div class="input-group-custom mb-4">
+                <label class="detail-label">NEW DISPLAY NAME</label>
                 <input type="text" name="fullName" th:value="${fullName}" required>
             </div>
-            <button type="submit" class="btn-editorial-gold">SAVE CHANGES</button>
+            <button type="submit" class="btn-editorial-gold w-100 py-2">SAVE CHANGES</button>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form th:action="@{/profile/delete}" method="post" class="modal-content p-4" style="border: 1px solid #ff6b6b; background: #1a1209;">
+            <h4 class="editorial-title fs-3 mb-2" style="color: #ff6b6b;">Verify <em>Security</em></h4>
+            <p class="text-white-50 mb-4" style="font-size: 0.72rem; letter-spacing: 0.5px; line-height: 1.4;">
+                To process account destruction protocols, please enter your password to authenticate account ownership.
+            </p>
+
+            <div class="input-group-custom mb-4">
+                <label class="detail-label">ACCOUNT PASSWORD</label>
+                <input type="password" name="verifyPassword" placeholder="••••••••" required>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-secondary w-50 py-2 rounded-0 text-uppercase" data-bs-dismiss="modal" style="font-size: 0.7rem; letter-spacing: 1px;">Cancel</button>
+                <button type="submit" class="btn btn-sm btn-danger w-50 py-2 rounded-0 text-uppercase" style="font-size: 0.7rem; letter-spacing: 1px; font-weight: 600;">Confirm Destruction</button>
+            </div>
         </form>
     </div>
 </div>

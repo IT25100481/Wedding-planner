@@ -1,2 +1,2 @@
-a3c2a82a|platinum|PREMIUM|everything|500000.0|sanchukan|yeah|true
-f42c8bd3|silver|BASIC|good for budget|299999.98|cake ,decor|photography|true
+ae9f80e7|silver|BASIC|everything|300000.0|photo , cake , decor, makeup|catering|true
+2006dd11|platinum|PREMIUM|premium|500000.0|premium||true

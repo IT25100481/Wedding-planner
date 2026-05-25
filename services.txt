@@ -1,10 +1,9 @@
-v1|Velvet Crème Patisserie|Cake|Universal|Luxury floral wedding cakes with elegant handcrafted detailing.|+94 77 234 5678|85000|https://images.unsplash.com/photo-1535254973040-607b474cb8c2?w=500|Available
+v1|Velvet Crème Patisserie|Makeup|Christian|Luxury floral wedding cakes with elegant handcrafted detailing.|+94 77 234 5678|85000|https://images.unsplash.com/photo-1535254973040-607b474cb8c2?w=500|APPROVED
 v2|Moonlit Sugar Studio|Cake|Universal|Modern fondant and buttercream cakes for grand wedding receptions.|+94 71 445 6677|72000|https://images.unsplash.com/photo-1525467022096-1d372ef3a060?w=500|Available
 v3|Ivory Bloom Cakes|Cake|Universal|Premium custom cakes with unique flavors and artistic finishes.|+94 76 889 3344|110000|https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500|Available
 v4|Rosé Whisk Atelier|Cake|Universal|Chic and affordable wedding cakes for intimate celebrations.|+94 70 998 2211|48000|https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=500|Available
 v5|Arul’s Jathakam Decor|Decoration|Universal|Grand floral stages and luxury wedding hall transformations.|+94 77 901 2233|650000|https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=500|Available
 v6|Celestial Petals Events|Decoration|Universal|Elegant wedding décor with fresh flowers and crystal lighting.|+94 71 334 8899|480000|https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500|Available
-v7|Golden Veil Creations|Decoration|Universal|Traditional and modern wedding setups with luxurious themes.|+94 76 118 5522|920000|https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=500|Available
 v8|Enchanted Aura Décor|Decoration|Universal|Stylish and romantic décor packages for indoor receptions.|+94 75 440 7766|350000|https://images.unsplash.com/photo-1507504031003-b417219a0fde?w=500|Available
 v9|EverAfter Motion Studio|Photography|Universal|Cinematic wedding photography with drone and highlight films.|+94 77 654 8899|540000|https://images.unsplash.com/photo-1519741497674-611481863552?w=500|Available
 v10|Lumora Wedding Films|Photography|Universal|Creative storytelling photography for timeless wedding memories.|+94 71 555 7711|390000|https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=500|Available

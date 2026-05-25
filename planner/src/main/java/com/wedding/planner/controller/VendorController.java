@@ -100,11 +100,13 @@ public class VendorController {
             //preventing null vendorName
             String vendorName = (String) session.getAttribute("vendorName");
             if (vendorName == null) {
+
+
                 return "redirect:/vendor/dashboard?error=noSession";
             }
 
             service.setBusinessName(vendorName);    //set vendor name
-            //Associates service with vendor
+                                                    //Associates service with vendor
 
             if ("essential".equals(offeringType)) {
                 service.setTradition("Universal");

@@ -1,6 +1,8 @@
 package com.wedding.planner.controller;
 
+import com.wedding.planner.model.AdminUser;
 import com.wedding.planner.model.User;
+import com.wedding.planner.service.AdminService;
 import com.wedding.planner.service.UserService;
 import com.wedding.planner.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,54 +16,49 @@ import java.util.UUID;
 @Controller
 public class UserController {
     private final UserService userService;
+    private final AdminService adminService;
 
     @Autowired
     private EmailService emailService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AdminService adminService) {
         this.userService = userService;
-    }
-
-    @GetMapping("/gallery")
-    public String gallery() {
-        return "gallery";
+        this.adminService = adminService;
     }
 
     @GetMapping("/")
     public String index() { return "index"; }
-
-    /* ── PUBLIC ABOUT US ROUTE ── */
-    @GetMapping("/about")
-    public String about() {
-        return "about";
-    }
 
     @GetMapping("/login")
     public String login() { return "login"; }
 
     @PostMapping("/login")
     public String doLogin(@RequestParam String username, @RequestParam String password, HttpSession session) {
+
+        // ── CHECK ADMIN FIRST ──
+        if (adminService.authenticate(username, password)) {
+            AdminUser admin = adminService.getAdminByUsername(username);
+            session.setAttribute("admin", admin);
+            return "redirect:/admin/dashboard";
+        }
+
+        // ── CHECK REGULAR USER ──
         User user = userService.findByUsername(username);
 
         if (user == null) {
             return "redirect:/login?notFound=true";
         }
 
-        // FIXED: Now calls the cryptographic hashing comparison method instead of comparing raw strings
-        if (userService.checkPassword(password, user.getPassword())) {
-
-            // --- INITIALS & NAME LOGIC ---
+        if (user.getPassword().equals(password)) {
             String fullName = user.getFullName().trim();
             String firstName = fullName.split("\\s+")[0];
 
-            // Set session attributes securely
             session.setAttribute("userInitials", getInitials(fullName));
             session.setAttribute("loggedInUser", user.getUsername());
             session.setAttribute("userName", fullName);
-            session.setAttribute("userEmail", user.getEmail()); // Store email in session
+            session.setAttribute("userEmail", user.getEmail());
             session.setAttribute("navName", firstName);
             session.setAttribute("userRole", user.getRole());
-            session.setAttribute("vendorName", user.getUsername());
 
             return "redirect:/?loginSuccess=true";
         } else {
@@ -131,7 +128,7 @@ public class UserController {
     public String handlePasswordReset(@RequestParam String email, @RequestParam String newPassword) {
         User user = userService.findByEmail(email);
         if (user != null) {
-            userService.updatePassword(email, newPassword); // Automatically securely hashes via updated service
+            userService.updatePassword(email, newPassword);
         }
         return "redirect:/login?resetSuccess=true";
     }
@@ -150,16 +147,15 @@ public class UserController {
             return "redirect:/register?usernameTaken=true";
         }
 
-        userService.saveUser(user); // Automatically hashes raw password via updated service
+        userService.saveUser(user);
 
         String fullName = user.getFullName().trim();
         String firstName = fullName.split("\\s+")[0];
 
-        // Set session attributes for immediate login effect
         session.setAttribute("userInitials", getInitials(fullName));
         session.setAttribute("loggedInUser", user.getUsername());
         session.setAttribute("userName", fullName);
-        session.setAttribute("userEmail", user.getEmail()); // Store email in session
+        session.setAttribute("userEmail", user.getEmail());
         session.setAttribute("navName", firstName);
         session.setAttribute("userRole", user.getRole());
 
@@ -172,11 +168,9 @@ public class UserController {
         return "redirect:/login?logout";
     }
 
-    // HELPER METHOD: Generates Initials
     private String getInitials(String fullName) {
         String[] parts = fullName.trim().split("\\s+");
         if (parts.length == 0) return "??";
-
         String initials = parts[0].substring(0, 1).toUpperCase();
         if (parts.length > 1) {
             initials += parts[parts.length - 1].substring(0, 1).toUpperCase();

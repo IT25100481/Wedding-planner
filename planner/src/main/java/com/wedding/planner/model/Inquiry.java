@@ -1,16 +1,18 @@
 package com.wedding.planner.model;
 
 public class Inquiry {
+    // Private variables enforce Encapsulation
     private String customerEmail;
     private String customerName;
     private String contactNo;
+    private String weddingDate;
     private String message;
-    private String vendorName = "General Inquiry";
-    private String userRole; // Dropdown eken select karana 'Couple' hari 'Vendor' hari methanata enne
+    private String vendorName;
 
+    // Default Constructor
     public Inquiry() {}
 
-    // Getters and Setters
+    // Public Getters and Setters (Encapsulation Accessors)
     public String getCustomerEmail() { return customerEmail; }
     public void setCustomerEmail(String customerEmail) { this.customerEmail = customerEmail; }
 
@@ -20,12 +22,12 @@ public class Inquiry {
     public String getContactNo() { return contactNo; }
     public void setContactNo(String contactNo) { this.contactNo = contactNo; }
 
+    public String getWeddingDate() { return weddingDate; }
+    public void setWeddingDate(String weddingDate) { this.weddingDate = weddingDate; }
+
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }
 
     public String getVendorName() { return vendorName; }
     public void setVendorName(String vendorName) { this.vendorName = vendorName; }
-
-    public String getUserRole() { return userRole; }
-    public void setUserRole(String userRole) { this.userRole = userRole; }
 }
